@@ -11,6 +11,8 @@ GIT
     rails_log_stdout (0.0.1)
 
 GEM
+  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     Ascii85 (1.0.2)
     actionmailer (4.0.1)

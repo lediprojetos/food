@@ -1,13 +1,13 @@
 development:
   adapter: postgresql
-  database: my_database_development
+  database: my_database_food_development
   pool: 5
   timeout: 5000
   username: postgres
   password: sivic 
 test:
   adapter: postgresql
-  database: my_database_development
+  database: my_database_food_development
   pool: 5
   timeout: 5000
   username: postgres
@@ -15,7 +15,7 @@ test:
 
 production:
   adapter: postgresql
-  database: my_database_development
+  database: my_database_food_development
   pool: 5
   timeout: 5000
   username: postgres
