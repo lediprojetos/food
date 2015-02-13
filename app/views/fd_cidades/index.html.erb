@@ -1,0 +1,29 @@
+<h1>Listing fd_cidades</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome cidade</th>
+      <th>Fd estado</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_cidades.each do |fd_cidade| %>
+      <tr>
+        <td><%= fd_cidade.nome_cidade %></td>
+        <td><%= fd_cidade.fd_estado %></td>
+        <td><%= link_to 'Show', fd_cidade %></td>
+        <td><%= link_to 'Edit', edit_fd_cidade_path(fd_cidade) %></td>
+        <td><%= link_to 'Destroy', fd_cidade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd cidade', new_fd_cidade_path %>

@@ -1,4 +1,10 @@
 Food::Application.routes.draw do
+  resources :fd_enderecos
+
+  resources :fd_cidades
+
+  resources :fd_estados
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,41 @@
+<h1>Listing fd_enderecos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome bairro</th>
+      <th>Nome rua</th>
+      <th>Numr quadra</th>
+      <th>Desc complemento</th>
+      <th>Desc pontoreferencia</th>
+      <th>Numr cep</th>
+      <th>Data inclusao</th>
+      <th>Fd endereco</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_enderecos.each do |fd_endereco| %>
+      <tr>
+        <td><%= fd_endereco.nome_bairro %></td>
+        <td><%= fd_endereco.nome_rua %></td>
+        <td><%= fd_endereco.numr_quadra %></td>
+        <td><%= fd_endereco.desc_complemento %></td>
+        <td><%= fd_endereco.desc_pontoreferencia %></td>
+        <td><%= fd_endereco.numr_cep %></td>
+        <td><%= fd_endereco.data_inclusao %></td>
+        <td><%= fd_endereco.fd_endereco %></td>
+        <td><%= link_to 'Show', fd_endereco %></td>
+        <td><%= link_to 'Edit', edit_fd_endereco_path(fd_endereco) %></td>
+        <td><%= link_to 'Destroy', fd_endereco, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd endereco', new_fd_endereco_path %>

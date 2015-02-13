@@ -1,0 +1,29 @@
+<h1>Listing fd_estados</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome estado</th>
+      <th>Sigla estado</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_estados.each do |fd_estado| %>
+      <tr>
+        <td><%= fd_estado.nome_estado %></td>
+        <td><%= fd_estado.sigl_estado %></td>
+        <td><%= link_to 'Show', fd_estado %></td>
+        <td><%= link_to 'Edit', edit_fd_estado_path(fd_estado) %></td>
+        <td><%= link_to 'Destroy', fd_estado, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd estado', new_fd_estado_path %>

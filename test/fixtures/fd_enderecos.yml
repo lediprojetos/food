@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome_bairro: MyString
+  nome_rua: MyString
+  numr_quadra: MyString
+  desc_complemento: MyString
+  desc_pontoreferencia: MyString
+  numr_cep: MyString
+  data_inclusao: 2015-02-13 16:22:25
+  fd_endereco_id: 
+
+two:
+  nome_bairro: MyString
+  nome_rua: MyString
+  numr_quadra: MyString
+  desc_complemento: MyString
+  desc_pontoreferencia: MyString
+  numr_cep: MyString
+  data_inclusao: 2015-02-13 16:22:25
+  fd_endereco_id: 

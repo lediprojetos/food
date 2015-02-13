@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome bairro:</strong>
+  <%= @fd_endereco.nome_bairro %>
+</p>
+
+<p>
+  <strong>Nome rua:</strong>
+  <%= @fd_endereco.nome_rua %>
+</p>
+
+<p>
+  <strong>Numr quadra:</strong>
+  <%= @fd_endereco.numr_quadra %>
+</p>
+
+<p>
+  <strong>Desc complemento:</strong>
+  <%= @fd_endereco.desc_complemento %>
+</p>
+
+<p>
+  <strong>Desc pontoreferencia:</strong>
+  <%= @fd_endereco.desc_pontoreferencia %>
+</p>
+
+<p>
+  <strong>Numr cep:</strong>
+  <%= @fd_endereco.numr_cep %>
+</p>
+
+<p>
+  <strong>Data inclusao:</strong>
+  <%= @fd_endereco.data_inclusao %>
+</p>
+
+<p>
+  <strong>Fd endereco:</strong>
+  <%= @fd_endereco.fd_endereco %>
+</p>
+
+<%= link_to 'Edit', edit_fd_endereco_path(@fd_endereco) %> |
+<%= link_to 'Back', fd_enderecos_path %>

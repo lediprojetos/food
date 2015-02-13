@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome estado:</strong>
+  <%= @fd_estado.nome_estado %>
+</p>
+
+<p>
+  <strong>Sigla estado:</strong>
+  <%= @fd_estado.sigla_estado %>
+</p>
+
+<%= link_to 'Edit', edit_fd_estado_path(@fd_estado) %> |
+<%= link_to 'Back', fd_estados_path %>
