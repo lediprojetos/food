@@ -1,4 +1,4 @@
-<h1>Listing fd_categoriaempresas</h1>
+<h1>Lista de Categoria Empresa</h1>
 
 <table>
   <thead>
@@ -14,9 +14,9 @@
     <% @fd_categoriaempresas.each do |fd_categoriaempresa| %>
       <tr>
         <td><%= fd_categoriaempresa.nome_categoria %></td>
-        <td><%= link_to 'Show', fd_categoriaempresa %></td>
-        <td><%= link_to 'Edit', edit_fd_categoriaempresa_path(fd_categoriaempresa) %></td>
-        <td><%= link_to 'Destroy', fd_categoriaempresa, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Exibir', fd_categoriaempresa %></td>
+        <td><%= link_to 'Editar', edit_fd_categoriaempresa_path(fd_categoriaempresa) %></td>
+        <td><%= link_to 'Deletar', fd_categoriaempresa, method: :delete, data: { confirm: 'Deseja excluir?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Fd categoriaempresa', new_fd_categoriaempresa_path %>
+<%= link_to 'Nova Categoria', new_fd_categoriaempresa_path %>

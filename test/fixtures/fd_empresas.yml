@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  desc_razaosocial: MyString
+  desc_nomefantasia: MyString
+  nome_responsavel: MyString
+  desc_cnpj: MyString
+  desc_telefone: MyString
+  desc_celular: MyString
+  data_inclusao: 2015-02-13 23:10:32
+  fd_endereco_id: 
+  fd_categoriaempresa_id: 
+
+two:
+  desc_razaosocial: MyString
+  desc_nomefantasia: MyString
+  nome_responsavel: MyString
+  desc_cnpj: MyString
+  desc_telefone: MyString
+  desc_celular: MyString
+  data_inclusao: 2015-02-13 23:10:32
+  fd_endereco_id: 
+  fd_categoriaempresa_id: 

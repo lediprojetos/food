@@ -1,0 +1,53 @@
+<%= form_for(@fd_empresa) do |f| %>
+  <% if @fd_empresa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_empresa.errors.count, "error") %> prohibited this fd_empresa from being saved:</h2>
+
+      <ul>
+      <% @fd_empresa.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :desc_razaosocial %><br>
+    <%= f.text_field :desc_razaosocial %>
+  </div>
+  <div class="field">
+    <%= f.label :desc_nomefantasia %><br>
+    <%= f.text_field :desc_nomefantasia %>
+  </div>
+  <div class="field">
+    <%= f.label :nome_responsavel %><br>
+    <%= f.text_field :nome_responsavel %>
+  </div>
+  <div class="field">
+    <%= f.label :desc_cnpj %><br>
+    <%= f.text_field :desc_cnpj %>
+  </div>
+  <div class="field">
+    <%= f.label :desc_telefone %><br>
+    <%= f.text_field :desc_telefone %>
+  </div>
+  <div class="field">
+    <%= f.label :desc_celular %><br>
+    <%= f.text_field :desc_celular %>
+  </div>
+  <div class="field">
+    <%= f.label :data_inclusao %><br>
+    <%= f.datetime_select :data_inclusao %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_endereco_id %><br>
+    <%= f.text_field :fd_endereco_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_categoriaempresa_id %><br>
+    <%= f.text_field :fd_categoriaempresa_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

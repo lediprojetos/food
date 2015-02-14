@@ -1,4 +1,6 @@
 Food::Application.routes.draw do
+  resources :fd_empresas
+
   resources :fd_categoriaempresas
   resources :fd_enderecos
   resources :fd_cidades
