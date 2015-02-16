@@ -1,4 +1,6 @@
 Food::Application.routes.draw do
+  resources :fd_usuarios
+
   resources :fd_empresas
 
   resources :fd_categoriaempresas

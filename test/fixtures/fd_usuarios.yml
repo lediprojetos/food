@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  desc_nome: MyString
+  desc_login: MyString
+  desc_senha: MyString
+  data_inclusao: 2015-02-15 22:33:38
+  desc_perfil: MyString
+  fd_empresas_id: 
+
+two:
+  desc_nome: MyString
+  desc_login: MyString
+  desc_senha: MyString
+  data_inclusao: 2015-02-15 22:33:38
+  desc_perfil: MyString
+  fd_empresas_id: 
