@@ -8,7 +8,7 @@ class CreateFdEnderecos < ActiveRecord::Migration
       t.string :desc_pontoreferencia
       t.string :numr_cep
       t.datetime :data_inclusao
-      t.references :fd_endereco, index: true
+      t.references :fd_cidade, index: true
 
       t.timestamps
     end

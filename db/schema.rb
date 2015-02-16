@@ -56,12 +56,12 @@ ActiveRecord::Schema.define(version: 20150214011032) do
     t.string   "desc_pontoreferencia"
     t.string   "numr_cep"
     t.datetime "data_inclusao"
-    t.integer  "fd_endereco_id"
+    t.integer  "fd_cidade_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "fd_enderecos", ["fd_endereco_id"], name: "index_fd_enderecos_on_fd_endereco_id", using: :btree
+  add_index "fd_enderecos", ["fd_cidade_id"], name: "index_fd_enderecos_on_fd_cidade_id", using: :btree
 
   create_table "fd_estados", force: true do |t|
     t.string   "nome_estado"

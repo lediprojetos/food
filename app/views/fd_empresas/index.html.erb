@@ -1,17 +1,13 @@
-<h1>Listing fd_empresas</h1>
+<h1>Lista de Empresas</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Desc razaosocial</th>
-      <th>Desc nomefantasia</th>
+      <th>Razão Social</th>
+      <th>Nome Fantasia</th>
       <th>Nome responsavel</th>
-      <th>Desc cnpj</th>
-      <th>Desc telefone</th>
-      <th>Desc celular</th>
-      <th>Data inclusao</th>
-      <th>Fd endereco</th>
-      <th>Fd categoriaempresa</th>
+      <th>CNPJ</th>
+      <th>Categoria Empresa</th>
       <th></th>
       <th></th>
       <th></th>
@@ -25,14 +21,10 @@
         <td><%= fd_empresa.desc_nomefantasia %></td>
         <td><%= fd_empresa.nome_responsavel %></td>
         <td><%= fd_empresa.desc_cnpj %></td>
-        <td><%= fd_empresa.desc_telefone %></td>
-        <td><%= fd_empresa.desc_celular %></td>
-        <td><%= fd_empresa.data_inclusao %></td>
-        <td><%= fd_empresa.fd_endereco %></td>
         <td><%= fd_empresa.fd_categoriaempresa %></td>
-        <td><%= link_to 'Show', fd_empresa %></td>
-        <td><%= link_to 'Edit', edit_fd_empresa_path(fd_empresa) %></td>
-        <td><%= link_to 'Destroy', fd_empresa, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Exibir', fd_empresa %></td>
+        <td><%= link_to 'Editar', edit_fd_empresa_path(fd_empresa) %></td>
+        <td><%= link_to 'Deletar', fd_empresa, method: :delete, data: { confirm: 'Deseja Excluir?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -40,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Fd empresa', new_fd_empresa_path %>
+<%= link_to 'Nova Empresa', new_fd_empresa_path %>

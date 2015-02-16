@@ -53,6 +53,6 @@ class FdEnderecosController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fd_endereco_params
-      params.require(:fd_endereco).permit(:nome_bairro, :nome_rua, :numr_quadra, :desc_complemento, :desc_pontoreferencia, :numr_cep, :data_inclusao, :fd_endereco_id)
+      params.require(:fd_endereco).permit(:nome_bairro, :nome_rua, :numr_quadra, :desc_complemento, :desc_pontoreferencia, :numr_cep, :data_inclusao, :fd_cidade_id)
     end
 end

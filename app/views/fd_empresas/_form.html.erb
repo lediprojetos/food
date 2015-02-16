@@ -12,11 +12,16 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :desc_razaosocial %><br>
+    <%= f.label :Categoria %><br>
+    <%= f.select :fd_categoriaempresa_id, options_from_collection_for_select(FdCategoriaempresa.all, 'id','nome_categoria',@fd_empresa.fd_categoriaempresa_id)%>
+  </div>
+
+  <div class="field">
+    <%= f.label :Razao_Social %><br>
     <%= f.text_field :desc_razaosocial %>
   </div>
   <div class="field">
-    <%= f.label :desc_nomefantasia %><br>
+    <%= f.label :Nome_Fantasia %><br>
     <%= f.text_field :desc_nomefantasia %>
   </div>
   <div class="field">
@@ -24,29 +29,54 @@
     <%= f.text_field :nome_responsavel %>
   </div>
   <div class="field">
-    <%= f.label :desc_cnpj %><br>
+    <%= f.label :CNPJ %><br>
     <%= f.text_field :desc_cnpj %>
   </div>
   <div class="field">
-    <%= f.label :desc_telefone %><br>
+    <%= f.label :Telefone_Fixo %><br>
     <%= f.text_field :desc_telefone %>
   </div>
   <div class="field">
-    <%= f.label :desc_celular %><br>
+    <%= f.label :Telefone_Celular %><br>
     <%= f.text_field :desc_celular %>
   </div>
+
+ <h>Endereço</h>
+
+
+  <%=  f.fields_for :fd_endereco do |endereco| %>
+  
+   <div class="field">
+    <%= endereco.label :fd_cidade_id %><br>
+    <%= endereco.text_field :fd_cidade_id %>
+  </div>
+
   <div class="field">
-    <%= f.label :data_inclusao %><br>
-    <%= f.datetime_select :data_inclusao %>
+    <%= endereco.label :nome_bairro %><br>
+    <%= endereco.text_field :nome_bairro %>
   </div>
   <div class="field">
-    <%= f.label :fd_endereco_id %><br>
-    <%= f.text_field :fd_endereco_id %>
+    <%= endereco.label :nome_rua %><br>
+    <%= endereco.text_field :nome_rua %>
   </div>
   <div class="field">
-    <%= f.label :fd_categoriaempresa_id %><br>
-    <%= f.text_field :fd_categoriaempresa_id %>
+    <%= endereco.label :Quadra %><br>
+    <%= endereco.text_field :numr_quadra %>
   </div>
+  <div class="field">
+    <%= endereco.label :Complemento %><br>
+    <%= endereco.text_field :desc_complemento %>
+  </div>
+  <div class="field">
+    <%= endereco.label :Ponto_referencia %><br>
+    <%= endereco.text_field :desc_pontoreferencia %>
+  </div>
+  <div class="field">
+    <%= endereco.label :CEP %><br>
+    <%= endereco.text_field :numr_cep %>
+  </div>
+
+  <%end%>
   <div class="actions">
     <%= f.submit %>
   </div>
