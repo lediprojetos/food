@@ -10,8 +10,8 @@ Food::Application.routes.draw do
   resources :fd_estados
 
   match '/listarCidade', to: 'fd_cidades#get_cities', via: 'get'
+  
   match '/login', to: 'fd_autentication#login', via: 'get'
   match '/login', to: 'fd_autentication#login', via: 'post'
-  match '/login2', to: 'fd_autentication#login2', via: 'post'
 
 end

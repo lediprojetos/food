@@ -5,9 +5,8 @@ class FdAutenticationController < ApplicationController
 		desc_senha = params[:desc_senha]
 
 		#session[:ObjLogon] = FdUsuario.where(:desc_login => desc_login, :desc_senha => desc_senha) rescue nil
-		@objlogon = FdUsuario.where(:desc_login => desc_login, :desc_senha => desc_senha) rescue nil
+		session[:ObjLogon] = FdUsuario.where(:desc_login => desc_login, :desc_senha => desc_senha) rescue nil
 
-		session[:ObjLogon] = @objlogon.first
 
 		#debugger
 
