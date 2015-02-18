@@ -42,14 +42,12 @@
   </div>
 
  <h>Endereço</h>
+ <br>
 
 
   <%=  f.fields_for :fd_endereco do |endereco| %>
   
-   <div class="field">
-    <%= endereco.label :fd_cidade_id %><br>
-    <%= endereco.text_field :fd_cidade_id %>
-  </div>
+
 
   <div class="field">
     <%= endereco.label :nome_bairro %><br>
@@ -77,25 +75,25 @@
   </div>
 
   <%=  f.fields_for :fd_estado do |estado| %>
-      <div class="col-xs-3">
+      <div class="field">
         <%= estado.label :Estado %><br>
-        <%= estado.select :fd_estado_id, options_from_collection_for_select(FdEstado.all, 'id', 'nome_estado',@fd_estado), {:include_blank => true}, {:onchange => 'changeState(this)', :class => "form-control"}%>
+        <%= estado.select :fd_estado_id, options_from_collection_for_select(FdEstado.all, 'id', 'nome_estado',@fd_estado), {:include_blank => true}, {:onchange => 'changeState(this)'}%>
       </div>
   <%end%>
-
+  <br>
   <%if @fd_cidade %>
-        <div class="col-xs-3">
+        <div class="field">
           <%= endereco.label :Cidade %>
-          <%= endereco.select :fd_cidade_id, options_from_collection_for_select(@fd_cidade, 'id', 'nome_cidade',@fd_cidade_setada),{},{ :class =>  'form-control'}%>
+          <%= endereco.select :fd_cidade_id, options_from_collection_for_select(@fd_cidade, 'id', 'nome_cidade',@fd_cidade_setada),{}%>
         </div>
   <%else%>
 
-  <div class="col-xs-3">
-          <%= endereco.label :Cidade   %>
-          <%= endereco.select :fd_cidade_id, [], {}, :class =>  'form-control' %>
-        </div> 
+  <div class="field">
+          <%= endereco.label :Cidade %><br>
+          <%= endereco.select :fd_cidade_id,[]%>
+  </div>
 
-  <%end%>
+ <%end%>
 
   <%end%>
   <br>

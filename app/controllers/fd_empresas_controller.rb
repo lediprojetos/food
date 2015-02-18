@@ -59,6 +59,6 @@ class FdEmpresasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fd_empresa_params
-      params.require(:fd_empresa).permit(:desc_razaosocial, :desc_nomefantasia, :nome_responsavel, :desc_cnpj, :desc_telefone, :desc_celular, :data_inclusao, :fd_endereco_id, :fd_categoriaempresa_id, fd_endereco_attributes: [ :id, :nome_bairro , :nome_rua, :numr_quadra, :desc_complemento, :desc_pontoreferencia, :numr_cep, :fd_cidade_id])
+      params.require(:fd_empresa).permit(:desc_razaosocial, :desc_nomefantasia, :nome_responsavel, :desc_cnpj, :desc_telefone, :desc_celular, :data_inclusao, :fd_categoriaempresa_id, fd_endereco_attributes: [ :id, :nome_bairro , :nome_rua, :numr_quadra, :desc_complemento, :desc_pontoreferencia, :numr_cep, :fd_cidade_id])
     end
 end
