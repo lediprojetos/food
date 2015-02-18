@@ -19,6 +19,13 @@ class FdCidadesController < ApplicationController
   def edit
   end
 
+  def get_cities
+    fd_cidades = FdCidade.find :all, :conditions => {:fd_estado_id => params[:id]}, :order => "nome_cidade ASC"
+    fd_cidades_json = fd_cidades.map {|item| {:id => item.id, :name => item.nome_cidade}}
+
+    render :json => fd_cidades_json
+  end 
+
   # POST /fd_cidades
   def create
     @fd_cidade = FdCidade.new(fd_cidade_params)

@@ -13,10 +13,16 @@ class FdEmpresasController < ApplicationController
   # GET /fd_empresas/new
   def new
     @fd_empresa = FdEmpresa.new
+    @fd_empresa.build_fd_endereco
   end
 
   # GET /fd_empresas/1/edit
   def edit
+    @fd_estado = FdEmpresa.find(params[:id])
+    @fd_estado = @fd_estado.fd_endereco.fd_cidade.fd_estado.id
+
+    @fd_cidade = FdCidade.find :all, :conditions => {:fd_estado_id => @fd_estado}
+
   end
 
   # POST /fd_empresas
@@ -53,6 +59,6 @@ class FdEmpresasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fd_empresa_params
-      params.require(:fd_empresa).permit(:desc_razaosocial, :desc_nomefantasia, :nome_responsavel, :desc_cnpj, :desc_telefone, :desc_celular, :data_inclusao, :fd_endereco_id, :fd_categoriaempresa_id)
+      params.require(:fd_empresa).permit(:desc_razaosocial, :desc_nomefantasia, :nome_responsavel, :desc_cnpj, :desc_telefone, :desc_celular, :data_inclusao, :fd_endereco_id, :fd_categoriaempresa_id, fd_endereco_attributes: [ :id, :nome_bairro , :nome_rua, :numr_quadra, :desc_complemento, :desc_pontoreferencia, :numr_cep, :fd_cidade_id])
     end
 end

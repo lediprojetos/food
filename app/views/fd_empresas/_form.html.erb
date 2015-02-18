@@ -76,8 +76,54 @@
     <%= endereco.text_field :numr_cep %>
   </div>
 
+  <%=  f.fields_for :fd_estado do |estado| %>
+      <div class="col-xs-3">
+        <%= estado.label :Estado %><br>
+        <%= estado.select :fd_estado_id, options_from_collection_for_select(FdEstado.all, 'id', 'nome_estado',@fd_estado), {:include_blank => true}, {:onchange => 'changeState(this)', :class => "form-control"}%>
+      </div>
   <%end%>
+
+  <%if @fd_cidade %>
+        <div class="col-xs-3">
+          <%= endereco.label :Cidade %>
+          <%= endereco.select :fd_cidade_id, options_from_collection_for_select(@fd_cidade, 'id', 'nome_cidade',@fd_cidade_setada),{},{ :class =>  'form-control'}%>
+        </div>
+  <%else%>
+
+  <div class="col-xs-3">
+          <%= endereco.label :Cidade   %>
+          <%= endereco.select :fd_cidade_id, [], {}, :class =>  'form-control' %>
+        </div> 
+
+  <%end%>
+
+  <%end%>
+  <br>
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+
+<script>
+ 
+    function changeState(state){
+        $.ajax({
+          url: '<%= listarCidade_path %>',
+          data : {id : state.value},
+          success: function(data){
+            $('#fd_empresa_fd_endereco_attributes_fd_cidade_id').empty();
+            $('#fd_empresa_fd_endereco_attributes_fd_cidade_id').html('<option>Carregando...</option>');
+            $('#fd_empresa_fd_endereco_attributes_fd_cidade_id').attr('disabled', 'disabled');
+            var options = "";
+            for (var i in data) {
+              var item = data[i];
+              options += "<option value='"+item.id+"'>"+item.name+"</option>"
+            };
+   
+            $('#fd_empresa_fd_endereco_attributes_fd_cidade_id').html(options);
+            $('#fd_empresa_fd_endereco_attributes_fd_cidade_id').removeAttr('disabled');          
+          }
+        })
+      }
+  </script>

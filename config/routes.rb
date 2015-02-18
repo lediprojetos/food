@@ -10,5 +10,7 @@ Food::Application.routes.draw do
 
   
   root  'static_pages#home'
+  
+  match '/listarCidade', to: 'fd_cidades#get_cities', via: 'get'
 
 end
