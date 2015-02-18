@@ -39,6 +39,10 @@ gem 'debugger'
 gem 'will_paginate', '~> 3.0.5'
 #gem 'pdfkit'
 
+#Gerenciador de Relatórios
 gem 'thinreports'
+
+#Gerenciador de Sessões
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 #gem "font-awesome-rails"

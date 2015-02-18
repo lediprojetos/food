@@ -1,0 +1,11 @@
+
+<%= form_tag login_path, method: 'POST' do %>
+	<label >Usuário</label><br>
+	<input id="desc_login" name="desc_login" type="text" class="form-control" placeholder="Usuario"><br/>
+	<label >Senha</label><br>
+	<input id="desc_senha" name="desc_senha" type="password" class="form-control" placeholder="Senha"><br/>
+	<button class="btn btn-success" type="submit" >Entrar</button>
+<% end %>
+
+<%=session[:ObjLogon].first.desc_nome rescue nil%>
+<%#=@objlogon.first.desc_nome rescue nil%>
