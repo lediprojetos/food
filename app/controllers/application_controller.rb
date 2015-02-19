@@ -1,4 +1,4 @@
-require 'lib/lib_autentication'
+require 'Lib/lib_autentication'
 class ApplicationController < ActionController::Base
 	include Auntentication
 	# Prevent CSRF attacks by raising an exception.

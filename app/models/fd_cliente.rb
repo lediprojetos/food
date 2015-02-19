@@ -5,7 +5,7 @@ class FdCliente < ActiveRecord::Base
 
  accepts_nested_attributes_for :fd_endereco, allow_destroy: true
 
- SEXO = %w[MASCULINO FEMININO GAY]
+ SEXO = %w[MASCULINO FEMININO]
 
  validates :nome_cliente, :presence => { :message => 'Digite o nome' }  
 
