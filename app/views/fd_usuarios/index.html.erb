@@ -1,16 +1,11 @@
-<h1>Listing fd_usuarios</h1>
+<h1>Listar Usuários</h1>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Desc nome</th>
-      <th>Desc login</th>
-      <th>Desc senha</th>
-      <th>Data inclusao</th>
-      <th>Desc perfil</th>
-      <th>Fd empresas</th>
-      <th></th>
-      <th></th>
+      <th>Nome</th>
+      <th>Login</th>
+      <th>Data Inclusao</th>
       <th></th>
     </tr>
   </thead>
@@ -23,7 +18,6 @@
         <td><%= fd_usuario.desc_senha %></td>
         <td><%= fd_usuario.data_inclusao %></td>
         <td><%= fd_usuario.desc_perfil %></td>
-        <td><%= fd_usuario.fd_empresas %></td>
         <td><%= link_to 'Show', fd_usuario %></td>
         <td><%= link_to 'Edit', edit_fd_usuario_path(fd_usuario) %></td>
         <td><%= link_to 'Destroy', fd_usuario, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -32,6 +26,4 @@
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Fd usuario', new_fd_usuario_path %>
+<%= link_to 'Novo Usuário', new_fd_usuario_path %>

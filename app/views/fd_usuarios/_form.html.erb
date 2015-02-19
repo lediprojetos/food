@@ -11,19 +11,31 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :desc_nome %><br>
-    <%= f.text_field :desc_nome %>
+<div class="row mar-bot40">
+  <div class="col-lg-3" >
+    <%= f.label :Nome_Completo %><br>
+    <%= f.text_field :desc_nome, :class => 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :desc_login %><br>
-    <%= f.text_field :desc_login %>
+</div>
+<br/>
+<div class="row mar-bot40">
+  <div class="col-lg-3" >
+    <%= f.label :Login %><br>
+    <%= f.text_field :desc_login, :class => 'form-control'  %>
   </div>
-  <div class="field">
+</div>
+<br/>
+<div class="row mar-bot40">
+  <div class="col-lg-3" >
     <%= f.label :desc_senha %><br>
-    <%= f.text_field :desc_senha %>
+    <%= f.password_field :desc_senha, :class => 'form-control'  %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+</div>
+<hr/>
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn">
+    </span> Salvar
+  </button>  
+
 <% end %>
