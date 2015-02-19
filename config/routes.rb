@@ -13,5 +13,6 @@ Food::Application.routes.draw do
   
   match '/login', to: 'fd_autentication#login', via: 'get'
   match '/login', to: 'fd_autentication#login', via: 'post'
+  match '/logoff', to: 'fd_autentication#logoff', via: 'get'
 
 end

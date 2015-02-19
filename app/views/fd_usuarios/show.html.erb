@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Desc nome:</strong>
+  <%= @fd_usuario.desc_nome %>
+</p>
+
+<p>
+  <strong>Desc login:</strong>
+  <%= @fd_usuario.desc_login %>
+</p>
+
+<p>
+  <strong>Desc senha:</strong>
+  <%= @fd_usuario.desc_senha %>
+</p>
+
+<p>
+  <strong>Data inclusao:</strong>
+  <%= @fd_usuario.data_inclusao %>
+</p>
+
+<p>
+  <strong>Desc perfil:</strong>
+  <%= @fd_usuario.desc_perfil %>
+</p>
+
+<p>
+  <strong>Fd empresas:</strong>
+  <%= @fd_usuario.fd_empresas %>
+</p>
+
+<%= link_to 'Edit', edit_fd_usuario_path(@fd_usuario) %> |
+<%= link_to 'Back', fd_usuarios_path %>
