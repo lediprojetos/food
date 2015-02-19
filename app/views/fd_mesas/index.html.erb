@@ -1,0 +1,35 @@
+<h1>Listing fd_mesas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Numr mesa</th>
+      <th>Desc mesa</th>
+      <th>Flag mesaaberta</th>
+      <th>Fd empresa</th>
+      <th>Fd usuario</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_mesas.each do |fd_mesa| %>
+      <tr>
+        <td><%= fd_mesa.numr_mesa %></td>
+        <td><%= fd_mesa.desc_mesa %></td>
+        <td><%= fd_mesa.flag_mesaaberta %></td>
+        <td><%= fd_mesa.fd_empresa %></td>
+        <td><%= fd_mesa.fd_usuario %></td>
+        <td><%= link_to 'Show', fd_mesa %></td>
+        <td><%= link_to 'Edit', edit_fd_mesa_path(fd_mesa) %></td>
+        <td><%= link_to 'Destroy', fd_mesa, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd mesa', new_fd_mesa_path %>

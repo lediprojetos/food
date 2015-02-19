@@ -26,6 +26,9 @@ class FdEmpresasController < ApplicationController
 
     @fd_cidade = FdCidade.find :all, :conditions => {:fd_estado_id => @fd_estado}
 
+    @fd_cidade_setada = FdEmpresa.find(params[:id])
+    @fd_cidade_setada = @fd_cidade_setada.fd_endereco.fd_cidade.id
+
   end
 
   # POST /fd_empresas

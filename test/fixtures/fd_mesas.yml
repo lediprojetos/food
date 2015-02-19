@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  numr_mesa: 1
+  desc_mesa: MyString
+  flag_mesaaberta: false
+  fd_empresa_id: 
+  fd_usuario_id: 
+
+two:
+  numr_mesa: 1
+  desc_mesa: MyString
+  flag_mesaaberta: false
+  fd_empresa_id: 
+  fd_usuario_id: 

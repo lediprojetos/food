@@ -32,7 +32,7 @@ class FdUsuariosController < ApplicationController
     @fd_usuario = FdUsuario.new(fd_usuario_params)
 
     if @fd_usuario.save
-      redirect_to @fd_usuario, notice: 'Fd usuario was successfully created.'
+      redirect_to @fd_usuario, notice: 'Registro inserido com sucesso.'
     else
       render action: 'new'
     end
@@ -41,7 +41,7 @@ class FdUsuariosController < ApplicationController
   # PATCH/PUT /fd_usuarios/1
   def update
     if @fd_usuario.update(fd_usuario_params)
-      redirect_to @fd_usuario, notice: 'Fd usuario was successfully updated.'
+      redirect_to @fd_usuario, notice: 'Registro alterado com sucesso.'
     else
       render action: 'edit'
     end
@@ -50,7 +50,7 @@ class FdUsuariosController < ApplicationController
   # DELETE /fd_usuarios/1
   def destroy
     @fd_usuario.destroy
-    redirect_to fd_usuarios_url, notice: 'Fd usuario was successfully destroyed.'
+    redirect_to fd_usuarios_url, notice: 'Registro inserido com sucesso.'
   end
 
   private

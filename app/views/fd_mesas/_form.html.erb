@@ -1,0 +1,37 @@
+<%= form_for(@fd_mesa) do |f| %>
+  <% if @fd_mesa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_mesa.errors.count, "error") %> prohibited this fd_mesa from being saved:</h2>
+
+      <ul>
+      <% @fd_mesa.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :numr_mesa %><br>
+    <%= f.number_field :numr_mesa %>
+  </div>
+  <div class="field">
+    <%= f.label :desc_mesa %><br>
+    <%= f.text_field :desc_mesa %>
+  </div>
+  <div class="field">
+    <%= f.label :flag_mesaaberta %><br>
+    <%= f.check_box :flag_mesaaberta %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_empresa_id %><br>
+    <%= f.text_field :fd_empresa_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_usuario_id %><br>
+    <%= f.text_field :fd_usuario_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -11,10 +11,6 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :fd_empresa_id %><br>
-    <%= f.text_field :fd_empresa_id %>
-  </div>
 
   <div class="field">
     <%= f.label :nome_cliente %><br>
@@ -22,8 +18,9 @@
   </div>
   <div class="field">
     <%= f.label :Sexo %><br>
-    <%= f.text_field :desc_sexo %>
+    <%= f.collection_select :desc_sexo, FdCliente::SEXO, :to_s, :humanize, {}%>
   </div>
+
   <div class="field">
     <%= f.label :Telefone_celular %><br>
     <%= f.text_field :desc_celular %>
@@ -97,6 +94,10 @@
   </div>
 
  <%end%>
+
+
+  <!--Capturando usuario logado-->
+  <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresas_id%> 
 
   <%end%>
   <br>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Numr mesa:</strong>
+  <%= @fd_mesa.numr_mesa %>
+</p>
+
+<p>
+  <strong>Desc mesa:</strong>
+  <%= @fd_mesa.desc_mesa %>
+</p>
+
+<p>
+  <strong>Flag mesaaberta:</strong>
+  <%= @fd_mesa.flag_mesaaberta %>
+</p>
+
+<p>
+  <strong>Fd empresa:</strong>
+  <%= @fd_mesa.fd_empresa %>
+</p>
+
+<p>
+  <strong>Fd usuario:</strong>
+  <%= @fd_mesa.fd_usuario %>
+</p>
+
+<%= link_to 'Edit', edit_fd_mesa_path(@fd_mesa) %> |
+<%= link_to 'Back', fd_mesas_path %>

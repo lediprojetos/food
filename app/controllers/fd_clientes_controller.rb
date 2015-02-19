@@ -1,3 +1,4 @@
+#encoding: utf-8
 class FdClientesController < ApplicationController
   before_action :set_fd_cliente, only: [:show, :edit, :update, :destroy]
 
@@ -28,9 +29,10 @@ class FdClientesController < ApplicationController
   # POST /fd_clientes
   def create
     @fd_cliente = FdCliente.new(fd_cliente_params)
+    @fd_cliente.data_inclusao = Time.now
 
     if @fd_cliente.save
-      redirect_to @fd_cliente, notice: 'Fd cliente was successfully created.'
+      redirect_to @fd_cliente, notice: 'Registro inserido com sucesso.'
     else
       render action: 'new'
     end
@@ -39,7 +41,7 @@ class FdClientesController < ApplicationController
   # PATCH/PUT /fd_clientes/1
   def update
     if @fd_cliente.update(fd_cliente_params)
-      redirect_to @fd_cliente, notice: 'Fd cliente was successfully updated.'
+      redirect_to @fd_cliente, notice: 'Registro alterado com sucesso.'
     else
       render action: 'edit'
     end
@@ -48,7 +50,7 @@ class FdClientesController < ApplicationController
   # DELETE /fd_clientes/1
   def destroy
     @fd_cliente.destroy
-    redirect_to fd_clientes_url, notice: 'Fd cliente was successfully destroyed.'
+    redirect_to fd_clientes_url, notice: 'Registro excluído com sucesso..'
   end
 
   private
