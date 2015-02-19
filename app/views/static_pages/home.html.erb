@@ -1,9 +1,18 @@
+    <% flash.each do |name, msg| -%>
+      <div class="alert alert-warning alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <%= msg%>
+      </div>      
+    <% end -%>
+
+
   <p><%= link_to "Categoria Empresa",   fd_categoriaempresas_path %></p>
   <p><%= link_to "Cadastro de Empresa",   fd_empresas_path %></p>
   <p><%= link_to "Cadastro de Cliente",   fd_clientes_path %></p>
   <p><%= link_to "Tela de Login",   login_path %></p>
   <p><%= link_to "Sair",   logoff_path %></p>
 
+<%=user.desc_nome%>
 
 
   

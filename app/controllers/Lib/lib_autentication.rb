@@ -14,7 +14,7 @@ module Auntentication
 		if 	usuario_logado == true
 			return true
 		else
-			redirect_to login_path, notice: 'Fd usuario was successfully created.'
+			redirect_to login_path
 		end
 	end	
 
@@ -27,7 +27,7 @@ module Auntentication
 
 	def encerra_sessao
 		reset_session
-		redirect_to login_path, notice: 'Fd usuario was successfully created.'
+		redirect_to login_path
 	end
 
 end

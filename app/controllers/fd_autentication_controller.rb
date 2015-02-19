@@ -1,17 +1,29 @@
 class FdAutenticationController < ApplicationController
 
 	def login
-		desc_login = params[:desc_login]
-		desc_senha = params[:desc_senha]
 
-		#session[:ObjLogon] = FdUsuario.where(:desc_login => desc_login, :desc_senha => desc_senha) rescue nil
-		session[:ObjLogon] = FdUsuario.where(:desc_login => desc_login, :desc_senha => desc_senha) rescue nil
-		session[:ObjLogon] = session[:ObjLogon].first
+		#debugger
+		if request.post?
 
-		if usuario_logado == true
-			redirect_to root_path, notice: 'Usuario logado com sucesso.'
+			#debugger
+
+			if params[:desc_login] == "" && params[:desc_senha] == ""
+				flash[:error] = "Favor informar usuario e senha."
+				return
+			else
+
+				session[:ObjLogon] = FdUsuario.where(:desc_login => params[:desc_login], :desc_senha => params[:desc_senha]) rescue nil
+				session[:ObjLogon] = session[:ObjLogon].first
+
+				if usuario_logado == true
+					redirect_to root_path, notice: 'Usuario logado com sucesso.'
+				else
+					 flash[:error] = "Usuario ou senha incorretos."
+				end
+			
+			end
+
 		end
-		
 	end
 
 	def logoff
