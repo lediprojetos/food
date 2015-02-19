@@ -2,7 +2,7 @@ module Auntentication
 
 
 	def usuario_logado
-		if 	session[:ObjLogon] == nil
+		if 	session[:ObjLogon] == nil || session[:ObjLogon] == ""
 			return false
 		else
 			return true

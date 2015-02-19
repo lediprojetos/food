@@ -7,7 +7,7 @@
 	<button class="btn btn-success" type="submit" >Entrar</button>
 <% end %>
 
-<%#=session[:ObjLogon].desc_nome rescue nil%>
+<%=session[:ObjLogon].desc_nome rescue nil%>
 
 
 <%= link_to 'Novo Usuario', new_fd_usuario_path %>
