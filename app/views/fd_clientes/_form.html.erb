@@ -1,0 +1,130 @@
+<%= form_for(@fd_cliente) do |f| %>
+  <% if @fd_cliente.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_cliente.errors.count, "error") %> prohibited this fd_cliente from being saved:</h2>
+
+      <ul>
+      <% @fd_cliente.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fd_empresa_id %><br>
+    <%= f.text_field :fd_empresa_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :nome_cliente %><br>
+    <%= f.text_field :nome_cliente %>
+  </div>
+  <div class="field">
+    <%= f.label :Sexo %><br>
+    <%= f.text_field :desc_sexo %>
+  </div>
+  <div class="field">
+    <%= f.label :Telefone_celular %><br>
+    <%= f.text_field :desc_celular %>
+  </div>
+  <div class="field">
+    <%= f.label :Telefone_Fixo %><br>
+    <%= f.text_field :desc_telefone %>
+  </div>
+  <div class="field">
+    <%= f.label :Email %><br>
+    <%= f.text_field :desc_email %>
+  </div>
+  <div class="field">
+    <%= f.label :CPF %><br>
+    <%= f.text_field :desc_cpf %>
+  </div>
+  <div class="field">
+    <%= f.label :Data_nascimento %><br>
+    <%= f.date_select :data_nascimento %>
+  </div>
+
+
+ <h>Endereço</h>
+ <br>
+
+  <%=  f.fields_for :fd_endereco do |endereco| %>
+  
+
+  <div class="field">
+    <%= endereco.label :nome_bairro %><br>
+    <%= endereco.text_field :nome_bairro %>
+  </div>
+  <div class="field">
+    <%= endereco.label :nome_rua %><br>
+    <%= endereco.text_field :nome_rua %>
+  </div>
+  <div class="field">
+    <%= endereco.label :Quadra %><br>
+    <%= endereco.text_field :numr_quadra %>
+  </div>
+  <div class="field">
+    <%= endereco.label :Complemento %><br>
+    <%= endereco.text_field :desc_complemento %>
+  </div>
+  <div class="field">
+    <%= endereco.label :Ponto_referencia %><br>
+    <%= endereco.text_field :desc_pontoreferencia %>
+  </div>
+  <div class="field">
+    <%= endereco.label :CEP %><br>
+    <%= endereco.text_field :numr_cep %>
+  </div>
+
+  <%=  f.fields_for :fd_estado do |estado| %>
+      <div class="field">
+        <%= estado.label :Estado %><br>
+        <%= estado.select :fd_estado_id, options_from_collection_for_select(FdEstado.all, 'id', 'nome_estado',@fd_estado), {:include_blank => true}, {:onchange => 'changeState(this)'}%>
+      </div>
+  <%end%>
+  <br>
+  <%if @fd_cidade %>
+        <div class="field">
+          <%= endereco.label :Cidade %>
+          <%= endereco.select :fd_cidade_id, options_from_collection_for_select(@fd_cidade, 'id', 'nome_cidade',@fd_cidade_setada),{}%>
+        </div>
+  <%else%>
+
+  <div class="field">
+          <%= endereco.label :Cidade %><br>
+          <%= endereco.select :fd_cidade_id,[]%>
+  </div>
+
+ <%end%>
+
+  <%end%>
+  <br>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<script>
+ 
+    function changeState(state){
+        $.ajax({
+          url: '<%= listarCidade_path %>',
+          data : {id : state.value},
+          success: function(data){
+            $('#fd_cliente_fd_endereco_attributes_fd_cidade_id').empty();
+            $('#fd_cliente_fd_endereco_attributes_fd_cidade_id').html('<option>Carregando...</option>');
+            $('#fd_cliente_fd_endereco_attributes_fd_cidade_id').attr('disabled', 'disabled');
+            var options = "";
+            for (var i in data) {
+              var item = data[i];
+              options += "<option value='"+item.id+"'>"+item.name+"</option>"
+            };
+   
+            $('#fd_cliente_fd_endereco_attributes_fd_cidade_id').html(options);
+            $('#fd_cliente_fd_endereco_attributes_fd_cidade_id').removeAttr('disabled');          
+          }
+        })
+      }
+  </script>

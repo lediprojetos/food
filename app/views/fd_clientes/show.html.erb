@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome cliente:</strong>
+  <%= @fd_cliente.nome_cliente %>
+</p>
+
+<p>
+  <strong>Desc sexo:</strong>
+  <%= @fd_cliente.desc_sexo %>
+</p>
+
+<p>
+  <strong>Desc celular:</strong>
+  <%= @fd_cliente.desc_celular %>
+</p>
+
+<p>
+  <strong>Desc telefone:</strong>
+  <%= @fd_cliente.desc_telefone %>
+</p>
+
+<p>
+  <strong>Desc email:</strong>
+  <%= @fd_cliente.desc_email %>
+</p>
+
+<p>
+  <strong>Desc cpf:</strong>
+  <%= @fd_cliente.desc_cpf %>
+</p>
+
+<p>
+  <strong>Data nascimento:</strong>
+  <%= @fd_cliente.data_nascimento %>
+</p>
+
+<p>
+  <strong>Data inclusao:</strong>
+  <%= @fd_cliente.data_inclusao %>
+</p>
+
+<p>
+  <strong>Fd empresa:</strong>
+  <%= @fd_cliente.fd_empresa %>
+</p>
+
+<p>
+  <strong>Fd endereco:</strong>
+  <%= @fd_cliente.fd_endereco %>
+</p>
+
+<%= link_to 'Edit', edit_fd_cliente_path(@fd_cliente) %> |
+<%= link_to 'Back', fd_clientes_path %>

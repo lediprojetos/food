@@ -1,5 +1,7 @@
 Food::Application.routes.draw do
 
+  resources :fd_clientes
+
   root  'static_pages#home'
 
   resources :fd_usuarios

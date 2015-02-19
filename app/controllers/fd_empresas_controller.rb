@@ -1,6 +1,6 @@
 class FdEmpresasController < ApplicationController
   before_action :set_fd_empresa, only: [:show, :edit, :update, :destroy]
-  before_action :requer_logon
+  #before_action :requer_logon
 
   #requer_logon
 

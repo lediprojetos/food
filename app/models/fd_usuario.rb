@@ -1,3 +1,4 @@
 class FdUsuario < ActiveRecord::Base
-  belongs_to :fd_empresas
+  belongs_to :fd_empresa
+
 end

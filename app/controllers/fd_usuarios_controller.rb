@@ -24,6 +24,7 @@ class FdUsuariosController < ApplicationController
 
   # GET /fd_usuarios/1/edit
   def edit
+
   end
 
   # POST /fd_usuarios

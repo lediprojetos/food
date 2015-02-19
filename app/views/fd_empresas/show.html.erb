@@ -1,48 +1,86 @@
 <p id="notice"><%= notice %></p>
 
+
+
 <p>
-  <strong>Desc razaosocial:</strong>
+  <strong>Categoria Empresa:</strong>
+  <%= @fd_empresa.fd_categoriaempresa.nome_categoria %>
+</p>
+
+<p>
+  <strong>Razão Social:</strong>
   <%= @fd_empresa.desc_razaosocial %>
 </p>
 
 <p>
-  <strong>Desc nomefantasia:</strong>
+  <strong>Nome Fantasia:</strong>
   <%= @fd_empresa.desc_nomefantasia %>
 </p>
 
 <p>
-  <strong>Nome responsavel:</strong>
+  <strong>Nome Responsavel:</strong>
   <%= @fd_empresa.nome_responsavel %>
 </p>
 
 <p>
-  <strong>Desc cnpj:</strong>
+  <strong>CNPJ:</strong>
   <%= @fd_empresa.desc_cnpj %>
 </p>
 
 <p>
-  <strong>Desc telefone:</strong>
+  <strong>Telefône Fixo:</strong>
   <%= @fd_empresa.desc_telefone %>
 </p>
 
 <p>
-  <strong>Desc celular:</strong>
+  <strong>Telefône Célular:</strong>
   <%= @fd_empresa.desc_celular %>
 </p>
 
+<h>Endereço</h>
+
+
 <p>
-  <strong>Data inclusao:</strong>
-  <%= @fd_empresa.data_inclusao %>
+  <strong>Bairro:</strong>
+  <%= @fd_empresa.fd_endereco.nome_bairro %>
 </p>
 
 <p>
-  <strong>Fd endereco:</strong>
-  <%= @fd_empresa.fd_endereco %>
+  <strong>Rua:</strong>
+  <%= @fd_empresa.fd_endereco.nome_rua %>
 </p>
 
 <p>
-  <strong>Fd categoriaempresa:</strong>
-  <%= @fd_empresa.fd_categoriaempresa %>
+  <strong>Quadra:</strong>
+  <%= @fd_empresa.fd_endereco.numr_quadra %>
+</p>
+
+<p>
+  <strong>Complemento:</strong>
+  <%= @fd_empresa.fd_endereco.desc_complemento %>
+</p>
+
+<p>
+  <strong>Ponto Referencia:</strong>
+  <%= @fd_empresa.fd_endereco.desc_pontoreferencia %>
+</p>
+
+
+<p>
+  <strong>CEP:</strong>
+  <%= @fd_empresa.fd_endereco.numr_cep %>
+</p>
+
+
+<p>
+  <strong>Estado:</strong>
+  <%= @fd_empresa.fd_endereco.fd_cidade.fd_estado.nome_estado %>
+</p>
+
+
+<p>
+  <strong>Cidade:</strong>
+  <%= @fd_empresa.fd_endereco.fd_cidade.nome_cidade %>
 </p>
 
 <%= link_to 'Edit', edit_fd_empresa_path(@fd_empresa) %> |

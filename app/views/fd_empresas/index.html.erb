@@ -21,7 +21,7 @@
         <td><%= fd_empresa.desc_nomefantasia %></td>
         <td><%= fd_empresa.nome_responsavel %></td>
         <td><%= fd_empresa.desc_cnpj %></td>
-        <td><%= fd_empresa.fd_categoriaempresa %></td>
+        <td><%= fd_empresa.fd_categoriaempresa.nome_categoria %></td>
         <td><%= link_to 'Exibir', fd_empresa %></td>
         <td><%= link_to 'Editar', edit_fd_empresa_path(fd_empresa) %></td>
         <td><%= link_to 'Deletar', fd_empresa, method: :delete, data: { confirm: 'Deseja Excluir?' } %></td>

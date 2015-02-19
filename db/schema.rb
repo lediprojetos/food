@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150218194533) do
+ActiveRecord::Schema.define(version: 20150219080028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,24 @@ ActiveRecord::Schema.define(version: 20150218194533) do
   end
 
   add_index "fd_cidades", ["fd_estado_id"], name: "index_fd_cidades_on_fd_estado_id", using: :btree
+
+  create_table "fd_clientes", force: true do |t|
+    t.string   "nome_cliente"
+    t.string   "desc_sexo"
+    t.string   "desc_celular"
+    t.string   "desc_telefone"
+    t.string   "desc_email"
+    t.string   "desc_cpf"
+    t.date     "data_nascimento"
+    t.datetime "data_inclusao"
+    t.integer  "fd_empresa_id"
+    t.integer  "fd_endereco_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_clientes", ["fd_empresa_id"], name: "index_fd_clientes_on_fd_empresa_id", using: :btree
+  add_index "fd_clientes", ["fd_endereco_id"], name: "index_fd_clientes_on_fd_endereco_id", using: :btree
 
   create_table "fd_empresas", force: true do |t|
     t.string   "desc_razaosocial"
@@ -56,12 +74,12 @@ ActiveRecord::Schema.define(version: 20150218194533) do
     t.string   "desc_pontoreferencia"
     t.string   "numr_cep"
     t.datetime "data_inclusao"
-    t.integer  "fd_endereco_id"
+    t.integer  "fd_cidade_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "fd_enderecos", ["fd_endereco_id"], name: "index_fd_enderecos_on_fd_endereco_id", using: :btree
+  add_index "fd_enderecos", ["fd_cidade_id"], name: "index_fd_enderecos_on_fd_cidade_id", using: :btree
 
   create_table "fd_estados", force: true do |t|
     t.string   "nome_estado"
