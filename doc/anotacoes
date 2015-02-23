@@ -1,0 +1,19 @@
+#Matéria sobre internacionalização
+http://www.akitaonrails.com/2012/07/14/internationalizacao-i18n-minima-em-rails-3-2-parte-1#.VOchJfnF_wo
+http://perludum.blogspot.com.br/2011/02/aplicando-localizacao-pt-br-no-ruby-on.html
+
+#Exemplo de formatação
+
+<dl>
+  <dt>Number to Currency</dt>
+  <dd><%= number_to_currency(123.56) %></dd>
+
+  <dt>Number to Human</dt>
+  <dd><%= number_to_human(100_555_123.15) %></dd>
+
+  <dt>Date</dt>
+  <dd><%=l Time.current, format: :long %></dd>
+
+  <dt>Time</dt>
+  <dd><%= distance_of_time_in_words(1.hour + 20.minutes) %></dd>
+</dl>

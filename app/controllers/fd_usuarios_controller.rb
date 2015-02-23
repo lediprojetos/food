@@ -61,6 +61,6 @@ class FdUsuariosController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fd_usuario_params
-      params.require(:fd_usuario).permit(:desc_nome, :desc_login, :desc_senha, :data_inclusao, :desc_perfil, :fd_empresas_id)
+      params.require(:fd_usuario).permit(:desc_nome, :desc_login, :desc_senha, :desc_confirmasenha, :desc_confirmalogin, :data_inclusao, :desc_perfil, :fd_empresas_id)
     end
 end
