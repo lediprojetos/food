@@ -4,7 +4,22 @@ class FdMesasController < ApplicationController
 
   # GET /fd_mesas
   def index
+
+   if params[:q]
+      @fd_mesa = FdMesa.new
+      @fd_mesa.numr_mesa = params[:q]
+      @fd_mesa.flag_mesaaberta = true
+      @fd_mesa.user_exclusao = user.id
+      @fd_mesa.save           
+   end
+
     @fd_mesas = FdMesa.all
+   #debugger
+    if not @fd_mesas.first == nil
+      @numr_mesa =  @fd_mesas.maximum("numr_mesa") + 1
+    else
+      @numr_mesa = 1
+    end
   end
 
   # GET /fd_mesas/1

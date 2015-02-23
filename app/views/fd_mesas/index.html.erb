@@ -1,13 +1,24 @@
-<h1>Listing fd_mesas</h1>
 
-<table>
+<%= form_tag nil, method: 'GET' do %>
+  <label >N° Mesa</label><br>
+  <div class="row">
+    <div class="col-lg-2">
+      <div class="input-group">
+        <input id="q" name="q" type="text" value ="<%=@numr_mesa%>"class="form-control" placeholder="N° mesa">
+        <span class="input-group-btn">
+          <button class="btn btn-success" type="submit" >+</button>
+        </span>
+      </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+  </div><!-- /.row -->
+  <br />  
+<% end %>
+
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Numr mesa</th>
-      <th>Desc mesa</th>
-      <th>Flag mesaaberta</th>
-      <th>Fd empresa</th>
-      <th>Fd usuario</th>
+      <th>N° Mesa</th>
+      <th>Situação Mesa</th>
       <th></th>
       <th></th>
       <th></th>
@@ -17,14 +28,15 @@
   <tbody>
     <% @fd_mesas.each do |fd_mesa| %>
       <tr>
-        <td><%= fd_mesa.numr_mesa %></td>
-        <td><%= fd_mesa.desc_mesa %></td>
-        <td><%= fd_mesa.flag_mesaaberta %></td>
-        <td><%= fd_mesa.fd_empresa %></td>
-        <td><%= fd_mesa.fd_usuario %></td>
-        <td><%= link_to 'Show', fd_mesa %></td>
-        <td><%= link_to 'Edit', edit_fd_mesa_path(fd_mesa) %></td>
-        <td><%= link_to 'Destroy', fd_mesa, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= fd_mesa.numr_mesa %></td> 
+        <%if fd_mesa.flag_mesaaberta%>
+           <td>Livre</td>
+        <%else%>
+           <td>Ocupada</td>
+        <%end%>   
+        <td><%= link_to 'Exibir', fd_mesa %></td>
+        <td><%= link_to 'Editar', edit_fd_mesa_path(fd_mesa) %></td>
+        <td><%= link_to 'Deletar', fd_mesa, method: :delete, data: { confirm: 'Deseja Excluir?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -32,4 +44,3 @@
 
 <br>
 
-<%= link_to 'New Fd mesa', new_fd_mesa_path %>
