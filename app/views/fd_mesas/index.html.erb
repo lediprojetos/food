@@ -1,3 +1,9 @@
+<%if notice %>
+  <div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     <%= notice %>
+</div>
+<%end%>
 
 <%= form_tag nil, method: 'GET' do %>
   <label >N° Mesa</label><br>
@@ -20,8 +26,6 @@
       <th>N° Mesa</th>
       <th>Situação Mesa</th>
       <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -34,8 +38,6 @@
         <%else%>
            <td>Ocupada</td>
         <%end%>   
-        <td><%= link_to 'Exibir', fd_mesa %></td>
-        <td><%= link_to 'Editar', edit_fd_mesa_path(fd_mesa) %></td>
         <td><%= link_to 'Deletar', fd_mesa, method: :delete, data: { confirm: 'Deseja Excluir?' } %></td>
       </tr>
     <% end %>

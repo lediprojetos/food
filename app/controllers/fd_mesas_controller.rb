@@ -6,17 +6,29 @@ class FdMesasController < ApplicationController
   def index
 
    if params[:q]
-      @fd_mesa = FdMesa.new
-      @fd_mesa.numr_mesa = params[:q]
-      @fd_mesa.flag_mesaaberta = true
-      @fd_mesa.user_exclusao = user.id
-      @fd_mesa.save           
+
+     @fd_mesa = FdMesa.where(numr_mesa: params[:q].to_i, fd_empresa_id: user.fd_empresa_id)  
+     
+    #debugger
+
+     if @fd_mesa.first == nil
+        @fd_mesa = FdMesa.new
+        @fd_mesa.numr_mesa = params[:q]
+        @fd_mesa.flag_mesaaberta = true
+        @fd_mesa.user_exclusao = user.id
+        @fd_mesa.fd_empresa_id = user.fd_empresa_id
+       @fd_mesa.save 
+
+     else
+       @fd_mesa = FdMesa.new
+       redirect_to @fd_mesa, notice: "Mesa #{params[:q]} já está cadastrada "
+     end
    end
 
-    @fd_mesas = FdMesa.all
+    @fd_mesas = FdMesa.order('numr_mesa ASC').all
    #debugger
     if not @fd_mesas.first == nil
-      @numr_mesa =  @fd_mesas.maximum("numr_mesa") + 1
+      @numr_mesa =  @fd_mesas.last.numr_mesa + 1
     else
       @numr_mesa = 1
     end
@@ -37,6 +49,7 @@ class FdMesasController < ApplicationController
 
   # POST /fd_mesas
   def create
+
     @fd_mesa = FdMesa.new(fd_mesa_params)
 
     if @fd_mesa.save
