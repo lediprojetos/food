@@ -1,0 +1,29 @@
+<%= form_for(@fd_categoriaproduto) do |f| %>
+  <% if @fd_categoriaproduto.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_categoriaproduto.errors.count, "error") %> prohibited this fd_categoriaproduto from being saved:</h2>
+
+      <ul>
+      <% @fd_categoriaproduto.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+<div class="row mar-bot40">
+  <div class="col-lg-3" >
+    <%= f.label :Categoria %><br>
+    <%= f.text_field :desc_categoria, :class => "form-control" %>
+  </div>
+</div>
+
+<hr/>
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn">
+    </span> Salvar
+  </button>  
+
+<% end %>

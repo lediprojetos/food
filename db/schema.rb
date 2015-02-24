@@ -11,13 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150219153712) do
+ActiveRecord::Schema.define(version: 20150224155950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "fd_categoriaempresas", force: true do |t|
     t.string   "nome_categoria"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fd_categoriaprodutos", force: true do |t|
+    t.string   "desc_categoria"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -103,18 +109,33 @@ ActiveRecord::Schema.define(version: 20150219153712) do
 
   add_index "fd_mesas", ["fd_empresa_id"], name: "index_fd_mesas_on_fd_empresa_id", using: :btree
 
+  create_table "fd_produtos", force: true do |t|
+    t.integer  "fd_empresa_id"
+    t.integer  "fd_categoriaproduto_id"
+    t.integer  "fd_usuario_id"
+    t.string   "nome_produto"
+    t.string   "desc_produto"
+    t.decimal  "valr_produto"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_produtos", ["fd_categoriaproduto_id"], name: "index_fd_produtos_on_fd_categoriaproduto_id", using: :btree
+  add_index "fd_produtos", ["fd_empresa_id"], name: "index_fd_produtos_on_fd_empresa_id", using: :btree
+  add_index "fd_produtos", ["fd_usuario_id"], name: "index_fd_produtos_on_fd_usuario_id", using: :btree
+
   create_table "fd_usuarios", force: true do |t|
     t.string   "desc_nome"
     t.string   "desc_login"
     t.string   "desc_senha"
     t.datetime "data_inclusao"
     t.string   "desc_perfil"
-    t.integer  "fd_empresas_id"
+    t.integer  "fd_empresa_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "fd_usuarios", ["fd_empresas_id"], name: "index_fd_usuarios_on_fd_empresas_id", using: :btree
+  add_index "fd_usuarios", ["fd_empresa_id"], name: "index_fd_usuarios_on_fd_empresa_id", using: :btree
 
   create_table "sessions", force: true do |t|
     t.string   "session_id", null: false

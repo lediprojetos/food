@@ -1,0 +1,37 @@
+<h1>Listing fd_produtos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fd empresas</th>
+      <th>Fd categoriaprodutos</th>
+      <th>Fd usuarios</th>
+      <th>Nome produto</th>
+      <th>Desc produto</th>
+      <th>Valr produto</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_produtos.each do |fd_produto| %>
+      <tr>
+        <td><%= fd_produto.fd_empresas %></td>
+        <td><%= fd_produto.fd_categoriaprodutos %></td>
+        <td><%= fd_produto.fd_usuarios %></td>
+        <td><%= fd_produto.nome_produto %></td>
+        <td><%= fd_produto.desc_produto %></td>
+        <td><%= fd_produto.valr_produto %></td>
+        <td><%= link_to 'Show', fd_produto %></td>
+        <td><%= link_to 'Edit', edit_fd_produto_path(fd_produto) %></td>
+        <td><%= link_to 'Destroy', fd_produto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd produto', new_fd_produto_path %>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fd empresas:</strong>
+  <%= @fd_produto.fd_empresas %>
+</p>
+
+<p>
+  <strong>Fd categoriaprodutos:</strong>
+  <%= @fd_produto.fd_categoriaprodutos %>
+</p>
+
+<p>
+  <strong>Fd usuarios:</strong>
+  <%= @fd_produto.fd_usuarios %>
+</p>
+
+<p>
+  <strong>Nome produto:</strong>
+  <%= @fd_produto.nome_produto %>
+</p>
+
+<p>
+  <strong>Desc produto:</strong>
+  <%= @fd_produto.desc_produto %>
+</p>
+
+<p>
+  <strong>Valr produto:</strong>
+  <%= @fd_produto.valr_produto %>
+</p>
+
+<%= link_to 'Edit', edit_fd_produto_path(@fd_produto) %> |
+<%= link_to 'Back', fd_produtos_path %>

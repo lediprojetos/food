@@ -1,5 +1,9 @@
 Food::Application.routes.draw do
 
+  resources :fd_produtos
+
+  resources :fd_categoriaprodutos
+
   resources :fd_mesas
 
   resources :fd_clientes

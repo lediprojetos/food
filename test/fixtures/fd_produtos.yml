@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fd_empresas_id: 
+  fd_categoriaprodutos_id: 
+  fd_usuarios_id: 
+  nome_produto: MyString
+  desc_produto: MyString
+  valr_produto: 9.99
+
+two:
+  fd_empresas_id: 
+  fd_categoriaprodutos_id: 
+  fd_usuarios_id: 
+  nome_produto: MyString
+  desc_produto: MyString
+  valr_produto: 9.99

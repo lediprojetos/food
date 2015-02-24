@@ -124,25 +124,19 @@
 </div>
 
   <!--Capturando usuario logado-->
-  <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresas_id%> 
+  <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
 
 <%end%>
-  <br>
 
-<div class="btn-group">
+<hr/>
 
-  <button type="submit" class="btn btn-default btn">
-    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
-  </button>
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn">
+    </span> Salvar
+  </button>  
 
-  <%= yield(:iconexibir) %>
-
-  <%= link_to fd_clientes_path, :class => "btn btn-default" do %>
-    <span class="glyphicon glyphicon-arrow-left"></span> Voltar
-  <% end %>
-
-</div>
 <% end %>
+
 
 <script>
  

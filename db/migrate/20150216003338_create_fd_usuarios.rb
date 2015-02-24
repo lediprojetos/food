@@ -6,7 +6,7 @@ class CreateFdUsuarios < ActiveRecord::Migration
       t.string :desc_senha
       t.datetime :data_inclusao
       t.string :desc_perfil
-      t.references :fd_empresas, index: true
+      t.references :fd_empresa, index: true
 
       t.timestamps
     end

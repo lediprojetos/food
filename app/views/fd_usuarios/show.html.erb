@@ -1,5 +1,10 @@
 <p id="notice"><%= notice %></p>
 
+<div class="page-header">
+  <h1>Exibir Usuários</h1>
+</div>
+
+
 <p>
   <strong>Desc nome:</strong>
   <%= @fd_usuario.desc_nome %>
@@ -30,5 +35,20 @@
   <%#= @fd_usuario.fd_empresas %>
 </p>
 
-<%= link_to 'Edit', edit_fd_usuario_path(@fd_usuario) %> |
-<%= link_to 'Back', fd_usuarios_path %>
+
+<hr/>
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn">
+    </span> Salvar
+  </button>  
+
+  <%= link_to  edit_fd_usuario_path(@fd_usuario), :class => "btn btn-default" do %>
+    Editar
+  <% end %>
+
+  <%= link_to  fd_usuarios_path, :class => "btn btn-default" do %>
+    Voltar
+  <% end %>  
+
+</div>
