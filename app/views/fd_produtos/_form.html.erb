@@ -11,31 +11,30 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :fd_empresas_id %><br>
-    <%= f.text_field :fd_empresas_id %>
+<div class="row mar-bot40">
+  <div class="col-lg-3" >
+    <%= f.label :Categoria %><br>
+    <%= f.select :fd_categoriaproduto_id, options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria',@fd_produto.fd_categoriaproduto_id), {:include_blank => true}, {:class => 'form-control' }%>
   </div>
-  <div class="field">
-    <%= f.label :fd_categoriaprodutos_id %><br>
-    <%= f.text_field :fd_categoriaprodutos_id %>
+  <div class="col-lg-3" >
+    <%= f.label :Nome %><br>
+    <%= f.text_field :nome_produto, :class => "form-control" %>
   </div>
-  <div class="field">
-    <%= f.label :fd_usuarios_id %><br>
-    <%= f.text_field :fd_usuarios_id %>
+  <div class="col-lg-3" >
+    <%= f.label :Descrição %><br>
+    <%= f.text_field :desc_produto, :class => "form-control" %>
   </div>
-  <div class="field">
-    <%= f.label :nome_produto %><br>
-    <%= f.text_field :nome_produto %>
+  <div class="col-lg-3" >
+    <%= f.label :Valor %><br>
+    <%= f.text_field :valr_produto, :class => "form-control" %>
   </div>
-  <div class="field">
-    <%= f.label :desc_produto %><br>
-    <%= f.text_field :desc_produto %>
-  </div>
-  <div class="field">
-    <%= f.label :valr_produto %><br>
-    <%= f.text_field :valr_produto %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+</div>
+<hr/>
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn">
+    </span> Salvar
+  </button>  
+
 <% end %>
+
+
