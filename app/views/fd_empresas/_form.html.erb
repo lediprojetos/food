@@ -11,94 +11,129 @@
     </div>
   <% end %>
 
-  <div class="field">
+<div class="row mar-bot40">
+ <div class="col-lg-1">
+ </div>
+  <div class="col-lg-4">
     <%= f.label :Categoria %><br>
-    <%= f.select :fd_categoriaempresa_id, options_from_collection_for_select(FdCategoriaempresa.all, 'id','nome_categoria',@fd_empresa.fd_categoriaempresa_id)%>
+    <%= f.select :fd_categoriaempresa_id, options_from_collection_for_select(FdCategoriaempresa.all, 'id','nome_categoria',@fd_empresa.fd_categoriaempresa_id), {}, {:class => 'form-control'}%>
   </div>
-
-  <div class="field">
+  <div class="col-lg-6">
     <%= f.label :Razao_Social %><br>
-    <%= f.text_field :desc_razaosocial %>
+    <%= f.text_field :desc_razaosocial, :class => 'form-control' %>
   </div>
-  <div class="field">
+</div>
+</br>
+<div class="row mar-bot40">
+  <div class="col-lg-1">
+ </div>
+  <div class="col-lg-5">
     <%= f.label :Nome_Fantasia %><br>
-    <%= f.text_field :desc_nomefantasia %>
+    <%= f.text_field :desc_nomefantasia, :class => 'form-control' %>
   </div>
-  <div class="field">
+  <div class="col-lg-5">
     <%= f.label :nome_responsavel %><br>
-    <%= f.text_field :nome_responsavel %>
+    <%= f.text_field :nome_responsavel, :class => 'form-control' %>
   </div>
-  <div class="field">
+</div>
+<br>
+<div class="row mar-bot40">
+ <div class="col-lg-1">
+ </div> 
+  <div class="col-lg-3">
     <%= f.label :CNPJ %><br>
-    <%= f.text_field :desc_cnpj %>
+    <%= f.text_field :desc_cnpj, :class => 'form-control' %>
   </div>
-  <div class="field">
+  <div class="col-lg-3">
     <%= f.label :Telefone_Fixo %><br>
-    <%= f.text_field :desc_telefone %>
+    <%= f.text_field :desc_telefone, :class => 'form-control' %>
   </div>
-  <div class="field">
+  <div class="col-lg-3">
     <%= f.label :Telefone_Celular %><br>
-    <%= f.text_field :desc_celular %>
+    <%= f.text_field :desc_celular, :class => 'form-control' %>
   </div>
+</div>
 
- <h>Endereço</h>
+ <div class="row mar-bot40">
+  <div class="col-lg-1">
+  </div>
+<div class="col-lg-2">
+  <h4>Endereço</h4>
+ </div>
+ </div>
  <br>
 
-
-  <%=  f.fields_for :fd_endereco do |endereco| %>
-  
-
-  <div class="field">
-    <%= endereco.label :nome_bairro %><br>
-    <%= endereco.text_field :nome_bairro %>
+<%=  f.fields_for :fd_endereco do |endereco| %>
+ <div class="row mar-bot40">  
+    <div class="col-lg-1">
+    </div>
+    <div class="col-lg-4">
+      <%= endereco.label :nome_bairro %><br>
+      <%= endereco.text_field :nome_bairro, :class => 'form-control' %>
+    </div>
+    <div class="col-lg-4">
+      <%= endereco.label :nome_rua %><br>
+      <%= endereco.text_field :nome_rua, :class => 'form-control' %>
+    </div>
+    <div class="col-lg-2">
+      <%= endereco.label :Quadra %><br>
+      <%= endereco.text_field :numr_quadra, :class => 'form-control' %>
+    </div>
+</div>
+<br>
+ <div class="row mar-bot40">
+  <div class="col-lg-1">
   </div>
-  <div class="field">
-    <%= endereco.label :nome_rua %><br>
-    <%= endereco.text_field :nome_rua %>
-  </div>
-  <div class="field">
-    <%= endereco.label :Quadra %><br>
-    <%= endereco.text_field :numr_quadra %>
-  </div>
-  <div class="field">
+  <div class="col-lg-5">
     <%= endereco.label :Complemento %><br>
-    <%= endereco.text_field :desc_complemento %>
+    <%= endereco.text_field :desc_complemento, :class => 'form-control' %>
   </div>
-  <div class="field">
+  <div class="col-lg-3">
     <%= endereco.label :Ponto_referencia %><br>
-    <%= endereco.text_field :desc_pontoreferencia %>
+    <%= endereco.text_field :desc_pontoreferencia, :class => 'form-control' %>
   </div>
-  <div class="field">
+  <div class="col-lg-2">
     <%= endereco.label :CEP %><br>
-    <%= endereco.text_field :numr_cep %>
+    <%= endereco.text_field :numr_cep, :class => 'form-control' %>
   </div>
-
+</div>
+<br>
+<div class="row mar-bot40">
+  <div class="col-lg-1">
+  </div>
   <%=  f.fields_for :fd_estado do |estado| %>
-      <div class="field">
+      <div class="col-lg-4">
         <%= estado.label :Estado %><br>
-        <%= estado.select :fd_estado_id, options_from_collection_for_select(FdEstado.all, 'id', 'nome_estado',@fd_estado), {:include_blank => true}, {:onchange => 'changeState(this)'}%>
+        <%= estado.select :fd_estado_id, options_from_collection_for_select(FdEstado.all, 'id', 'nome_estado',@fd_estado), {:include_blank => true}, {:onchange => 'changeState(this)', :class => 'form-control' }%>
       </div>
   <%end%>
-  <br>
   <%if @fd_cidade %>
-        <div class="field">
+        <div class="col-lg-4">
           <%= endereco.label :Cidade %>
-          <%= endereco.select :fd_cidade_id, options_from_collection_for_select(@fd_cidade, 'id', 'nome_cidade',@fd_cidade_setada),{}%>
+          <%= endereco.select :fd_cidade_id, options_from_collection_for_select(@fd_cidade, 'id', 'nome_cidade',@fd_cidade_setada),{}, :class => 'form-control'%>
         </div>
   <%else%>
 
-  <div class="field">
+  <div class="col-lg-4">
           <%= endereco.label :Cidade %><br>
-          <%= endereco.select :fd_cidade_id,[]%>
+          <%= endereco.select :fd_cidade_id, [], {}, :class => 'form-control'%>
   </div>
 
  <%end%>
+</div>
 
-  <%end%>
-  <br>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <!--Capturando usuario logado-->
+  <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
+
+<%end%>
+
+<hr/>
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn">
+    </span> Salvar
+</button>  
+
 <% end %>
 
 

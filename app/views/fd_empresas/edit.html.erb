@@ -2,5 +2,10 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Exibir', @fd_empresa %> |
-<%= link_to 'Voltar', fd_empresas_path %>
+
+ <%= link_to @fd_empresa, :class => "btn btn-default" do %>
+    <span></span> Exibir
+ <% end %>
+ <%= link_to fd_empresas_path, :class => "btn btn-default" do %>
+    <span aria-hidden="true">&larr;</span> Voltar
+ <% end %>

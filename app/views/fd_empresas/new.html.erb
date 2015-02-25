@@ -1,5 +1,11 @@
-<h1>Nova Empresa</h1>
+<div class="page-header">
+  <h1>Empresa</h1>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to 'Voltar', fd_empresas_path %>
+  <%= link_to fd_empresas_path, :class => "btn btn-default" do %>
+    <span aria-hidden="true">&larr;</span> Voltar
+  <% end %>
+
+</div>
