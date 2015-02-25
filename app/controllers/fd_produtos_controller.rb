@@ -53,6 +53,6 @@ class FdProdutosController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fd_produto_params
-      params.require(:fd_produto).permit(:fd_empresas_id, :fd_categoriaprodutos_id, :fd_usuarios_id, :nome_produto, :desc_produto, :valr_produto)
+      params.require(:fd_produto).permit(:fd_empresa_id, :fd_categoriaproduto_id, :fd_usuario_id, :nome_produto, :desc_produto, :valr_produto)
     end
 end

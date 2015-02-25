@@ -1,11 +1,11 @@
-<h1>Listing fd_produtos</h1>
+<div class="page-header">
+  <h1>Listar Produtos</h1>
+</div>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Fd empresas</th>
       <th>Fd categoriaprodutos</th>
-      <th>Fd usuarios</th>
       <th>Nome produto</th>
       <th>Desc produto</th>
       <th>Valr produto</th>
@@ -18,9 +18,7 @@
   <tbody>
     <% @fd_produtos.each do |fd_produto| %>
       <tr>
-        <td><%= fd_produto.fd_empresas %></td>
-        <td><%= fd_produto.fd_categoriaprodutos %></td>
-        <td><%= fd_produto.fd_usuarios %></td>
+        <td><%= fd_produto.fd_categoriaproduto.desc_categoria %></td>
         <td><%= fd_produto.nome_produto %></td>
         <td><%= fd_produto.desc_produto %></td>
         <td><%= fd_produto.valr_produto %></td>
@@ -34,4 +32,6 @@
 
 <br>
 
-<%= link_to 'New Fd produto', new_fd_produto_path %>
+<%= link_to new_fd_produto_path, :class => "btn btn-default" do %>
+   Novo
+<% end %>  

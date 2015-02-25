@@ -1,6 +1,15 @@
-<h1>Editing fd_produto</h1>
+<div class="page-header">
+	<h1>Editar Produtos</h1>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @fd_produto %> |
-<%= link_to 'Back', fd_produtos_path %>
+  <%= link_to @fd_produto , :class => "btn btn-default" do %>
+     Exibir
+  <% end %>
+
+  <%= link_to fd_produtos_path, :class => "btn btn-default" do %>
+     Voltar
+  <% end %>  
+
+</div>

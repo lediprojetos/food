@@ -1,7 +1,21 @@
-<h1>Editing fd_usuario</h1>
+<div class="page-header">
+	<h1>Editar Usuários</h1>
+</div>
 
 <%= render 'form' %>
 
+<<<<<<< HEAD
 <%= link_to 'Show', @fd_usuario %> |
 <%= link_to 'Back', fd_usuarios_path %>
 
+=======
+  <%= link_to @fd_usuario , :class => "btn btn-default" do %>
+     Exibir
+  <% end %>
+
+  <%= link_to fd_usuarios_path, :class => "btn btn-default" do %>
+     Voltar
+  <% end %>  
+
+</div>
+>>>>>>> 9e02058100284f559b37dd4b38460b04973a5307
