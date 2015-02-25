@@ -1,0 +1,2 @@
+module StaticPedidosHelper
+end
