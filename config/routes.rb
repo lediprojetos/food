@@ -24,6 +24,8 @@ Food::Application.routes.draw do
   match '/logoff', to: 'fd_autentication#logoff', via: 'get'
 
   match '/tipo_pedido', to: 'static_pedidos#tipo_pedido', via: 'get'
+  match '/lista_mesas', to: 'static_pedidos#lista_mesas', via: 'get'
+  match '/pedidos', to: 'static_pedidos#pedidos', via: 'get'
 
 
 end

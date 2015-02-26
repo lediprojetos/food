@@ -1,0 +1,33 @@
+
+<%cont = 0%>
+<div class="well"><label>Mesas<label></div>
+
+<div class="row mar-bot40">
+
+	<% @fd_mesa.each do |fd_mesa| %>
+
+	<div class="col-lg-2" >
+		<button type="button" class="btn btn-default btn-lg ">
+
+		<%if fd_mesa.flag_mesaaberta == true%>
+		 	<%= image_tag ("table_open.png")%>
+	 	<%else%>
+		 	<%= image_tag ("table_close.png")%>
+	 	<%end%>
+
+		 <br/> Mesa <%=fd_mesa.numr_mesa%>
+		</button>
+	</div>
+
+	<%cont = (cont + 1)%>
+	<%if cont == 6 %>
+		</div>
+		<br/>
+		<div class="row mar-bot40">
+		<%cont = 0%>
+	<%end%>
+	<% end %>	
+
+</div>
+
+
