@@ -1,5 +1,13 @@
 Food::Application.routes.draw do
 
+  resources :fd_itensadicionals
+
+  resources :fd_items
+
+  resources :fd_funcionarios
+
+  resources :fd_cargos
+
   resources :fd_produtos
 
   resources :fd_categoriaprodutos

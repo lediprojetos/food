@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150224155950) do
+ActiveRecord::Schema.define(version: 20150226170422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "fd_cargos", force: true do |t|
+    t.string   "nome_cargo"
+    t.string   "desc_cargo"
+    t.datetime "data_exclusao"
+    t.integer  "fd_empresa_id"
+    t.integer  "user_exclusao"
+    t.integer  "integer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_cargos", ["fd_empresa_id"], name: "index_fd_cargos_on_fd_empresa_id", using: :btree
 
   create_table "fd_categoriaempresas", force: true do |t|
     t.string   "nome_categoria"
@@ -93,6 +106,52 @@ ActiveRecord::Schema.define(version: 20150224155950) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "fd_funcionarios", force: true do |t|
+    t.string   "nome_funcionario"
+    t.string   "desc_telefone"
+    t.string   "desc_celular"
+    t.datetime "data_exclusao"
+    t.integer  "fd_cargo_id"
+    t.integer  "fd_endereco_id"
+    t.integer  "fd_empresa_id"
+    t.integer  "user_inclusao"
+    t.integer  "integer"
+    t.integer  "user_exclusao"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_funcionarios", ["fd_cargo_id"], name: "index_fd_funcionarios_on_fd_cargo_id", using: :btree
+  add_index "fd_funcionarios", ["fd_empresa_id"], name: "index_fd_funcionarios_on_fd_empresa_id", using: :btree
+  add_index "fd_funcionarios", ["fd_endereco_id"], name: "index_fd_funcionarios_on_fd_endereco_id", using: :btree
+
+  create_table "fd_items", force: true do |t|
+    t.string   "desc_item"
+    t.datetime "data_exclusao"
+    t.integer  "fd_empresa_id"
+    t.integer  "user_inclusao"
+    t.integer  "integer"
+    t.integer  "user_exclusao"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_items", ["fd_empresa_id"], name: "index_fd_items_on_fd_empresa_id", using: :btree
+
+  create_table "fd_itensadicionals", force: true do |t|
+    t.integer  "fd_item_id"
+    t.integer  "fd_categoriaproduto_id"
+    t.decimal  "valr_item"
+    t.integer  "user_inclusao"
+    t.integer  "integer"
+    t.integer  "user_exclusao"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_itensadicionals", ["fd_categoriaproduto_id"], name: "index_fd_itensadicionals_on_fd_categoriaproduto_id", using: :btree
+  add_index "fd_itensadicionals", ["fd_item_id"], name: "index_fd_itensadicionals_on_fd_item_id", using: :btree
 
   create_table "fd_mesas", force: true do |t|
     t.integer  "numr_mesa"

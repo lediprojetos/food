@@ -1,0 +1,39 @@
+<h1>Listing fd_funcionarios</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome funcionario</th>
+      <th>Desc telefone</th>
+      <th>Desc celular</th>
+      <th>Data exclusao</th>
+      <th>Fd cargo</th>
+      <th>Fd endereco</th>
+      <th>Fd empresa</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_funcionarios.each do |fd_funcionario| %>
+      <tr>
+        <td><%= fd_funcionario.nome_funcionario %></td>
+        <td><%= fd_funcionario.desc_telefone %></td>
+        <td><%= fd_funcionario.desc_celular %></td>
+        <td><%= fd_funcionario.data_exclusao %></td>
+        <td><%= fd_funcionario.fd_cargo %></td>
+        <td><%= fd_funcionario.fd_endereco %></td>
+        <td><%= fd_funcionario.fd_empresa %></td>
+        <td><%= link_to 'Show', fd_funcionario %></td>
+        <td><%= link_to 'Edit', edit_fd_funcionario_path(fd_funcionario) %></td>
+        <td><%= link_to 'Destroy', fd_funcionario, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd funcionario', new_fd_funcionario_path %>

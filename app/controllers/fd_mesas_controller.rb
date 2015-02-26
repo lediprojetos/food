@@ -15,7 +15,7 @@ class FdMesasController < ApplicationController
         @fd_mesa = FdMesa.new
         @fd_mesa.numr_mesa = params[:q]
         @fd_mesa.flag_mesaaberta = true
-        @fd_mesa.user_exclusao = user.id
+        @fd_mesa.user_inclusao = user.id
         @fd_mesa.fd_empresa_id = user.fd_empresa_id
        @fd_mesa.save 
 

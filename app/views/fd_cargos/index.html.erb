@@ -1,0 +1,33 @@
+<h1>Listing fd_cargos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome cargo</th>
+      <th>Desc cargo</th>
+      <th>Data exclusao</th>
+      <th>Fd empresa</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_cargos.each do |fd_cargo| %>
+      <tr>
+        <td><%= fd_cargo.nome_cargo %></td>
+        <td><%= fd_cargo.desc_cargo %></td>
+        <td><%= fd_cargo.data_exclusao %></td>
+        <td><%= fd_cargo.fd_empresa %></td>
+        <td><%= link_to 'Show', fd_cargo %></td>
+        <td><%= link_to 'Edit', edit_fd_cargo_path(fd_cargo) %></td>
+        <td><%= link_to 'Destroy', fd_cargo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd cargo', new_fd_cargo_path %>

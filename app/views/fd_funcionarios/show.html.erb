@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome funcionario:</strong>
+  <%= @fd_funcionario.nome_funcionario %>
+</p>
+
+<p>
+  <strong>Desc telefone:</strong>
+  <%= @fd_funcionario.desc_telefone %>
+</p>
+
+<p>
+  <strong>Desc celular:</strong>
+  <%= @fd_funcionario.desc_celular %>
+</p>
+
+<p>
+  <strong>Data exclusao:</strong>
+  <%= @fd_funcionario.data_exclusao %>
+</p>
+
+<p>
+  <strong>Fd cargo:</strong>
+  <%= @fd_funcionario.fd_cargo %>
+</p>
+
+<p>
+  <strong>Fd endereco:</strong>
+  <%= @fd_funcionario.fd_endereco %>
+</p>
+
+<p>
+  <strong>Fd empresa:</strong>
+  <%= @fd_funcionario.fd_empresa %>
+</p>
+
+<%= link_to 'Edit', edit_fd_funcionario_path(@fd_funcionario) %> |
+<%= link_to 'Back', fd_funcionarios_path %>

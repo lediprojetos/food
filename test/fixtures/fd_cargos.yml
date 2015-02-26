@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome_cargo: MyString
+  desc_cargo: MyString
+  data_exclusao: 2015-02-26 12:46:14
+  fd_empresa_id: 
+
+two:
+  nome_cargo: MyString
+  desc_cargo: MyString
+  data_exclusao: 2015-02-26 12:46:14
+  fd_empresa_id: 
