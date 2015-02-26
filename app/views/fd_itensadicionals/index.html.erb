@@ -1,0 +1,31 @@
+<h1>Listing fd_itensadicionals</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fd item</th>
+      <th>Fd categoriaproduto</th>
+      <th>Valr item</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_itensadicionals.each do |fd_itensadicional| %>
+      <tr>
+        <td><%= fd_itensadicional.fd_item %></td>
+        <td><%= fd_itensadicional.fd_categoriaproduto %></td>
+        <td><%= fd_itensadicional.valr_item %></td>
+        <td><%= link_to 'Show', fd_itensadicional %></td>
+        <td><%= link_to 'Edit', edit_fd_itensadicional_path(fd_itensadicional) %></td>
+        <td><%= link_to 'Destroy', fd_itensadicional, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd itensadicional', new_fd_itensadicional_path %>

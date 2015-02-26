@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome_funcionario: MyString
+  desc_telefone: MyString
+  desc_celular: MyString
+  data_exclusao: 2015-02-26 13:41:29
+  fd_cargo_id: 
+  fd_endereco_id: 
+  fd_empresa_id: 
+
+two:
+  nome_funcionario: MyString
+  desc_telefone: MyString
+  desc_celular: MyString
+  data_exclusao: 2015-02-26 13:41:29
+  fd_cargo_id: 
+  fd_endereco_id: 
+  fd_empresa_id: 

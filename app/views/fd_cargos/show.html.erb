@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome cargo:</strong>
+  <%= @fd_cargo.nome_cargo %>
+</p>
+
+<p>
+  <strong>Desc cargo:</strong>
+  <%= @fd_cargo.desc_cargo %>
+</p>
+
+<p>
+  <strong>Data exclusao:</strong>
+  <%= @fd_cargo.data_exclusao %>
+</p>
+
+<p>
+  <strong>Fd empresa:</strong>
+  <%= @fd_cargo.fd_empresa %>
+</p>
+
+<%= link_to 'Edit', edit_fd_cargo_path(@fd_cargo) %> |
+<%= link_to 'Back', fd_cargos_path %>

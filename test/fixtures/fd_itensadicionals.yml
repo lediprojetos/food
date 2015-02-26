@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fd_item_id: 
+  fd_categoriaproduto_id: 
+  valr_item: 9.99
+
+two:
+  fd_item_id: 
+  fd_categoriaproduto_id: 
+  valr_item: 9.99

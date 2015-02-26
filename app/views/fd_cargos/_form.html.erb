@@ -1,0 +1,33 @@
+<%= form_for(@fd_cargo) do |f| %>
+  <% if @fd_cargo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_cargo.errors.count, "error") %> prohibited this fd_cargo from being saved:</h2>
+
+      <ul>
+      <% @fd_cargo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nome_cargo %><br>
+    <%= f.text_field :nome_cargo %>
+  </div>
+  <div class="field">
+    <%= f.label :desc_cargo %><br>
+    <%= f.text_field :desc_cargo %>
+  </div>
+  <div class="field">
+    <%= f.label :data_exclusao %><br>
+    <%= f.datetime_select :data_exclusao %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_empresa_id %><br>
+    <%= f.text_field :fd_empresa_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
