@@ -2,18 +2,18 @@
   <div class="col-lg-8">
     <div class="tabbable">
       <ul class="nav nav-tabs">
-        <li class="active">
+        <li >
           <a href="#tab1" data-toggle="tab">Pedido</a>
         </li>
-        <li>
+        <li class="active">
           <a href="#tab2" data-toggle="tab">Produtos</a>
         </li>
         <li>
-          <a href="#tab2" data-toggle="tab">Serviços</a>
+          <a href="#tab3" data-toggle="tab">Serviços</a>
         </li>               
       </ul>
       <div class="tab-content">
-        <div class="tab-pane active" id="tab1">
+        <div class="tab-pane" id="tab1">
           <br/>
           <div class="panel panel-default">
             <div class="panel-heading"><strong>Mesa 04</strong></div>
@@ -32,8 +32,8 @@
                     <td>R$ 25,00 </td>
                     <td align="right">
                       <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default">Excluir</button>
-                        <button type="button" class="btn btn-default">Alterar</button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                       </div>                    
                     </td>
                   </tr>
@@ -42,8 +42,8 @@
                     <td>R$ 5,00</td>
                     <td align="right">
                       <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default">Excluir</button>
-                        <button type="button" class="btn btn-default">Alterar</button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                       </div>                    
                     </td>
                   </tr>
@@ -52,8 +52,8 @@
                     <td>R$ 3,00 </td>
                     <td align="right">
                       <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default">Excluir</button>
-                        <button type="button" class="btn btn-default">Alterar</button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                       </div>                    
                     </td>
                   </tr>                                
@@ -61,12 +61,110 @@
               </table>
             </div>
           </div>
-        <div class="tab-pane" id="tab2">
-            
+        <div class="tab-pane active" id="tab2">
+          <br/>
+          <div class="row mar-bot40">
+            <div class="col-lg-4">
+
+              <select class="form-control">
+                <option>Pizzas</option>
+                <option>Sanduiches</option>
+                <option>Bebidas</option>
+              </select>
+
+            </div>
+          </div>
+          <br/>
+          <div class="panel panel-default">
+            <div class="panel-heading"><strong>Pizzas</strong></div>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>À Moda</td>
+                    <td>R$ 25,00 </td>
+                    <td align="right">
+                      <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                      </div>                    
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Calabresa</td>
+                    <td>R$ 25,00</td>
+                    <td align="right">
+                      <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                      </div>                    
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Portuguesa</td>
+                    <td>R$ 25,00 </td>
+                    <td align="right">
+                      <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                      </div>                    
+                    </td>
+                  </tr>                                
+                </tbody>
+              </table>
+            </div>            
             
         </div>
 
         <div class="tab-pane" id="tab3">
+
+          <br/>
+          <div class="panel panel-default">
+            <div class="panel-heading"><strong>Serviços</strong></div>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Tipo</th>
+                    <th>Preço</th>
+                    <th>Qtd.</th>
+                    <th></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Taxa Garçon</td>
+                    <td>10%</td>
+                    <td>1</td>
+                    <td align="right">
+                      <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                      </div>                    
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Cover</td>
+                    <td>R$ 5,00</td>
+                    <td>3</td>
+                    <td align="right">
+                      <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                      </div>                    
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>        
+
             
         </div>        
       </div>
@@ -78,24 +176,97 @@
       <!-- Default panel contents -->
       <div class="panel-heading">Comanda</div>
       <div class="panel-body">
-        <p>Pizza Moda ......................................R$ 25,00</p>
-        <p>X-Tudo ............................................R$ 5,00</p>
-        <p>Creme de Morango 400 Ml...................R$ 5,00</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
-        <p>...</p>
+        <br/>
+        <table width="100%">
+          <tr style="border-bottom-style: dotted; border-color:gray; border-width: 1px;">
+            <td align="left">Pizza Moda</td>
+            <td align="right">R$ 25,00</td>
+          </tr>
+          <tr style="border-bottom-style: dotted; border-color:gray; border-width: 1px;">
+            <td align="left">X-Tudo</td>
+            <td align="right">R$ 5,00</td>
+          </tr>
+          <tr style="border-bottom-style: dotted; border-color:gray; border-width: 1px;">
+            <td align="left">Creme de Morango 400 Ml</td>
+            <td align="right">R$ 3,00</td>
+          </tr>
+          <tr style="border-bottom-style: dotted; border-color:gray; border-width: 1px;">
+            <td align="left">Suco de Uva 400 Ml</td>
+            <td align="right">R$ 2,00</td>
+          </tr>
+          <tr style="border-bottom-style: dotted; border-color:gray; border-width: 1px;">
+            <td align="left">Chocoloate</td>
+            <td align="right">R$ 5,00</td>
+          </tr>                                        
+        </table>
       </div>
-
+      <br/>
       <!-- List group -->
       <ul class="list-group">
-        <li class="list-group-item"><strong>Total:</strong>R$ 35,00</li>
-        <li class="list-group-item"><strong>Taxas:</strong>R$ 3,50</li>
-        <li class="list-group-item"><strong>Total Geral:</strong>R$ 40,00</li>
-        <li class="list-group-item"><strong>Dinheiro:</strong>R$ 50,00</li>
-        <li class="list-group-item"><strong>Troco:</strong>R$ 10,00</li>
+        <li class="list-group-item">
+          <div class="row mar-bot40">
+            <div class="col-lg-6">
+              <strong>Total:</strong>
+            </div>
+            <div class="col-lg-6">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">R$</span>
+                <input type="text" class="form-control" placeholder="Total" aria-describedby="basic-addon1">
+              </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row mar-bot40">
+            <div class="col-lg-6">
+              <strong>Taxas:</strong>
+            </div>
+            <div class="col-lg-6">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">R$</span>
+                <input type="text" class="form-control" placeholder="Taxas" aria-describedby="basic-addon1">
+              </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row mar-bot40">
+            <div class="col-lg-6">
+              <strong>Total Geral:</strong>
+            </div>
+            <div class="col-lg-6">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">R$</span>
+                <input type="text" class="form-control" placeholder="Total Geral" aria-describedby="basic-addon1">
+              </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row mar-bot40">
+            <div class="col-lg-6">
+              <strong>Dinheiro:</strong>
+            </div>
+            <div class="col-lg-6">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">R$</span>
+                <input type="text" class="form-control" placeholder="Dinheiro" aria-describedby="basic-addon1">
+              </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row mar-bot40">
+            <div class="col-lg-6">
+              <strong>Troco:</strong>
+            </div>
+            <div class="col-lg-6">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">R$</span>
+                <input type="text" class="form-control" placeholder="Troco" aria-describedby="basic-addon1">
+              </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Fechar</button>
+          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button>
+        </li>                   
       </ul>
     </div>
 
