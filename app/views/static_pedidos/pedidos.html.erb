@@ -1,21 +1,103 @@
-  <div class="tabbable">
-    <ul class="nav nav-tabs">
+<div class="row mar-bot40">
+  <div class="col-lg-8">
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
         <li class="active">
-          <a href="#tab1" data-toggle="tab">Dados Evento</a>
+          <a href="#tab1" data-toggle="tab">Pedido</a>
         </li>
         <li>
-          <a href="#tab2" data-toggle="tab">Endereço</a>
-        </li>        
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="tab1">
-        <div class="row">
-          teste
+          <a href="#tab2" data-toggle="tab">Produtos</a>
+        </li>
+        <li>
+          <a href="#tab2" data-toggle="tab">Serviços</a>
+        </li>               
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+          <br/>
+          <div class="panel panel-default">
+            <div class="panel-heading"><strong>Mesa 04</strong></div>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Pizza Moda</td>
+                    <td>R$ 25,00 </td>
+                    <td align="right">
+                      <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default">Excluir</button>
+                        <button type="button" class="btn btn-default">Alterar</button>
+                      </div>                    
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>X-Tudo</td>
+                    <td>R$ 5,00</td>
+                    <td align="right">
+                      <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default">Excluir</button>
+                        <button type="button" class="btn btn-default">Alterar</button>
+                      </div>                    
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Creme de Morango 400 ml</td>
+                    <td>R$ 3,00 </td>
+                    <td align="right">
+                      <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default">Excluir</button>
+                        <button type="button" class="btn btn-default">Alterar</button>
+                      </div>                    
+                    </td>
+                  </tr>                                
+                </tbody>
+              </table>
+            </div>
+          </div>
+        <div class="tab-pane" id="tab2">
+            
+            
         </div>
-      </div>
-      <div class="tab-pane" id="tab2">
-        <div class="row">
-          teste2
+
+        <div class="tab-pane" id="tab3">
+            
         </div>        
-      </dib>
+      </div>
     </div>
+  </div>
+  <div class="col-lg-4">
+
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Comanda</div>
+      <div class="panel-body">
+        <p>Pizza Moda ......................................R$ 25,00</p>
+        <p>X-Tudo ............................................R$ 5,00</p>
+        <p>Creme de Morango 400 Ml...................R$ 5,00</p>
+        <p>...</p>
+        <p>...</p>
+        <p>...</p>
+        <p>...</p>
+        <p>...</p>
+        <p>...</p>
+      </div>
+
+      <!-- List group -->
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Total:</strong>R$ 35,00</li>
+        <li class="list-group-item"><strong>Taxas:</strong>R$ 3,50</li>
+        <li class="list-group-item"><strong>Total Geral:</strong>R$ 40,00</li>
+        <li class="list-group-item"><strong>Dinheiro:</strong>R$ 50,00</li>
+        <li class="list-group-item"><strong>Troco:</strong>R$ 10,00</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
