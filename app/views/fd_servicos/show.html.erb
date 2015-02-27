@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Desc servico:</strong>
+  <%= @fd_servico.desc_servico %>
+</p>
+
+<p>
+  <strong>Numr porcentagem:</strong>
+  <%= @fd_servico.numr_porcentagem %>
+</p>
+
+<p>
+  <strong>Valr servico:</strong>
+  <%= @fd_servico.valr_servico %>
+</p>
+
+<p>
+  <strong>Flag ativo:</strong>
+  <%= @fd_servico.flag_ativo %>
+</p>
+
+<p>
+  <strong>Data exclusao:</strong>
+  <%= @fd_servico.data_exclusao %>
+</p>
+
+<%= link_to 'Edit', edit_fd_servico_path(@fd_servico) %> |
+<%= link_to 'Back', fd_servicos_path %>

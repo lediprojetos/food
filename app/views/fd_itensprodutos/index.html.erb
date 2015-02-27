@@ -1,0 +1,29 @@
+<h1>Listing fd_itensprodutos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fd produto</th>
+      <th>Fd item</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_itensprodutos.each do |fd_itensproduto| %>
+      <tr>
+        <td><%= fd_itensproduto.fd_produto %></td>
+        <td><%= fd_itensproduto.fd_item %></td>
+        <td><%= link_to 'Show', fd_itensproduto %></td>
+        <td><%= link_to 'Edit', edit_fd_itensproduto_path(fd_itensproduto) %></td>
+        <td><%= link_to 'Destroy', fd_itensproduto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd itensproduto', new_fd_itensproduto_path %>

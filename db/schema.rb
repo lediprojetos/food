@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150226170422) do
+ActiveRecord::Schema.define(version: 20150227015440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,6 +153,19 @@ ActiveRecord::Schema.define(version: 20150226170422) do
   add_index "fd_itensadicionals", ["fd_categoriaproduto_id"], name: "index_fd_itensadicionals_on_fd_categoriaproduto_id", using: :btree
   add_index "fd_itensadicionals", ["fd_item_id"], name: "index_fd_itensadicionals_on_fd_item_id", using: :btree
 
+  create_table "fd_itensprodutos", force: true do |t|
+    t.integer  "fd_produto_id"
+    t.integer  "fd_item_id"
+    t.integer  "user_inclusao"
+    t.integer  "integer"
+    t.integer  "user_exclusao"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_itensprodutos", ["fd_item_id"], name: "index_fd_itensprodutos_on_fd_item_id", using: :btree
+  add_index "fd_itensprodutos", ["fd_produto_id"], name: "index_fd_itensprodutos_on_fd_produto_id", using: :btree
+
   create_table "fd_mesas", force: true do |t|
     t.integer  "numr_mesa"
     t.string   "desc_mesa"
@@ -182,6 +195,16 @@ ActiveRecord::Schema.define(version: 20150226170422) do
   add_index "fd_produtos", ["fd_categoriaproduto_id"], name: "index_fd_produtos_on_fd_categoriaproduto_id", using: :btree
   add_index "fd_produtos", ["fd_empresa_id"], name: "index_fd_produtos_on_fd_empresa_id", using: :btree
   add_index "fd_produtos", ["fd_usuario_id"], name: "index_fd_produtos_on_fd_usuario_id", using: :btree
+
+  create_table "fd_servicos", force: true do |t|
+    t.string   "desc_servico"
+    t.integer  "numr_porcentagem"
+    t.decimal  "valr_servico"
+    t.boolean  "flag_ativo"
+    t.datetime "data_exclusao"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fd_usuarios", force: true do |t|
     t.string   "desc_nome"
