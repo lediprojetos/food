@@ -1,5 +1,6 @@
 class FdProduto < ActiveRecord::Base
   belongs_to :fd_empresa
   belongs_to :fd_categoriaproduto
-  belongs_to :fd_usuario
+  belongs_to :inclusao, :class_name => "FdUsuario", :foreign_key => "user_inclusao"
+  belongs_to :exclusao, :class_name => "FdUsuario", :foreign_key => "user_exclusao"
 end

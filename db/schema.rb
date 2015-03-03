@@ -198,14 +198,15 @@ ActiveRecord::Schema.define(version: 20150303160551) do
     t.float    "numr_porcentagem"
     t.integer  "fd_empresa_id"
     t.integer  "fd_categoriaproduto_id"
-    t.integer  "fd_usuario_id"
+    t.integer  "user_inclusao"
+    t.integer  "integer"
+    t.integer  "user_exclusao"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "fd_produtos", ["fd_categoriaproduto_id"], name: "index_fd_produtos_on_fd_categoriaproduto_id", using: :btree
   add_index "fd_produtos", ["fd_empresa_id"], name: "index_fd_produtos_on_fd_empresa_id", using: :btree
-  add_index "fd_produtos", ["fd_usuario_id"], name: "index_fd_produtos_on_fd_usuario_id", using: :btree
 
   create_table "fd_produtoscombos", force: true do |t|
     t.integer  "fd_produto_id"

@@ -6,7 +6,8 @@ class CreateFdProdutos < ActiveRecord::Migration
       t.float :numr_porcentagem
       t.references :fd_empresa, index: true
       t.references :fd_categoriaproduto, index: true
-      t.references :fd_usuario, index: true
+      t.integer :user_inclusao, :integer, :references => :FdUsuario, index: true
+      t.integer :user_exclusao, :integer, :references => :FdUsuario, index: true
 
       t.timestamps
     end
