@@ -18,7 +18,7 @@ class FdCategoriaprodutosControllerTest < ActionController::TestCase
 
   test "should create fd_categoriaproduto" do
     assert_difference('FdCategoriaproduto.count') do
-      post :create, fd_categoriaproduto: { desc_categoria: @fd_categoriaproduto.desc_categoria }
+      post :create, fd_categoriaproduto: { desc_categoria: @fd_categoriaproduto.desc_categoria, father_id: @fd_categoriaproduto.father_id }
     end
 
     assert_redirected_to fd_categoriaproduto_path(assigns(:fd_categoriaproduto))
@@ -35,7 +35,7 @@ class FdCategoriaprodutosControllerTest < ActionController::TestCase
   end
 
   test "should update fd_categoriaproduto" do
-    patch :update, id: @fd_categoriaproduto, fd_categoriaproduto: { desc_categoria: @fd_categoriaproduto.desc_categoria }
+    patch :update, id: @fd_categoriaproduto, fd_categoriaproduto: { desc_categoria: @fd_categoriaproduto.desc_categoria, father_id: @fd_categoriaproduto.father_id }
     assert_redirected_to fd_categoriaproduto_path(assigns(:fd_categoriaproduto))
   end
 

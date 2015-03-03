@@ -1,11 +1,10 @@
-<div class="page-header">
-  <h1>Categoria de Produtos</h1>
-</div>
+<h1>Listing fd_categoriaprodutos</h1>
 
-<table class="table table-hover">
+<table>
   <thead>
     <tr>
-      <th>Categoria</th>
+      <th>Desc categoria</th>
+      <th>Father</th>
       <th></th>
       <th></th>
       <th></th>
@@ -16,6 +15,7 @@
     <% @fd_categoriaprodutos.each do |fd_categoriaproduto| %>
       <tr>
         <td><%= fd_categoriaproduto.desc_categoria %></td>
+        <td><%= fd_categoriaproduto.father_id %></td>
         <td><%= link_to 'Show', fd_categoriaproduto %></td>
         <td><%= link_to 'Edit', edit_fd_categoriaproduto_path(fd_categoriaproduto) %></td>
         <td><%= link_to 'Destroy', fd_categoriaproduto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -26,6 +26,4 @@
 
 <br>
 
-  <%= link_to new_fd_categoriaproduto_path, :class => "btn btn-default" do %>
-     Novo
-  <% end %>  
+<%= link_to 'New Fd categoriaproduto', new_fd_categoriaproduto_path %>

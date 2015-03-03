@@ -1,0 +1,21 @@
+<%= form_for(@fd_formapagamento) do |f| %>
+  <% if @fd_formapagamento.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_formapagamento.errors.count, "error") %> prohibited this fd_formapagamento from being saved:</h2>
+
+      <ul>
+      <% @fd_formapagamento.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :desc_formapagamento %><br>
+    <%= f.text_field :desc_formapagamento %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

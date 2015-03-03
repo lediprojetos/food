@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227015440) do
+ActiveRecord::Schema.define(version: 20150303160551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,11 @@ ActiveRecord::Schema.define(version: 20150227015440) do
 
   create_table "fd_categoriaprodutos", force: true do |t|
     t.string   "desc_categoria"
+    t.boolean  "flag_global"
+    t.integer  "father_id"
+    t.integer  "integer"
+    t.integer  "user_inclusao"
+    t.integer  "user_exclusao"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -103,6 +108,12 @@ ActiveRecord::Schema.define(version: 20150227015440) do
   create_table "fd_estados", force: true do |t|
     t.string   "nome_estado"
     t.string   "sigl_estado"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fd_formapagamentos", force: true do |t|
+    t.string   "desc_formapagamento"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -182,12 +193,12 @@ ActiveRecord::Schema.define(version: 20150227015440) do
   add_index "fd_mesas", ["fd_empresa_id"], name: "index_fd_mesas_on_fd_empresa_id", using: :btree
 
   create_table "fd_produtos", force: true do |t|
+    t.string   "nome_produto"
+    t.string   "desc_produto"
+    t.float    "numr_porcentagem"
     t.integer  "fd_empresa_id"
     t.integer  "fd_categoriaproduto_id"
     t.integer  "fd_usuario_id"
-    t.string   "nome_produto"
-    t.string   "desc_produto"
-    t.decimal  "valr_produto"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -196,12 +207,27 @@ ActiveRecord::Schema.define(version: 20150227015440) do
   add_index "fd_produtos", ["fd_empresa_id"], name: "index_fd_produtos_on_fd_empresa_id", using: :btree
   add_index "fd_produtos", ["fd_usuario_id"], name: "index_fd_produtos_on_fd_usuario_id", using: :btree
 
+  create_table "fd_produtoscombos", force: true do |t|
+    t.integer  "fd_produto_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_produtoscombos", ["fd_produto_id"], name: "index_fd_produtoscombos_on_fd_produto_id", using: :btree
+
   create_table "fd_servicos", force: true do |t|
     t.string   "desc_servico"
     t.integer  "numr_porcentagem"
     t.decimal  "valr_servico"
     t.boolean  "flag_ativo"
     t.datetime "data_exclusao"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fd_statuses", force: true do |t|
+    t.string   "nome_status"
+    t.string   "desc_status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -218,6 +244,26 @@ ActiveRecord::Schema.define(version: 20150227015440) do
   end
 
   add_index "fd_usuarios", ["fd_empresa_id"], name: "index_fd_usuarios_on_fd_empresa_id", using: :btree
+
+  create_table "fd_variacaoprodutos", force: true do |t|
+    t.decimal  "valr_produto"
+    t.integer  "fd_variaco_id"
+    t.integer  "fd_produto_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_variacaoprodutos", ["fd_produto_id"], name: "index_fd_variacaoprodutos_on_fd_produto_id", using: :btree
+  add_index "fd_variacaoprodutos", ["fd_variaco_id"], name: "index_fd_variacaoprodutos_on_fd_variaco_id", using: :btree
+
+  create_table "fd_variacaos", force: true do |t|
+    t.string   "desc_variacao"
+    t.integer  "fd_empresa_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_variacaos", ["fd_empresa_id"], name: "index_fd_variacaos_on_fd_empresa_id", using: :btree
 
   create_table "sessions", force: true do |t|
     t.string   "session_id", null: false

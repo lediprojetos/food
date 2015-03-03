@@ -1,0 +1,27 @@
+<h1>Listing fd_formapagamentos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Desc formapagamento</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_formapagamentos.each do |fd_formapagamento| %>
+      <tr>
+        <td><%= fd_formapagamento.desc_formapagamento %></td>
+        <td><%= link_to 'Show', fd_formapagamento %></td>
+        <td><%= link_to 'Edit', edit_fd_formapagamento_path(fd_formapagamento) %></td>
+        <td><%= link_to 'Destroy', fd_formapagamento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd formapagamento', new_fd_formapagamento_path %>

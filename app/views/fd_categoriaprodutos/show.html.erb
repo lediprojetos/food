@@ -1,27 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<div class="page-header">
-  <h1>Exibir Categoria</h1>
-</div>
-
 <p>
-  <strong>Categoria:</strong>
+  <strong>Desc categoria:</strong>
   <%= @fd_categoriaproduto.desc_categoria %>
 </p>
 
-<hr/>
+<p>
+  <strong>Father:</strong>
+  <%= @fd_categoriaproduto.father_id %>
+</p>
 
-<div class="btn-group" role="group" aria-label="...">
-  <button type="submit" class="btn btn-primary btn">
-    </span> Salvar
-  </button>  
-
-  <%= link_to  edit_fd_categoriaproduto_path(@fd_categoriaproduto), :class => "btn btn-default" do %>
-    Editar
-  <% end %>
-
-  <%= link_to  fd_categoriaprodutos_path, :class => "btn btn-default" do %>
-    Voltar
-  <% end %>  
-
-</div>
+<%= link_to 'Edit', edit_fd_categoriaproduto_path(@fd_categoriaproduto) %> |
+<%= link_to 'Back', fd_categoriaprodutos_path %>

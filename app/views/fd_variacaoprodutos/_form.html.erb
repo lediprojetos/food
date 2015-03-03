@@ -1,0 +1,29 @@
+<%= form_for(@fd_variacaoproduto) do |f| %>
+  <% if @fd_variacaoproduto.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_variacaoproduto.errors.count, "error") %> prohibited this fd_variacaoproduto from being saved:</h2>
+
+      <ul>
+      <% @fd_variacaoproduto.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :valr_produto %><br>
+    <%= f.text_field :valr_produto %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_variaco_id %><br>
+    <%= f.text_field :fd_variaco_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_produto_id %><br>
+    <%= f.text_field :fd_produto_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

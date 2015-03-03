@@ -8,7 +8,7 @@ class CreateFdCidades < ActiveRecord::Migration
       t.timestamps
     end
 
-    FdCidade.create(:nome_cidade => 'Afonso Cláudio', :fd_estado_id => '8')
+FdCidade.create(:nome_cidade => 'Afonso Cláudio', :fd_estado_id => '8')
 FdCidade.create(:nome_cidade => 'Água Doce do Norte', :fd_estado_id => '8')
 FdCidade.create(:nome_cidade => 'Águia Branca', :fd_estado_id => '8')
 FdCidade.create(:nome_cidade => 'Alegre', :fd_estado_id => '8')

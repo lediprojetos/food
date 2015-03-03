@@ -1,3 +1,4 @@
+<%#encoding: utf-8%>
 <div class="row mar-bot40">
   <div class="col-lg-8">
     <div class="tabbable">
@@ -65,13 +66,7 @@
           <br/>
           <div class="row mar-bot40">
             <div class="col-lg-4">
-
-              <select class="form-control">
-                <option>Pizzas</option>
-                <option>Sanduiches</option>
-                <option>Bebidas</option>
-              </select>
-
+              <%= select_tag "categorias", options_from_collection_for_select(FdCategoriaproduto.all, 'id','desc_categoria'),{:class => 'form-control'}%>
             </div>
           </div>
           <br/>

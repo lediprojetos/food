@@ -11,19 +11,15 @@
     </div>
   <% end %>
 
-
-<div class="row mar-bot40">
-  <div class="col-lg-3" >
-    <%= f.label :Categoria %><br>
-    <%= f.text_field :desc_categoria, :class => "form-control" %>
+  <div class="field">
+    <%= f.label :desc_categoria %><br>
+    <%= f.text_field :desc_categoria %>
   </div>
-</div>
-
-<hr/>
-
-<div class="btn-group" role="group" aria-label="...">
-  <button type="submit" class="btn btn-primary btn">
-    </span> Salvar
-  </button>  
-
+  <div class="field">
+    <%= f.label :father_id %><br>
+    <%= f.number_field :father_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
 <% end %>

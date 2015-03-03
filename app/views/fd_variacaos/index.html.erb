@@ -1,0 +1,29 @@
+<h1>Listing fd_variacaos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Desc variacao</th>
+      <th>Fd empresa</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_variacaos.each do |fd_variacao| %>
+      <tr>
+        <td><%= fd_variacao.desc_variacao %></td>
+        <td><%= fd_variacao.fd_empresa %></td>
+        <td><%= link_to 'Show', fd_variacao %></td>
+        <td><%= link_to 'Edit', edit_fd_variacao_path(fd_variacao) %></td>
+        <td><%= link_to 'Destroy', fd_variacao, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd variacao', new_fd_variacao_path %>

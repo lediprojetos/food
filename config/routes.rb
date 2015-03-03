@@ -1,5 +1,17 @@
 Food::Application.routes.draw do
 
+  resources :fd_categoriaprodutos
+
+  resources :fd_produtos
+
+  resources :fd_variacaos
+
+  resources :fd_formapagamentos
+
+  resources :fd_statuses
+
+  resources :fd_variacaoprodutos
+
   resources :fd_servicos
 
   resources :fd_itensprodutos

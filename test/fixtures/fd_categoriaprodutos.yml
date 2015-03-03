@@ -2,6 +2,8 @@
 
 one:
   desc_categoria: MyString
+  father_id: 1
 
 two:
   desc_categoria: MyString
+  father_id: 1

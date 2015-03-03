@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome status:</strong>
+  <%= @fd_status.nome_status %>
+</p>
+
+<p>
+  <strong>Desc status:</strong>
+  <%= @fd_status.desc_status %>
+</p>
+
+<%= link_to 'Edit', edit_fd_status_path(@fd_status) %> |
+<%= link_to 'Back', fd_statuses_path %>

@@ -1,42 +1,34 @@
 <p id="notice"><%= notice %></p>
 
-<div class="page-header">
-  <h1>Exibir Produto</h1>
-</div>
-
 <p>
-  <strong>Categoria:</strong>
-  <%= @fd_produto.fd_categoriaproduto.desc_categoria %>
-</p>
-
-<p>
-  <strong>Nome:</strong>
+  <strong>Nome produto:</strong>
   <%= @fd_produto.nome_produto %>
 </p>
 
 <p>
-  <strong>Descrição:</strong>
+  <strong>Desc produto:</strong>
   <%= @fd_produto.desc_produto %>
 </p>
 
 <p>
-  <strong>Valor:</strong>
-  <%= @fd_produto.valr_produto %>
+  <strong>Numr porcentagem:</strong>
+  <%= @fd_produto.numr_porcentagem %>
 </p>
 
-<hr/>
+<p>
+  <strong>Fd empresa:</strong>
+  <%= @fd_produto.fd_empresa %>
+</p>
 
-<div class="btn-group" role="group" aria-label="...">
-  <button type="submit" class="btn btn-primary btn">
-    </span> Salvar
-  </button>  
+<p>
+  <strong>Fd categoriaproduto:</strong>
+  <%= @fd_produto.fd_categoriaproduto %>
+</p>
 
-  <%= link_to  edit_fd_produto_path(@fd_produto), :class => "btn btn-default" do %>
-    Editar
-  <% end %>
+<p>
+  <strong>Fd usuario:</strong>
+  <%= @fd_produto.fd_usuario %>
+</p>
 
-  <%= link_to  fd_produtos_path, :class => "btn btn-default" do %>
-    Voltar
-  <% end %>  
-
-</div>
+<%= link_to 'Edit', edit_fd_produto_path(@fd_produto) %> |
+<%= link_to 'Back', fd_produtos_path %>
