@@ -51,5 +51,6 @@ Food::Application.routes.draw do
   match '/lista_mesas', to: 'static_pedidos#lista_mesas', via: 'get'
   match '/pedidos', to: 'static_pedidos#pedidos', via: 'get'
 
+  match '/buscaCategoriaProdutos', to: 'fd_categoriaprodutos#buscaCategoriaProdutos', via: 'get'
 
 end

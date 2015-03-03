@@ -64,12 +64,19 @@
           </div>
         <div class="tab-pane active" id="tab2">
           <br/>
-          <div class="row mar-bot40">
-            <div class="col-lg-4">
-              <%= select_tag "categorias", options_from_collection_for_select(FdCategoriaproduto.all, 'id','desc_categoria'),{:class => 'form-control'}%>
+          <div class="divCategorias">
+            <div class="row mar-bot40">
+                <%#= select_tag "categorias", options_from_collection_for_select(FdCategoriaproduto.where(:father_id => nil), 'id','desc_categoria'),{:class => 'form-control'}%>
+
+                <% @fd_categoriaproduto.each do |fd_categoriaproduto| %>
+                      <button type="button" class="btn btn-default btn-lg" onclick="buscaCategorias(<%=fd_categoriaproduto.id%>);">
+                        <%=fd_categoriaproduto.desc_categoria%>
+                      </button>
+                <%end%>
             </div>
           </div>
           <br/>
+          <div style="display:none">
           <div class="panel panel-default">
             <div class="panel-heading"><strong>Pizzas</strong></div>
               <table class="table table-hover">
@@ -114,7 +121,8 @@
                   </tr>                                
                 </tbody>
               </table>
-            </div>            
+            </div>   
+          </div>         
             
         </div>
 
@@ -267,3 +275,36 @@
 
   </div>
 </div>
+
+
+<script>
+  //$( "div.divCategorias" ).html( "<button type='button' class='btn btn-default btn-lg'>teste</button> " );
+
+
+
+function buscaCategorias(father_id) {
+
+  $.ajax({
+    url: '<%= buscaCategoriaProdutos_path %>',
+    data : 
+    {
+        father_id : father_id
+    },
+    success: function(data){
+
+    $("div.divCategorias").html("");
+    $("div.divCategorias").append("<button type='button' onclick='buscaCategorias(9);' class='btn btn-default btn-lg'>Geral</button>")
+      for (var i in data) {
+        var item = data[i];
+
+        $("div.divCategorias").append("<button type='button' onclick='buscaCategorias("+ item.id +");' class='btn btn-default btn-lg'>" + item.desc_categoria + "</button>")
+
+      };
+
+    }
+  })  
+}
+
+
+//buscaCategorias("")
+</script>

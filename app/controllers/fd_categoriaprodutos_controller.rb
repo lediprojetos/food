@@ -1,6 +1,16 @@
 class FdCategoriaprodutosController < ApplicationController
   before_action :set_fd_categoriaproduto, only: [:show, :edit, :update, :destroy]
 
+
+  def buscaCategoriaProdutos
+    FdCategoriaproduto.where
+    fd_categoriaprodutos = FdCategoriaproduto.where(:father_id => params[:father_id])
+
+    fd_categoriaprodutos_json = fd_categoriaprodutos.map {|item| {:id => item.id, :desc_categoria => item.desc_categoria}}
+    render :json => fd_categoriaprodutos_json
+
+  end  
+
   # GET /fd_categoriaprodutos
   def index
     @fd_categoriaprodutos = FdCategoriaproduto.all

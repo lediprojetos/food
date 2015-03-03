@@ -3,8 +3,8 @@
 <table>
   <thead>
     <tr>
-      <th>Desc categoria</th>
-      <th>Father</th>
+      <th>Categoria</th>
+      <th>Filho de</th>
       <th></th>
       <th></th>
       <th></th>
@@ -15,7 +15,7 @@
     <% @fd_categoriaprodutos.each do |fd_categoriaproduto| %>
       <tr>
         <td><%= fd_categoriaproduto.desc_categoria %></td>
-        <td><%= fd_categoriaproduto.father_id %></td>
+        <td><%= fd_categoriaproduto.father.desc_categoria rescue nil %></td>
         <td><%= link_to 'Show', fd_categoriaproduto %></td>
         <td><%= link_to 'Edit', edit_fd_categoriaproduto_path(fd_categoriaproduto) %></td>
         <td><%= link_to 'Destroy', fd_categoriaproduto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
