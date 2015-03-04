@@ -11,31 +11,37 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :nome_produto %><br>
-    <%= f.text_field :nome_produto %>
+<div class="row mar-bot40">
+  <div class="col-lg-6">
+
+    <%= f.label :Categoria_produto %><br>
+        <%= f.select :fd_categoriaproduto_id, options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria',@fd_produto.fd_categoriaproduto_id), {:include_blank => true}, {:onchange => 'changeState(this)', :class => 'form-control' }%>
   </div>
-  <div class="field">
-    <%= f.label :desc_produto %><br>
-    <%= f.text_field :desc_produto %>
+  
+  <div class="col-lg-6">
+    <%= f.label :Nome_Produto %><br>
+    <%= f.text_field :nome_produto, :class => 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :numr_porcentagem %><br>
-    <%= f.text_field :numr_porcentagem %>
+</div>
+<br>
+<div class="row mar-bot40">   
+  <div class="col-lg-6">
+    <%= f.label :Descrição %><br>
+    <%= f.text_area :desc_produto, :class => 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :fd_empresa_id %><br>
-    <%= f.text_field :fd_empresa_id %>
-  </div>
-  <div class="field">
-    <%= f.label :fd_categoriaproduto_id %><br>
-    <%= f.text_field :fd_categoriaproduto_id %>
-  </div>
-  <div class="field">
-    <%= f.label :fd_usuario_id %><br>
-    <%= f.text_field :fd_usuario_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  
+  
+  <!--Capturando usuario logado-->
+  <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
+
+</div> 
+
+
+<hr/>
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn">
+    </span> Salvar
+  </button>  
+
 <% end %>

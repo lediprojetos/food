@@ -9,7 +9,9 @@ class CreateFdCategoriaprodutos < ActiveRecord::Migration
       t.integer :user_exclusao, :integer, :references => :FdUsuario, index: true      
       t.timestamps
     end
-	#FdCategoriaprodutos.create(:desc_categoria => 'Serviços', :flag_global => true)
-	#FdCategoriaprodutos.create(:desc_categoria => 'Combos', :flag_global => true)  
+	  
+    FdCategoriaproduto.create(:desc_categoria => 'Serviços', :flag_global => true)
+    FdCategoriaproduto.create(:desc_categoria => 'Combos', :flag_global => true)  
+  
   end
 end

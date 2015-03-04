@@ -1,14 +1,12 @@
-<h1>Listing fd_produtos</h1>
+<div class="page-header">
+  <h2>Produtos</h2>
+</div>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Nome produto</th>
-      <th>Desc produto</th>
-      <th>Numr porcentagem</th>
-      <th>Fd empresa</th>
-      <th>Fd categoriaproduto</th>
-      <th>Fd usuario</th>
+      <th>Categoria</th>
       <th></th>
       <th></th>
       <th></th>
@@ -19,14 +17,10 @@
     <% @fd_produtos.each do |fd_produto| %>
       <tr>
         <td><%= fd_produto.nome_produto %></td>
-        <td><%= fd_produto.desc_produto %></td>
-        <td><%= fd_produto.numr_porcentagem %></td>
-        <td><%= fd_produto.fd_empresa %></td>
         <td><%= fd_produto.fd_categoriaproduto %></td>
-        <td><%= fd_produto.fd_usuario %></td>
-        <td><%= link_to 'Show', fd_produto %></td>
-        <td><%= link_to 'Edit', edit_fd_produto_path(fd_produto) %></td>
-        <td><%= link_to 'Destroy', fd_produto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Exibir', fd_produto %></td>
+        <td><%= link_to 'Editar', edit_fd_produto_path(fd_produto) %></td>
+        <td><%= link_to 'Deletar', fd_produto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,4 +28,6 @@
 
 <br>
 
-<%= link_to 'New Fd produto', new_fd_produto_path %>
+<%= link_to new_fd_produto_path, :class => "btn btn-default" do %>
+     Novo
+<% end %>  
