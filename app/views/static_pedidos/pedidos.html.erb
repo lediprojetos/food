@@ -27,37 +27,7 @@
                   </tr>
                 </thead>
 
-                <tbody>
-                  <tr>
-                    <td>Pizza Moda</td>
-                    <td>R$ 25,00 </td>
-                    <td align="right">
-                      <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                      </div>                    
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>X-Tudo</td>
-                    <td>R$ 5,00</td>
-                    <td align="right">
-                      <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                      </div>                    
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Creme de Morango 400 ml</td>
-                    <td>R$ 3,00 </td>
-                    <td align="right">
-                      <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                      </div>                    
-                    </td>
-                  </tr>                                
+                <tbody>                               
                 </tbody>
               </table>
             </div>
@@ -66,20 +36,13 @@
           <br/>
           <div class="divCategorias">
             <div class="row mar-bot40">
-                <%#= select_tag "categorias", options_from_collection_for_select(FdCategoriaproduto.where(:father_id => nil), 'id','desc_categoria'),{:class => 'form-control'}%>
-
-                <% @fd_categoriaproduto.each do |fd_categoriaproduto| %>
-                      <button type="button" class="btn btn-default btn-lg" onclick="buscaCategorias(<%=fd_categoriaproduto.id%>);">
-                        <%=fd_categoriaproduto.desc_categoria%>
-                      </button>
-                <%end%>
             </div>
           </div>
           <br/>
-          <div style="display:none">
+          <div style="display:block">
           <div class="panel panel-default">
             <div class="panel-heading"><strong>Pizzas</strong></div>
-              <table class="table table-hover">
+              <table class="table table-hover" name="tlbProdutos" id="tlbProdutos">
                 <thead>
                   <tr>
                     <th>Produto</th>
@@ -88,37 +51,8 @@
                   </tr>
                 </thead>
 
-                <tbody>
-                  <tr>
-                    <td>À Moda</td>
-                    <td>R$ 25,00 </td>
-                    <td align="right">
-                      <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                      </div>                    
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Calabresa</td>
-                    <td>R$ 25,00</td>
-                    <td align="right">
-                      <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                      </div>                    
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Portuguesa</td>
-                    <td>R$ 25,00 </td>
-                    <td align="right">
-                      <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                      </div>                    
-                    </td>
-                  </tr>                                
+                <tbody id="bodyTlbProdutos">
+                            
                 </tbody>
               </table>
             </div>   
@@ -276,10 +210,70 @@
   </div>
 </div>
 
+<div class="modal fade bs-example-modal-sm" id="mdVariacoes" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="list-group divVariacoes">
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   //$( "div.divCategorias" ).html( "<button type='button' class='btn btn-default btn-lg'>teste</button> " );
 
+function incluiItem(fd_produto_id) {
+
+  $.ajax({
+    url: '<%= busca_variacaoprodutos_path %>',
+    data : 
+    {
+        fd_produto_id : fd_produto_id
+    },
+    success: function(data){
+
+          $('#mdVariacoes').modal('show');
+
+          $("div.divVariacoes").html("");
+          $("div.divVariacoes").append('<a href="#" class="list-group-item disabled"><strong>Variações</strong></a>');
+
+      for (var i in data) {
+        var item = data[i];
+
+          $("div.divVariacoes").append('<a href="#" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
+
+      };
+
+    }
+  })  
+}
+
+
+function buscaVariacoes(fd_produto_id) {
+
+  $.ajax({
+    url: '<%= busca_variacaoprodutos_path %>',
+    data : 
+    {
+        fd_produto_id : fd_produto_id
+    },
+    success: function(data){
+
+          $('#mdVariacoes').modal('show');
+
+          $("div.divVariacoes").html("");
+          $("div.divVariacoes").append('<a href="#" class="list-group-item disabled"><strong>Variações</strong></a>');
+
+      for (var i in data) {
+        var item = data[i];
+
+          $("div.divVariacoes").append('<a href="#" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
+
+      };
+
+    }
+  })  
+}
 
 
 function buscaCategorias(father_id) {
@@ -292,12 +286,14 @@ function buscaCategorias(father_id) {
     },
     success: function(data){
 
+    buscaprodutos(father_id);
+
     $("div.divCategorias").html("");
-    $("div.divCategorias").append("<button type='button' onclick='buscaCategorias(9);' class='btn btn-default btn-lg'>Geral</button>")
+    $("div.divCategorias").append("<button type='button' onclick='buscaCategorias();' class='btn btn-primary btn-lg'>Geral</button>");
       for (var i in data) {
         var item = data[i];
 
-        $("div.divCategorias").append("<button type='button' onclick='buscaCategorias("+ item.id +");' class='btn btn-default btn-lg'>" + item.desc_categoria + "</button>")
+        $("div.divCategorias").append("<button type='button' onclick='buscaCategorias("+ item.id +");' class='btn btn-default btn-lg'>" + item.desc_categoria + "</button>");
 
       };
 
@@ -306,5 +302,28 @@ function buscaCategorias(father_id) {
 }
 
 
-//buscaCategorias("")
+function buscaprodutos(fd_categoriaproduto_id) {
+
+  $.ajax({
+    url: '<%= busca_produtos_path %>',
+    data : 
+    {
+        fd_categoriaproduto_id : fd_categoriaproduto_id
+    },
+    success: function(data){
+
+          $("#bodyTlbProdutos").empty();
+
+      for (var i in data) {
+        var item = data[i];
+
+          $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+')" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');         
+
+      };
+
+    }
+  })  
+}
+
+buscaCategorias();
 </script>

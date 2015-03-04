@@ -1,6 +1,15 @@
 class FdVariacaoprodutosController < ApplicationController
   before_action :set_fd_variacaoproduto, only: [:show, :edit, :update, :destroy]
 
+  def busca_variacaoprodutos
+    fd_variacaoprodutos = FdVariacaoproduto.where(:fd_produto_id => params[:fd_produto_id])
+
+    #debugger
+
+    fd_variacaoprodutos_json = fd_variacaoprodutos.map {|item| {:id => item.id, :valr_produto => item.valr_produto, :desc_variacao => item.fd_variacao.desc_variacao}}
+    render :json => fd_variacaoprodutos_json    
+  end
+
   # GET /fd_variacaoprodutos
   def index
     @fd_variacaoprodutos = FdVariacaoproduto.all

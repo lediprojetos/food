@@ -1,6 +1,16 @@
 class FdProdutosController < ApplicationController
   before_action :set_fd_produto, only: [:show, :edit, :update, :destroy]
 
+  def busca_produtos
+    fd_produtos = FdProduto.where(:fd_categoriaproduto_id => params[:fd_categoriaproduto_id], :fd_empresa_id => user.fd_empresa_id)
+
+    #debugger
+
+    fd_produtos_json = fd_produtos.map {|item| {:id => item.id, :nome_produto => item.nome_produto, :desc_produto => item.desc_produto}}
+    render :json => fd_produtos_json
+
+  end
+
   # GET /fd_produtos
   def index
     @fd_produtos = FdProduto.all

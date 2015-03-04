@@ -10,7 +10,7 @@ class StaticPedidosController < ApplicationController
 
 
 	def pedidos
-		@fd_categoriaproduto = FdCategoriaproduto.where(:father_id => nil)
+		#@fd_categoriaproduto = FdCategoriaproduto.where(:father_id => nil)
 
 	end
 end
