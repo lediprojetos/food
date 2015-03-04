@@ -11,31 +11,53 @@
     </div>
   <% end %>
 
-<div class="row mar-bot40">
-  <div class="col-lg-6">
 
-    <%= f.label :Categoria_produto %><br>
-        <%= f.select :fd_categoriaproduto_id, options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria',@fd_produto.fd_categoriaproduto_id), {:include_blank => true}, {:onchange => 'changeState(this)', :class => 'form-control' }%>
-  </div>
+
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#tab1" data-toggle="tab">Pedido</a>
+    </li>
+    <li>
+      <a href="#tab2" data-toggle="tab">Produtos</a>
+    </li>
+    <li>
+      <a href="#tab3" data-toggle="tab">Serviços</a>
+    </li>
+  </ul>            
+  <div class="tab-content">
+    <div class="tab-pane" id="tab1">
+      <br/>
+      <div class="row mar-bot40">
+          <div class="col-lg-6">
+            <%= f.label :Categoria_produto %><br>
+            <%= f.select :fd_categoriaproduto_id, options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria',@fd_produto.fd_categoriaproduto_id), {:include_blank => true}, {:onchange => 'changeState(this)', :class => 'form-control' }%>
+          </div>  
+          <div class="col-lg-6">
+            <%= f.label :Nome_Produto %><br>
+            <%= f.text_field :nome_produto, :class => 'form-control' %>
+          </div>
+      </div>
+  <br>
+  <div class="row mar-bot40">   
+       <div class="col-lg-6">
+         <%= f.label :Descrição %><br>
+         <%= f.text_area :desc_produto, :class => 'form-control' %>
+       </div>
   
-  <div class="col-lg-6">
-    <%= f.label :Nome_Produto %><br>
-    <%= f.text_field :nome_produto, :class => 'form-control' %>
+        <!--Capturando usuario logado-->
+        <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
+
+      </div> 
+    </div>
+     <div class="tab-pane" id="tab2">
+      2
+     </div>
+      <div class="tab-pane" id="tab3">
+       3    
+     </div>
   </div>
 </div>
-<br>
-<div class="row mar-bot40">   
-  <div class="col-lg-6">
-    <%= f.label :Descrição %><br>
-    <%= f.text_area :desc_produto, :class => 'form-control' %>
-  </div>
-  
-  
-  <!--Capturando usuario logado-->
-  <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
-
-</div> 
-
 
 <hr/>
 

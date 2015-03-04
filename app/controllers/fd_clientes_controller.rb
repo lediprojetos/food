@@ -14,7 +14,8 @@ class FdClientesController < ApplicationController
   # GET /fd_clientes/new
   def new
     @fd_cliente = FdCliente.new
-    @fd_cliente.build_fd_endereco
+  
+    @fd_cliente.build_fd_endereco 
   end
 
   # GET /fd_clientes/1/edit
