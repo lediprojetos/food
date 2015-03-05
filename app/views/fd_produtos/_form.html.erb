@@ -12,21 +12,20 @@
   <% end %>
 
 
-
 <div class="tabbable">
   <ul class="nav nav-tabs">
     <li class="active">
-      <a href="#tab1" data-toggle="tab">Pedido</a>
+      <a href="#tab1" data-toggle="tab">Produto</a>
+    </li>
+    <li >
+      <a href="#tab2" data-toggle="tab">Variações</a>
     </li>
     <li>
-      <a href="#tab2" data-toggle="tab">Produtos</a>
-    </li>
-    <li>
-      <a href="#tab3" data-toggle="tab">Serviços</a>
+      <a href="#tab3" data-toggle="tab">Itens</a>
     </li>
   </ul>            
-  <div class="tab-content">
-    <div class="tab-pane" id="tab1">
+<div class="tab-content">
+    <div class="tab-pane active" id="tab1"> 
       <br/>
       <div class="row mar-bot40">
           <div class="col-lg-6">
@@ -50,14 +49,36 @@
 
       </div> 
     </div>
+
      <div class="tab-pane" id="tab2">
-      2
+       <br/>
+      <div class="row mar-bot40">
+        <div class="col-lg-4">  
+          <div class="checkbox">
+            <label><input type="checkbox" id ="check" onclick ="teste()"value="">Produto Único</label>
+          </div>
+        </div>
+      </div>
+       <br/>
+
+      <div class="row mar-bot40">
+          <div class="col-lg-4"> 
+           <b>Variação</b>      
+            <%= select_tag("variacao_id", options_from_collection_for_select(FdVariacao.all, 'id', 'desc_variacao'),{:onchange => 'changeState(this)', :class => 'form-control' }) %>
+          </div>
+        <div class="col-lg-2">
+         <b>Valor Produto</b> 
+          <input id="nome_lider" name="nome_lider" value="<%=%>" onkeypress="" type="text" class="form-control">
+        </div>
+      <div class="row" style="margin-top:20px; margin-left:30px;">
+          <button id="bntSalvar" type="button" class="btn btn-success" onclick="setaPeriodo('custom');">Incluir</button>
+      </div>
+     </div>
      </div>
       <div class="tab-pane" id="tab3">
        3    
      </div>
   </div>
-</div>
 
 <hr/>
 
@@ -67,3 +88,15 @@
   </button>  
 
 <% end %>
+
+
+<script>
+
+$('.checkbox').checkbox();
+
+
+function teste(){
+  alert("fdsd");
+}
+
+</script>
