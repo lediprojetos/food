@@ -47,9 +47,10 @@ class FdItempedidosController < ApplicationController
 
   def busca_itempedido
 
-    fd_itenspedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id])
 
-    #debugger
+    fd_itenspedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id]).order(:fd_variacaoproduto_id)
+    #qtd = fd_itenspedidos.group(:fd_variacaoproduto_id).count
+
 
     fd_itenspedidos_json = fd_itenspedidos.map {|item| {:id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id, :desc_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao, :fd_pedido_id => item.fd_pedido_id, :fd_status_id => item.fd_status_id, :fd_funcionario_id => item.fd_funcionario_id}}
     render :json => fd_itenspedidos_json
@@ -67,7 +68,31 @@ class FdItempedidosController < ApplicationController
     #fd_itenspedidos_json = fd_itenspedidos.map {|item| {:id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id, :desc_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao, :fd_pedido_id => item.fd_pedido_id, :fd_status_id => item.fd_status_id, :fd_funcionario_id => item.fd_funcionario_id}}
     render json: {}, status: :no_content
 
-  end    
+  end   
+
+  def dobra_itempedido
+
+    fd_itenspedidos = FdItempedido.find(params[:fd_itempedido_id])
+    fd_itemdobrado = FdItempedido.new
+
+    fd_itemdobrado.desc_observacao = fd_itenspedidos.desc_observacao
+    fd_itemdobrado.valr_item = fd_itenspedidos.valr_item 
+    fd_itemdobrado.tipo_atendimento = fd_itenspedidos.tipo_atendimento
+    fd_itemdobrado.fd_empresa_id = fd_itenspedidos.fd_empresa_id
+    fd_itemdobrado.fd_variacaoproduto_id = fd_itenspedidos.fd_variacaoproduto_id
+    fd_itemdobrado.fd_pedido_id = fd_itenspedidos.fd_pedido_id
+    fd_itemdobrado.fd_status_id = fd_itenspedidos.fd_status_id
+    fd_itemdobrado.fd_funcionario_id = fd_itenspedidos.fd_funcionario_id
+    fd_itemdobrado.save
+
+    fd_itenspedidos = FdItempedido.where(:id => fd_itemdobrado.id)
+
+    #debugger
+
+    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id, :fd_pedido_id => item.fd_pedido_id, :fd_status_id => item.fd_status_id, :fd_funcionario_id => item.fd_funcionario_id}}
+    render :json => fd_itenspedidos_json
+
+  end  
 
   def insere_itempedido
 

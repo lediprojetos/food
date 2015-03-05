@@ -239,12 +239,31 @@ function buscaItensPedidos(fd_pedido_id) {
       for (var i in data) {
         var item = data[i];
 
-          $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td>'+item.valr_item+'</td><td align="right"><div class="btn-group" role="group"><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
+          $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td>'+item.valr_item+'</td><td align="right"><div class="btn-group" role="group"><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
 
           $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+'</td><td>'+item.valr_item+'</td><td align="right"></td></tr>');                         
 
       };
 
+    }
+  })  
+}
+
+function dobraItemPedido(fd_itempedido_id) {
+
+  //alert('lol');
+
+  $.ajax({
+    url: '<%= dobra_itempedido_path %>',
+    data : 
+    {
+        fd_itempedido_id : fd_itempedido_id
+
+    },
+    success: function(data){
+
+      $('#mdVariacoes').modal('hide')
+      buscaItensPedidos(1);
     }
   })  
 }
@@ -309,7 +328,6 @@ function buscaVariacoes(fd_produto_id) {
     },
     success: function(data){
 
-          $('#mdVariacoes').modal('show');
 
           $("div.divVariacoes").html("");
           $("div.divVariacoes").append('<a href="#" class="list-group-item disabled"><strong>Variações</strong></a>');
@@ -317,9 +335,20 @@ function buscaVariacoes(fd_produto_id) {
       for (var i in data) {
         var item = data[i];
 
-          $("div.divVariacoes").append('<a href="javascript:incluiItemPedido('+item.id+','+item.valr_produto+')" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
+          if (data.length == 1){
+              incluiItemPedido(item.id,item.valr_produto);
+          } else {
 
+            $("div.divVariacoes").append('<a href="javascript:incluiItemPedido('+item.id+','+item.valr_produto+')" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
+
+          };
       };
+
+      if (data.length != 1){
+
+        $('#mdVariacoes').modal('show');
+
+      }
 
     }
   })  
