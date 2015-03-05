@@ -1,0 +1,41 @@
+<h1>Listing fd_pedidos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valr pedido</th>
+      <th>Flag pago</th>
+      <th>Fd empresa</th>
+      <th>Fd cliente</th>
+      <th>Fd mesa</th>
+      <th>Fd funcionario</th>
+      <th>Fd formapagamento</th>
+      <th>Fd status</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_pedidos.each do |fd_pedido| %>
+      <tr>
+        <td><%= fd_pedido.valr_pedido %></td>
+        <td><%= fd_pedido.flag_pago %></td>
+        <td><%= fd_pedido.fd_empresa %></td>
+        <td><%= fd_pedido.fd_cliente %></td>
+        <td><%= fd_pedido.fd_mesa %></td>
+        <td><%= fd_pedido.fd_funcionario %></td>
+        <td><%= fd_pedido.fd_formapagamento %></td>
+        <td><%= fd_pedido.fd_status %></td>
+        <td><%= link_to 'Show', fd_pedido %></td>
+        <td><%= link_to 'Edit', edit_fd_pedido_path(fd_pedido) %></td>
+        <td><%= link_to 'Destroy', fd_pedido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd pedido', new_fd_pedido_path %>

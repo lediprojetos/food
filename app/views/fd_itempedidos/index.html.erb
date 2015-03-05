@@ -1,0 +1,41 @@
+<h1>Listing fd_itempedidos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Desc observacao</th>
+      <th>Valr item</th>
+      <th>Tipo atendimento</th>
+      <th>Fd empresa</th>
+      <th>Fd variacaoproduto</th>
+      <th>Fd pedido</th>
+      <th>Fd status</th>
+      <th>Fd funcionario</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_itempedidos.each do |fd_itempedido| %>
+      <tr>
+        <td><%= fd_itempedido.desc_observacao %></td>
+        <td><%= fd_itempedido.valr_item %></td>
+        <td><%= fd_itempedido.tipo_atendimento %></td>
+        <td><%= fd_itempedido.fd_empresa %></td>
+        <td><%= fd_itempedido.fd_variacaoproduto %></td>
+        <td><%= fd_itempedido.fd_pedido %></td>
+        <td><%= fd_itempedido.fd_status %></td>
+        <td><%= fd_itempedido.fd_funcionario %></td>
+        <td><%= link_to 'Show', fd_itempedido %></td>
+        <td><%= link_to 'Edit', edit_fd_itempedido_path(fd_itempedido) %></td>
+        <td><%= link_to 'Destroy', fd_itempedido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd itempedido', new_fd_itempedido_path %>

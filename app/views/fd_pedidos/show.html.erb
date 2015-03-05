@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Valr pedido:</strong>
+  <%= @fd_pedido.valr_pedido %>
+</p>
+
+<p>
+  <strong>Flag pago:</strong>
+  <%= @fd_pedido.flag_pago %>
+</p>
+
+<p>
+  <strong>Fd empresa:</strong>
+  <%= @fd_pedido.fd_empresa %>
+</p>
+
+<p>
+  <strong>Fd cliente:</strong>
+  <%= @fd_pedido.fd_cliente %>
+</p>
+
+<p>
+  <strong>Fd mesa:</strong>
+  <%= @fd_pedido.fd_mesa %>
+</p>
+
+<p>
+  <strong>Fd funcionario:</strong>
+  <%= @fd_pedido.fd_funcionario %>
+</p>
+
+<p>
+  <strong>Fd formapagamento:</strong>
+  <%= @fd_pedido.fd_formapagamento %>
+</p>
+
+<p>
+  <strong>Fd status:</strong>
+  <%= @fd_pedido.fd_status %>
+</p>
+
+<%= link_to 'Edit', edit_fd_pedido_path(@fd_pedido) %> |
+<%= link_to 'Back', fd_pedidos_path %>

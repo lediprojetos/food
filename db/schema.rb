@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150303160551) do
+ActiveRecord::Schema.define(version: 20150305004524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,25 @@ ActiveRecord::Schema.define(version: 20150303160551) do
   add_index "fd_funcionarios", ["fd_empresa_id"], name: "index_fd_funcionarios_on_fd_empresa_id", using: :btree
   add_index "fd_funcionarios", ["fd_endereco_id"], name: "index_fd_funcionarios_on_fd_endereco_id", using: :btree
 
+  create_table "fd_itempedidos", force: true do |t|
+    t.string   "desc_observacao"
+    t.decimal  "valr_item"
+    t.string   "tipo_atendimento"
+    t.integer  "fd_empresa_id"
+    t.integer  "fd_variacaoproduto_id"
+    t.integer  "fd_pedido_id"
+    t.integer  "fd_status_id"
+    t.integer  "fd_funcionario_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_itempedidos", ["fd_empresa_id"], name: "index_fd_itempedidos_on_fd_empresa_id", using: :btree
+  add_index "fd_itempedidos", ["fd_funcionario_id"], name: "index_fd_itempedidos_on_fd_funcionario_id", using: :btree
+  add_index "fd_itempedidos", ["fd_pedido_id"], name: "index_fd_itempedidos_on_fd_pedido_id", using: :btree
+  add_index "fd_itempedidos", ["fd_status_id"], name: "index_fd_itempedidos_on_fd_status_id", using: :btree
+  add_index "fd_itempedidos", ["fd_variacaoproduto_id"], name: "index_fd_itempedidos_on_fd_variacaoproduto_id", using: :btree
+
   create_table "fd_items", force: true do |t|
     t.string   "desc_item"
     t.datetime "data_exclusao"
@@ -192,6 +211,26 @@ ActiveRecord::Schema.define(version: 20150303160551) do
 
   add_index "fd_mesas", ["fd_empresa_id"], name: "index_fd_mesas_on_fd_empresa_id", using: :btree
 
+  create_table "fd_pedidos", force: true do |t|
+    t.decimal  "valr_pedido"
+    t.boolean  "flag_pago"
+    t.integer  "fd_empresa_id"
+    t.integer  "fd_cliente_id"
+    t.integer  "fd_mesa_id"
+    t.integer  "fd_funcionario_id"
+    t.integer  "fd_formapagamento_id"
+    t.integer  "fd_status_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_pedidos", ["fd_cliente_id"], name: "index_fd_pedidos_on_fd_cliente_id", using: :btree
+  add_index "fd_pedidos", ["fd_empresa_id"], name: "index_fd_pedidos_on_fd_empresa_id", using: :btree
+  add_index "fd_pedidos", ["fd_formapagamento_id"], name: "index_fd_pedidos_on_fd_formapagamento_id", using: :btree
+  add_index "fd_pedidos", ["fd_funcionario_id"], name: "index_fd_pedidos_on_fd_funcionario_id", using: :btree
+  add_index "fd_pedidos", ["fd_mesa_id"], name: "index_fd_pedidos_on_fd_mesa_id", using: :btree
+  add_index "fd_pedidos", ["fd_status_id"], name: "index_fd_pedidos_on_fd_status_id", using: :btree
+
   create_table "fd_produtos", force: true do |t|
     t.string   "nome_produto"
     t.string   "desc_produto"
@@ -215,16 +254,6 @@ ActiveRecord::Schema.define(version: 20150303160551) do
   end
 
   add_index "fd_produtoscombos", ["fd_produto_id"], name: "index_fd_produtoscombos_on_fd_produto_id", using: :btree
-
-  create_table "fd_servicos", force: true do |t|
-    t.string   "desc_servico"
-    t.integer  "numr_porcentagem"
-    t.decimal  "valr_servico"
-    t.boolean  "flag_ativo"
-    t.datetime "data_exclusao"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "fd_statuses", force: true do |t|
     t.string   "nome_status"

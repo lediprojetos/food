@@ -18,16 +18,16 @@
           <br/>
           <div class="panel panel-default">
             <div class="panel-heading"><strong>Mesa 04</strong></div>
-              <table class="table table-hover">
+              <table class="table table-hover" name="tlbItensPedidos" id="tlbItensPedidos">
                 <thead>
                   <tr>
                     <th>Produto</th>
+                    <th>Variação</th>
                     <th>Preço</th>
                     <th></th>
                   </tr>
                 </thead>
-
-                <tbody>                               
+                <tbody id="bodyTlbItensPedidos">                               
                 </tbody>
               </table>
             </div>
@@ -114,27 +114,13 @@
       <div class="panel-heading">Comanda</div>
       <div class="panel-body">
         <br/>
-        <table width="100%">
-          <tr style="border-bottom-style: dotted; border-color:gray; border-width: 1px;">
-            <td align="left">Pizza Moda</td>
-            <td align="right">R$ 25,00</td>
-          </tr>
-          <tr style="border-bottom-style: dotted; border-color:gray; border-width: 1px;">
-            <td align="left">X-Tudo</td>
-            <td align="right">R$ 5,00</td>
-          </tr>
-          <tr style="border-bottom-style: dotted; border-color:gray; border-width: 1px;">
-            <td align="left">Creme de Morango 400 Ml</td>
-            <td align="right">R$ 3,00</td>
-          </tr>
-          <tr style="border-bottom-style: dotted; border-color:gray; border-width: 1px;">
-            <td align="left">Suco de Uva 400 Ml</td>
-            <td align="right">R$ 2,00</td>
-          </tr>
-          <tr style="border-bottom-style: dotted; border-color:gray; border-width: 1px;">
-            <td align="left">Chocoloate</td>
-            <td align="right">R$ 5,00</td>
-          </tr>                                        
+        <table width="100%" name="tlbItensComanda" id="tlbItensComanda">
+          <tbody id="bodyTlbComanda">
+            <tr class="dotted">
+              <td align="left">Pizza Moda</td>
+              <td align="right">R$ 25,00</td>
+            </tr>
+          </tbody>                                      
         </table>
       </div>
       <br/>
@@ -220,7 +206,71 @@
 </div>
 
 <script>
-  //$( "div.divCategorias" ).html( "<button type='button' class='btn btn-default btn-lg'>teste</button> " );
+
+function excluiItensPedidos(id) {
+
+  $.ajax({
+    url: '<%= exclui_itempedido_path %>',
+    data : 
+    {
+        id : id
+    },
+    success: function(data){
+
+      buscaItensPedidos(1);
+
+    }
+  })  
+}
+
+function buscaItensPedidos(fd_pedido_id) {
+
+  $.ajax({
+    url: '<%= busca_itempedido_path %>',
+    data : 
+    {
+        fd_pedido_id : fd_pedido_id
+    },
+    success: function(data){
+
+          $("#bodyTlbItensPedidos").empty();
+          $("#bodyTlbComanda").empty();
+
+      for (var i in data) {
+        var item = data[i];
+
+          $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td>'+item.valr_item+'</td><td align="right"><div class="btn-group" role="group"><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
+
+          $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+'</td><td>'+item.valr_item+'</td><td align="right"></td></tr>');                         
+
+      };
+
+    }
+  })  
+}
+
+function incluiItemPedido(fd_variacaoproduto_id,valr_produto) {
+
+  $.ajax({
+    url: '<%= insere_itempedido_path %>',
+    data : 
+    {
+        desc_observacao : "desc_observacao"
+        ,valr_item : valr_produto
+        ,tipo_atendimento : 'tipo_atendimento'
+        ,fd_variacaoproduto_id : fd_variacaoproduto_id
+        ,fd_pedido_id : 1
+        ,fd_status_id : 1
+        ,fd_funcionario_id : 1
+    },
+    success: function(data){
+
+      $('#mdVariacoes').modal('hide')
+      buscaItensPedidos(1);
+    }
+  })  
+}
+
 
 function incluiItem(fd_produto_id) {
 
@@ -267,7 +317,7 @@ function buscaVariacoes(fd_produto_id) {
       for (var i in data) {
         var item = data[i];
 
-          $("div.divVariacoes").append('<a href="#" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
+          $("div.divVariacoes").append('<a href="javascript:incluiItemPedido('+item.id+','+item.valr_produto+')" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
 
       };
 
@@ -326,4 +376,5 @@ function buscaprodutos(fd_categoriaproduto_id) {
 }
 
 buscaCategorias();
+buscaItensPedidos(1);
 </script>

@@ -1,0 +1,49 @@
+<%= form_for(@fd_pedido) do |f| %>
+  <% if @fd_pedido.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_pedido.errors.count, "error") %> prohibited this fd_pedido from being saved:</h2>
+
+      <ul>
+      <% @fd_pedido.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :valr_pedido %><br>
+    <%= f.text_field :valr_pedido %>
+  </div>
+  <div class="field">
+    <%= f.label :flag_pago %><br>
+    <%= f.check_box :flag_pago %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_empresa_id %><br>
+    <%= f.text_field :fd_empresa_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_cliente_id %><br>
+    <%= f.text_field :fd_cliente_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_mesa_id %><br>
+    <%= f.text_field :fd_mesa_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_funcionario_id %><br>
+    <%= f.text_field :fd_funcionario_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_formapagamento_id %><br>
+    <%= f.text_field :fd_formapagamento_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_status_id %><br>
+    <%= f.text_field :fd_status_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,5 +1,11 @@
 Food::Application.routes.draw do
 
+  resources :fd_itempedidos
+
+  resources :fd_itempedidos
+
+  resources :fd_pedidos
+
   resources :fd_categoriaprodutos
 
   resources :fd_produtos
@@ -52,5 +58,8 @@ Food::Application.routes.draw do
   match '/buscaCategoriaProdutos', to: 'fd_categoriaprodutos#buscaCategoriaProdutos', via: 'get'
   match '/busca_produtos', to: 'fd_produtos#busca_produtos', via: 'get'
   match '/busca_variacaoprodutos', to: 'fd_variacaoprodutos#busca_variacaoprodutos', via: 'get'
+  match '/insere_itempedido', to: 'fd_itempedidos#insere_itempedido', via: 'get'
+  match '/busca_itempedido', to: 'fd_itempedidos#busca_itempedido', via: 'get'
+  match '/exclui_itempedido', to: 'fd_itempedidos#exclui_itempedido', via: 'get'
 
 end

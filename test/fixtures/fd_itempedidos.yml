@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  desc_observacao: MyString
+  valr_item: 9.99
+  tipo_atendimento: MyString
+  fd_empresa_id: 
+  fd_variacaoproduto_id: 
+  fd_pedido_id: 
+  fd_status_id: 
+  fd_funcionario_id: 
+
+two:
+  desc_observacao: MyString
+  valr_item: 9.99
+  tipo_atendimento: MyString
+  fd_empresa_id: 
+  fd_variacaoproduto_id: 
+  fd_pedido_id: 
+  fd_status_id: 
+  fd_funcionario_id: 

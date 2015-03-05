@@ -1,0 +1,49 @@
+<%= form_for(@fd_itempedido) do |f| %>
+  <% if @fd_itempedido.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_itempedido.errors.count, "error") %> prohibited this fd_itempedido from being saved:</h2>
+
+      <ul>
+      <% @fd_itempedido.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :desc_observacao %><br>
+    <%= f.text_field :desc_observacao %>
+  </div>
+  <div class="field">
+    <%= f.label :valr_item %><br>
+    <%= f.text_field :valr_item %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo_atendimento %><br>
+    <%= f.text_field :tipo_atendimento %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_empresa_id %><br>
+    <%= f.text_field :fd_empresa_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_variacaoproduto_id %><br>
+    <%= f.text_field :fd_variacaoproduto_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_pedido_id %><br>
+    <%= f.text_field :fd_pedido_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_status_id %><br>
+    <%= f.text_field :fd_status_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_funcionario_id %><br>
+    <%= f.text_field :fd_funcionario_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
