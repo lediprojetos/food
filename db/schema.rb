@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305004524) do
+ActiveRecord::Schema.define(version: 20150305202508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -300,6 +300,7 @@ ActiveRecord::Schema.define(version: 20150305004524) do
     t.integer  "fd_empresa_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "flag_global"
   end
 
   add_index "fd_variacaos", ["fd_empresa_id"], name: "index_fd_variacaos_on_fd_empresa_id", using: :btree
