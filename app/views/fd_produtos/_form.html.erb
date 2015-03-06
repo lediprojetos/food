@@ -55,7 +55,7 @@
       <div class="row mar-bot40">
         <div class="col-lg-4">  
           <div class="checkbox">
-            <label><input type="checkbox" id ="check" onclick ="teste()"value="">Produto Único</label>
+            <label><input type="checkbox" id ="check" onclick ="marcacheck()" value="">Produto Único ?</label>
           </div>
         </div>
       </div>
@@ -68,10 +68,10 @@
           </div>
         <div class="col-lg-2">
          <b>Valor Produto</b> 
-          <input id="nome_lider" name="nome_lider" value="<%=%>" onkeypress="" type="text" class="form-control">
+          <input id="valor_produto" name="valor_produto" value="<%=%>" onkeypress="" type="text" class="form-control">
         </div>
       <div class="row" style="margin-top:20px; margin-left:30px;">
-          <button id="bntSalvar" type="button" class="btn btn-success" onclick="setaPeriodo('custom');">Incluir</button>
+          <button id="bntSalvar" type="button" class="btn btn-success" onclick="salva();">Incluir</button>
       </div>
      </div>
      </div>
@@ -82,21 +82,90 @@
 
 <hr/>
 
-<div class="btn-group" role="group" aria-label="...">
-  <button type="submit" class="btn btn-primary btn">
-    </span> Salvar
-  </button>  
+<% if not @fd_produto %>
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="submit" class="btn btn-primary btn">
+        </span> Salvar
+      </button>  
+<%else%>
+
+  <input type="hidden" name="fd_produto_id" id="fd_produto_id" value ="<%=@fd_produto.id%>">
 
 <% end %>
+<%end%>
+
+
+
+<table class="table table-hover" id="tlbparticipantes">
+  <thead>
+    <tr>
+      <th>Variação:</th>
+      <th>Preço</th>
+      <th></th>     
+    </tr>
+  </thead>
+  <tbody>
+    <%@variacao_produto.each do |variacao| %>
+      <tr>
+        <td><%= variacao.desc_variacao %></td>
+        <td><%= variacao.valr_produto %></td>
+        <td align='right'>
+        <a class="btn btn-default btn-sm" title="" rel="tooltip" href="/sivic_relatorioscelulas/<%=sivic_partevenrelacelula.sivic_relatorioscelula.id%>/sivic_partevenrelacelulas/<%=sivic_partevenrelacelula.id%>" data-method="delete" data-confirm="Deseja excluir o registro?" data-original-title="Excluir"><span class="glyphicon glyphicon-trash" rel="tooltip"></span>
+        </a>  
+        </div>
+      </tr>
+    <% end %>
+  </tbody>
+
 
 
 <script>
 
-$('.checkbox').checkbox();
-
-
-function teste(){
-  alert("fdsd");
+function marcacheck(){
+    
+   if($("#check").is(":checked")){ 
+       $("#variacao_id").attr('disabled', 'disabled');
+     }else{
+      $("#variacao_id").removeAttr('disabled'); 
+    }  
 }
+
+  $(function() {
+     $("#valor_produto").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+  })
+
+
+function salva(){
+    var variacao 
+
+    if($("#check").is(":checked")){ 
+       variacao = 1
+     }else{
+       variacao = $("#variacao_id").val() 
+    } 
+
+    $.ajax({
+        url: '<%= insere_variacao_produto_path %>',
+        data :
+        {
+           valr_produto : $('#valor_produto').val()
+          ,fd_variaco_id : variacao
+          ,fd_produto_id: $('#fd_produto_id').val()
+
+    },
+
+    success: function(data){
+
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+           };
+
+         } 
+       })      
+    
+  }
+
 
 </script>

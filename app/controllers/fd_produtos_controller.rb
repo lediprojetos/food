@@ -16,6 +16,23 @@ class FdProdutosController < ApplicationController
     @fd_produtos = FdProduto.all
   end
 
+
+ def salva_variacao_produto
+
+  @fd_variacao_produto = FdVariacaoproduto.new
+  
+  @fd_variacao_produto.valr_produto = params[:valr_produto]
+  @fd_variacao_produto.fd_variaco_id = params[:fd_variaco_id]
+  @fd_variacao_produto.fd_produto_id = params[:fd_produto_id]
+
+  @fd_variacao_produto.save
+
+  fd_variacao = FdVariacaoproduto.where(fd_produto_id: params[:fd_produto_id])
+
+  fd_variacao_json = fd_variacao.map{|item|{:id => item.id, :valr_produto => item.valr_produto, :variacao => item.fd_variacao.desc_variacao}} 
+  render :json => fd_variacao_json
+
+ end
   # GET /fd_produtos/1
   def show
   end
@@ -27,6 +44,7 @@ class FdProdutosController < ApplicationController
 
   # GET /fd_produtos/1/edit
   def edit
+    @variacao_produto = FdVariacaoproduto.where(fd_produto_id: params[:fd_produto_id])
   end
 
   # POST /fd_produtos
