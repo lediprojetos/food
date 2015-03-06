@@ -3,10 +3,10 @@
   <div class="col-lg-8">
     <div class="tabbable">
       <ul class="nav nav-tabs">
-        <li >
+        <li class="active">
           <a href="#tab1" data-toggle="tab">Pedido</a>
         </li>
-        <li class="active">
+        <li >
           <a href="#tab2" data-toggle="tab">Produtos</a>
         </li>
         <li>
@@ -14,7 +14,7 @@
         </li>               
       </ul>
       <div class="tab-content">
-        <div class="tab-pane" id="tab1">
+        <div class="tab-pane active" id="tab1">
           <br/>
           <div class="panel panel-default">
             <div class="panel-heading"><strong>Mesa 04</strong></div>
@@ -31,7 +31,7 @@
               </table>
             </div>
           </div>
-        <div class="tab-pane active" id="tab2">
+        <div class="tab-pane" id="tab2">
           <br/>
           <div class="divCategorias">
             <div class="row mar-bot40">
@@ -230,7 +230,25 @@
 
 //$('#mdIngredientes').modal('show');
 
-function buscaIngredientes(fd_produto_id) {
+function alteraingredientes(fd_itempedido_id,numr_acao,fd_items_id) {
+
+  $.ajax({
+    url: '<%= insere_ingredientealterado_path %>',
+    data : 
+    {
+        fd_items_id : fd_items_id
+        ,fd_itempedido_id : fd_itempedido_id
+        ,numr_acao : numr_acao
+
+    },
+    success: function(data){
+      buscaIngredientes(fd_itempedido_id);
+    }
+  })  
+}
+
+
+function buscaIngredientes(fd_itempedido_id) {
 
   //alert('lol');
 
@@ -238,7 +256,7 @@ function buscaIngredientes(fd_produto_id) {
     url: '<%= busca_item_path %>',
     data : 
     {
-        fd_produto_id : fd_produto_id
+        fd_itempedido_id : fd_itempedido_id
 
     },
     success: function(data){
@@ -248,7 +266,11 @@ function buscaIngredientes(fd_produto_id) {
       for (var i in data) {
         var item = data[i];
 
-          $('#tlbIngredientes').append('<tr><td>'+item.desc_item+'</td><td></td><td align="right"></td><td align="right"><button type="button" onclick=""class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');    
+          if(item.numr_qtd == null){
+              item.numr_qtd = ""
+          };
+
+          $('#tlbIngredientes').append('<tr><td>'+item.desc_item+'</td><td><span class="badge">'+item.numr_qtd+'</span></td><td align="right"></td><td align="right"><button type="button" onclick="alteraingredientes('+item.fd_itempedido_id+',0,'+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="alteraingredientes('+item.fd_itempedido_id+',1,'+item.id+')" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');    
 
       };      
 
@@ -293,7 +315,7 @@ function buscaItensPedidos(fd_pedido_id) {
       for (var i in data) {
         var item = data[i];
 
-          $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaIngredientes('+item.fd_produto_id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
+          $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
 
           $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+'</td><td>'+item.valr_item+'</td><td align="right"></td></tr>');                         
 
@@ -302,27 +324,6 @@ function buscaItensPedidos(fd_pedido_id) {
     }
   })  
 }
-
-
-function alterapedido(fd_itempedido_id) {
-
-  //alert('lol');
-
-  $.ajax({
-    url: '<%= dobra_itempedido_path %>',
-    data : 
-    {
-        fd_itempedido_id : fd_itempedido_id
-
-    },
-    success: function(data){
-
-      $('#mdVariacoes').modal('hide')
-      buscaItensPedidos(1);
-    }
-  })  
-}
-
 
 function dobraItemPedido(fd_itempedido_id) {
 
