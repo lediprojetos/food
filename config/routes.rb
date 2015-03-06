@@ -66,7 +66,11 @@ Food::Application.routes.draw do
   match '/exclui_itempedido', to: 'fd_itempedidos#exclui_itempedido', via: 'get'
   match '/insere_variacao_produto', to: 'fd_produtos#salva_variacao_produto', via: 'get'
   match '/busca_item', to: 'fd_itensprodutos#busca_item', via: 'get'
+<<<<<<< HEAD
   match '/insere_ingredientealterado', to: 'fd_itemalterados#insere_ingredientealterado', via: 'get'
+=======
+  match '/exclui_variacao_produto', to: 'fd_produtos#exclui_variacao_produto', via: 'get'
+>>>>>>> 64f2fc852de37fc59bf0ce2670ff49fb02df9ed0
 
 
 end

@@ -325,6 +325,27 @@ function buscaItensPedidos(fd_pedido_id) {
   })  
 }
 
+
+function alterapedido(fd_itempedido_id) {
+
+  //alert('lol');
+
+  $.ajax({
+    url: '<%= dobra_itempedido_path %>',
+    data : 
+    {
+        fd_itempedido_id : fd_itempedido_id
+
+    },
+    success: function(data){
+
+      $('#mdVariacoes').modal('hide')
+      buscaItensPedidos(1);
+    }
+  })  
+}
+
+
 function dobraItemPedido(fd_itempedido_id) {
 
   //alert('lol');

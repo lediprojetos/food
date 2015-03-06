@@ -50,12 +50,12 @@
       </div> 
     </div>
 
-     <div class="tab-pane" id="tab2">
+    <div class="tab-pane" id="tab2">
        <br/>
       <div class="row mar-bot40">
         <div class="col-lg-4">  
           <div class="checkbox">
-            <label><input type="checkbox" id ="check" onclick ="marcacheck()" value="">Produto Único ?</label>
+            <label><input type="checkbox" id ="check" onclick ="marcacheck()" value="">Tamanho Único ?</label>
           </div>
         </div>
       </div>
@@ -64,17 +64,51 @@
       <div class="row mar-bot40">
           <div class="col-lg-4"> 
            <b>Variação</b>      
-            <%= select_tag("variacao_id", options_from_collection_for_select(FdVariacao.all, 'id', 'desc_variacao'),{:onchange => 'changeState(this)', :class => 'form-control' }) %>
+            <%= select_tag "variacao_id", options_from_collection_for_select(FdVariacao.all, 'id', 'desc_variacao'), include_blank: true, :class => 'form-control'%>
+
           </div>
         <div class="col-lg-2">
          <b>Valor Produto</b> 
           <input id="valor_produto" name="valor_produto" value="<%=%>" onkeypress="" type="text" class="form-control">
         </div>
-      <div class="row" style="margin-top:20px; margin-left:30px;">
+      <div class="row" style="margin-top:18px; margin-left:30px;">
           <button id="bntSalvar" type="button" class="btn btn-success" onclick="salva();">Incluir</button>
       </div>
      </div>
-     </div>
+
+    <br/>
+
+
+<div class="row mar-bot40">
+<div style="display:block">
+  <div class="panel panel-default" style="width:650px; margin-left:10px;">
+    <div class="panel-heading"><strong>Variações</strong></div>
+     <table class="table table-hover"  id="tlbvariacao">
+      <thead>
+        <tr>
+          <th>Variação:</th>
+          <th>Preço</th>
+          <th></th>     
+        </tr>
+      </thead>
+      <tbody id="tlbvariacaolis">
+        <%@variacao_produto.each do |variacao| %>
+          <tr>
+            <td><%= variacao.fd_variacao.desc_variacao%></td>
+            <td><%= variacao.valr_produto %></td>
+            <td align='right'>
+              <button type="button" onclick="excluiIVariacaoProduto('<%=variacao.id%>')"class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+            </td> 
+          </tr>
+        <% end %>
+      </tbody>
+     </table>
+      </div>
+    </div>
+  </div>
+  
+   </div>
+
       <div class="tab-pane" id="tab3">
        3    
      </div>
@@ -95,45 +129,18 @@
 <%end%>
 
 
-
-<table class="table table-hover" id="tlbparticipantes">
-  <thead>
-    <tr>
-      <th>Variação:</th>
-      <th>Preço</th>
-      <th></th>     
-    </tr>
-  </thead>
-  <tbody>
-    <%@variacao_produto.each do |variacao| %>
-      <tr>
-        <td><%= variacao.desc_variacao %></td>
-        <td><%= variacao.valr_produto %></td>
-        <td align='right'>
-        <a class="btn btn-default btn-sm" title="" rel="tooltip" href="/sivic_relatorioscelulas/<%=sivic_partevenrelacelula.sivic_relatorioscelula.id%>/sivic_partevenrelacelulas/<%=sivic_partevenrelacelula.id%>" data-method="delete" data-confirm="Deseja excluir o registro?" data-original-title="Excluir"><span class="glyphicon glyphicon-trash" rel="tooltip"></span>
-        </a>  
-        </div>
-      </tr>
-    <% end %>
-  </tbody>
-
-
-
 <script>
 
 function marcacheck(){
     
    if($("#check").is(":checked")){ 
+       $("#variacao_id").attr('selected','selected');
+        $('#variacao_id').val("");
        $("#variacao_id").attr('disabled', 'disabled');
      }else{
       $("#variacao_id").removeAttr('disabled'); 
     }  
 }
-
-  $(function() {
-     $("#valor_produto").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
-  })
-
 
 function salva(){
     var variacao 
@@ -155,10 +162,12 @@ function salva(){
     },
 
     success: function(data){
-
+         $("#tlbvariacaolis").empty();
          var options = "";
          for (var i in data){
           var item = data[i];
+
+          $('#tlbvariacao').append('<tr><td>'+item.desc_variacao+'</td><td>'+item.valr_produto+'</td><td align="right"><button type="button" onclick="excluiIVariacaoProduto('+item.id+');" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td></tr>')
 
            };
 
@@ -166,6 +175,35 @@ function salva(){
        })      
     
   }
+ 
 
+  function excluiIVariacaoProduto(id){ 
+    $.ajax({
+        url: '<%= exclui_variacao_produto_path %>',
+        data :
+      {
+
+          fd_variacoproduto_id : id
+          ,fd_produto_id: $('#fd_produto_id').val()
+      },
+
+    success: function(data){
+         $("#tlbvariacaolis").empty();
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+             $('#tlbvariacao').append('<tr><td>'+item.desc_variacao+'</td><td>'+item.valr_produto+'</td><td align="right"><button type="button" onclick="excluiIVariacaoProduto('+item.id+');" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td></tr>')
+           };
+
+         } 
+       }) 
+
+  }
+
+
+ // $(function() {
+ //    $("#valor_produto").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+ // })
 
 </script>
