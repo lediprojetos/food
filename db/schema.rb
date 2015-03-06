@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305202508) do
+ActiveRecord::Schema.define(version: 20150306011121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,18 @@ ActiveRecord::Schema.define(version: 20150305202508) do
   add_index "fd_funcionarios", ["fd_empresa_id"], name: "index_fd_funcionarios_on_fd_empresa_id", using: :btree
   add_index "fd_funcionarios", ["fd_endereco_id"], name: "index_fd_funcionarios_on_fd_endereco_id", using: :btree
 
+  create_table "fd_itemalterados", force: true do |t|
+    t.integer  "numr_acao"
+    t.integer  "numr_quntidade"
+    t.integer  "fd_itempedido_id"
+    t.integer  "fd_items_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_itemalterados", ["fd_itempedido_id"], name: "index_fd_itemalterados_on_fd_itempedido_id", using: :btree
+  add_index "fd_itemalterados", ["fd_items_id"], name: "index_fd_itemalterados_on_fd_items_id", using: :btree
+
   create_table "fd_itempedidos", force: true do |t|
     t.string   "desc_observacao"
     t.decimal  "valr_item"
@@ -237,14 +249,15 @@ ActiveRecord::Schema.define(version: 20150305202508) do
     t.float    "numr_porcentagem"
     t.integer  "fd_empresa_id"
     t.integer  "fd_categoriaproduto_id"
-    t.integer  "fd_usuario_id"
+    t.integer  "user_inclusao"
+    t.integer  "integer"
+    t.integer  "user_exclusao"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "fd_produtos", ["fd_categoriaproduto_id"], name: "index_fd_produtos_on_fd_categoriaproduto_id", using: :btree
   add_index "fd_produtos", ["fd_empresa_id"], name: "index_fd_produtos_on_fd_empresa_id", using: :btree
-  add_index "fd_produtos", ["fd_usuario_id"], name: "index_fd_produtos_on_fd_usuario_id", using: :btree
 
   create_table "fd_produtoscombos", force: true do |t|
     t.integer  "fd_produto_id"
@@ -253,16 +266,6 @@ ActiveRecord::Schema.define(version: 20150305202508) do
   end
 
   add_index "fd_produtoscombos", ["fd_produto_id"], name: "index_fd_produtoscombos_on_fd_produto_id", using: :btree
-
-  create_table "fd_servicos", force: true do |t|
-    t.string   "desc_servico"
-    t.integer  "numr_porcentagem"
-    t.decimal  "valr_servico"
-    t.boolean  "flag_ativo"
-    t.datetime "data_exclusao"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "fd_statuses", force: true do |t|
     t.string   "nome_status"

@@ -1,6 +1,17 @@
 class FdItensprodutosController < ApplicationController
   before_action :set_fd_itensproduto, only: [:show, :edit, :update, :destroy]
 
+  def busca_item
+
+    fd_itensprodutos = FdItensproduto.where(:fd_produto_id => params[:fd_produto_id])
+    #qtd = fd_itenspedidos.group(:fd_variacaoproduto_id).count
+
+
+    fd_itensprodutos_json = fd_itensprodutos.map {|item| {:id => item.id, :fd_produto_id => item.fd_produto_id, :fd_item_id => item.fd_item_id, :desc_item => item.fd_item.desc_item}}
+    render :json => fd_itensprodutos_json
+
+  end  
+
   # GET /fd_itensprodutos
   def index
     @fd_itensprodutos = FdItensproduto.all
