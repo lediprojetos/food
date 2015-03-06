@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305202508) do
+ActiveRecord::Schema.define(version: 20150306011121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,6 +136,18 @@ ActiveRecord::Schema.define(version: 20150305202508) do
   add_index "fd_funcionarios", ["fd_cargo_id"], name: "index_fd_funcionarios_on_fd_cargo_id", using: :btree
   add_index "fd_funcionarios", ["fd_empresa_id"], name: "index_fd_funcionarios_on_fd_empresa_id", using: :btree
   add_index "fd_funcionarios", ["fd_endereco_id"], name: "index_fd_funcionarios_on_fd_endereco_id", using: :btree
+
+  create_table "fd_itemalterados", force: true do |t|
+    t.integer  "numr_acao"
+    t.integer  "numr_quntidade"
+    t.integer  "fd_itempedido_id"
+    t.integer  "fd_items_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_itemalterados", ["fd_itempedido_id"], name: "index_fd_itemalterados_on_fd_itempedido_id", using: :btree
+  add_index "fd_itemalterados", ["fd_items_id"], name: "index_fd_itemalterados_on_fd_items_id", using: :btree
 
   create_table "fd_itempedidos", force: true do |t|
     t.string   "desc_observacao"

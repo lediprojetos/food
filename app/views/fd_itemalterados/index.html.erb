@@ -1,0 +1,33 @@
+<h1>Listing fd_itemalterados</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Numr acao</th>
+      <th>Numr quntidade</th>
+      <th>Fd itempedido</th>
+      <th>Fd items</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_itemalterados.each do |fd_itemalterado| %>
+      <tr>
+        <td><%= fd_itemalterado.numr_acao %></td>
+        <td><%= fd_itemalterado.numr_quntidade %></td>
+        <td><%= fd_itemalterado.fd_itempedido %></td>
+        <td><%= fd_itemalterado.fd_items %></td>
+        <td><%= link_to 'Show', fd_itemalterado %></td>
+        <td><%= link_to 'Edit', edit_fd_itemalterado_path(fd_itemalterado) %></td>
+        <td><%= link_to 'Destroy', fd_itemalterado, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd itemalterado', new_fd_itemalterado_path %>

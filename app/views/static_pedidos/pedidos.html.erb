@@ -18,12 +18,11 @@
           <br/>
           <div class="panel panel-default">
             <div class="panel-heading"><strong>Mesa 04</strong></div>
-              <table class="table table-hover" name="tlbItensPedidos" id="tlbItensPedidos">
+              <table class="table table-hover " name="tlbItensPedidos" id="tlbItensPedidos">
                 <thead>
                   <tr>
                     <th>Produto</th>
                     <th>Variação</th>
-                    <th>Preço</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -196,6 +195,28 @@
   </div>
 </div>
 
+<div class="modal fade" id="mdIngredientes">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Ingredientes</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Tabela -->
+        <table class="table table-hover" name="tlbIngredientes" id="tlbIngredientes">
+          <tbody id="bodyIngredientes">
+          </tbody>                                      
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="modal fade bs-example-modal-sm" id="mdVariacoes" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -206,6 +227,39 @@
 </div>
 
 <script>
+
+//$('#mdIngredientes').modal('show');
+
+function buscaIngredientes(fd_produto_id) {
+
+  //alert('lol');
+
+  $.ajax({
+    url: '<%= busca_item_path %>',
+    data : 
+    {
+        fd_produto_id : fd_produto_id
+
+    },
+    success: function(data){
+
+      $("#bodyIngredientes").empty();
+
+      for (var i in data) {
+        var item = data[i];
+
+          $('#tlbIngredientes').append('<tr><td>'+item.desc_item+'</td><td></td><td align="right"></td><td align="right"><button type="button" onclick=""class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');    
+
+      };      
+
+      if (data.length > 0){
+        $('#mdIngredientes').modal('show')
+
+      };
+    }
+  })  
+}
+
 
 function excluiItensPedidos(id) {
 
@@ -239,7 +293,7 @@ function buscaItensPedidos(fd_pedido_id) {
       for (var i in data) {
         var item = data[i];
 
-          $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td>'+item.valr_item+'</td><td align="right"><div class="btn-group" role="group"><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
+          $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaIngredientes('+item.fd_produto_id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
 
           $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+'</td><td>'+item.valr_item+'</td><td align="right"></td></tr>');                         
 
@@ -248,6 +302,27 @@ function buscaItensPedidos(fd_pedido_id) {
     }
   })  
 }
+
+
+function alterapedido(fd_itempedido_id) {
+
+  //alert('lol');
+
+  $.ajax({
+    url: '<%= dobra_itempedido_path %>',
+    data : 
+    {
+        fd_itempedido_id : fd_itempedido_id
+
+    },
+    success: function(data){
+
+      $('#mdVariacoes').modal('hide')
+      buscaItensPedidos(1);
+    }
+  })  
+}
+
 
 function dobraItemPedido(fd_itempedido_id) {
 

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  numr_acao: 1
+  numr_quntidade: 1
+  fd_itempedido_id: 
+  fd_items_id: 
+
+two:
+  numr_acao: 1
+  numr_quntidade: 1
+  fd_itempedido_id: 
+  fd_items_id: 
