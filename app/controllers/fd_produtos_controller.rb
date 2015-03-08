@@ -41,7 +41,7 @@ end
 
 def exclui_variacao_produto
 
- @fd_variacao_produto = FdVariacaoproduto.find(params[:fd_variacoproduto_id])
+  @fd_variacao_produto = FdVariacaoproduto.find(params[:fd_variacoproduto_id])
 
   @fd_variacao_produto.destroy 
 
@@ -53,12 +53,14 @@ def exclui_variacao_produto
 end
 
   # GET /fd_produtos/1
+  
   def show
   end
 
   # GET /fd_produtos/new
   def new
     @fd_produto = FdProduto.new
+    @variacao_produto = FdVariacaoproduto.where(fd_produto_id: params[:id])
   end
 
   # GET /fd_produtos/1/edit
