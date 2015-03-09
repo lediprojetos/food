@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fd_intensadicional_id: 
+  fd_itempedido_id: 
+  numr_quantidade: 1
+
+two:
+  fd_intensadicional_id: 
+  fd_itempedido_id: 
+  numr_quantidade: 1

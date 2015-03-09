@@ -1,0 +1,31 @@
+<h1>Listing fd_adicionaisinclusos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fd intensadicional</th>
+      <th>Fd itempedido</th>
+      <th>Numr quantidade</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_adicionaisinclusos.each do |fd_adicionaisincluso| %>
+      <tr>
+        <td><%= fd_adicionaisincluso.fd_intensadicional %></td>
+        <td><%= fd_adicionaisincluso.fd_itempedido %></td>
+        <td><%= fd_adicionaisincluso.numr_quantidade %></td>
+        <td><%= link_to 'Show', fd_adicionaisincluso %></td>
+        <td><%= link_to 'Edit', edit_fd_adicionaisincluso_path(fd_adicionaisincluso) %></td>
+        <td><%= link_to 'Destroy', fd_adicionaisincluso, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd adicionaisincluso', new_fd_adicionaisincluso_path %>

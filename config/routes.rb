@@ -1,5 +1,7 @@
 Food::Application.routes.draw do
 
+  resources :fd_adicionaisinclusos
+
   resources :fd_itemalterados
 
   resources :fd_itempedidos
@@ -70,5 +72,7 @@ Food::Application.routes.draw do
   match '/exclui_variacao_produto', to: 'fd_produtos#exclui_variacao_produto', via: 'get'
   match '/busca_items', to: 'fd_produtos#busca_item', via: 'get'
   match '/busca_itemsproduto', to: 'fd_produtos#busca_item_produto', via: 'get'
+  match '/busca_itemadicional', to: 'fd_itensadicionals#busca_itemadicional', via: 'get'
+  match '/insere_adicionais', to: 'fd_adicionaisinclusos#insere_adicionais', via: 'get'
 
 end

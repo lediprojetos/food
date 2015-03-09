@@ -17,7 +17,7 @@
         <div class="tab-pane active" id="tab1">
           <br/>
           <div class="panel panel-default">
-            <div class="panel-heading"><strong>Mesa 04</strong></div>
+            <div class="panel-heading"><strong>Mesa Nº</strong></div>
               <table class="table table-hover " name="tlbItensPedidos" id="tlbItensPedidos">
                 <thead>
                   <tr>
@@ -200,18 +200,32 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Ingredientes</h4>
+        <h4 id="h4Ingredientes" class="modal-title">Ingredientes</h4>
+        <h4 id="h4Adicionais" class="modal-title" style="display:none;">Adicionais</h4>
       </div>
       <div class="modal-body">
-        <!-- Tabela -->
-        <table class="table table-hover" name="tlbIngredientes" id="tlbIngredientes">
-          <tbody id="bodyIngredientes">
-          </tbody>                                      
-        </table>
+
+        <div id="divIngredientes" name="divIngredientes" style="display:block">
+          <!-- Tabela -->
+          <table class="table table-hover" name="tlbIngredientes" id="tlbIngredientes">
+            <tbody id="bodyIngredientes">
+            </tbody>                                      
+          </table>
+        </div>
+
+        <div id="divAdicionais" name="divAdicionais" style="display:none">
+          <!-- Tabela -->
+          <table class="table table-hover" name="tlbAdicionais" id="tlbAdicionais">
+            <tbody id="bodyAdicionais">
+            </tbody>                                      
+          </table>
+        </div>        
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" onclick="IngredAdiciona('ingredientes')" class="btn btn-success" >Ingredientes</button>
+        <button type="button" onclick="IngredAdiciona('adicionais')" class="btn btn-primary" >Adicionais</button>
+        <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -228,7 +242,81 @@
 
 <script>
 
-//$('#mdIngredientes').modal('show');
+function alteraAdicionais(fd_intensadicional_id,numr_acao,fd_itempedido_id) {
+
+  //alert(fd_intensadicional_id);
+  //alert(numr_acao);
+  //alert(fd_itempedido_id);
+
+  $.ajax({
+    url: '<%= insere_adicionais_path %>',
+    data : 
+    {
+        fd_intensadicional_id : fd_intensadicional_id
+        ,numr_acao : numr_acao
+        ,fd_itempedido_id : fd_itempedido_id
+
+    },
+    success: function(data){
+      buscaAdicionais(fd_itempedido_id);
+    }
+  })  
+}
+
+function IngredAdiciona(tipo) {
+
+
+  if (tipo == "ingredientes") {
+    $("#divIngredientes").show();
+    $("#h4Ingredientes").show();
+
+    $("#divAdicionais").hide();
+    $("#h4Adicionais").hide();
+  } else {
+    $("#divIngredientes").hide();
+    $("#h4Ingredientes").hide();
+
+    $("#divAdicionais").show();
+    $("#h4Adicionais").show();
+  };
+
+}
+
+function buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id) {
+
+  //alert(fd_itempedido_id);
+  //alert(fd_categoriaproduto_id);
+
+  $.ajax({
+    url: '<%= busca_itemadicional_path %>',
+    data : 
+    {
+        fd_itempedido_id : fd_itempedido_id
+        ,fd_categoriaproduto_id : fd_categoriaproduto_id
+
+    },
+    success: function(data){
+
+      $("#bodyAdicionais").empty();
+
+      for (var i in data) {
+        var item = data[i];
+
+          if(item.numr_qtd == null){
+              item.numr_qtd = ""
+          };
+
+          $('#tlbAdicionais').append('<tr><td>'+item.desc_item+'</td><td><span class="badge">'+item.numr_quantidade+'</span></td><td align="right"></td><td align="right"><button type="button" onclick="alteraAdicionais('+item.fd_intensadicional_id+',0,'+item.fd_itempedido_id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="alteraAdicionais('+item.fd_intensadicional_id+',1,'+item.fd_itempedido_id+')" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');    
+
+      };      
+
+      if (data.length > 0){
+        $('#mdIngredientes').modal('show')
+
+      };
+    }
+  })  
+}
 
 function alteraingredientes(fd_itempedido_id,numr_acao,fd_items_id) {
 
@@ -249,8 +337,6 @@ function alteraingredientes(fd_itempedido_id,numr_acao,fd_items_id) {
 
 
 function buscaIngredientes(fd_itempedido_id) {
-
-  //alert('lol');
 
   $.ajax({
     url: '<%= busca_item_path %>',
@@ -315,7 +401,7 @@ function buscaItensPedidos(fd_pedido_id) {
       for (var i in data) {
         var item = data[i];
 
-          $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
+          $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
 
           $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+'</td><td>'+item.valr_item+'</td><td align="right"></td></tr>');                         
 
