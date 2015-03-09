@@ -17,12 +17,23 @@
     <li class="active" >
       <a href="#tab1" data-toggle="tab">Produto</a>
     </li>
-    <li >
-      <a href="#tab2" data-toggle="tab">Variações</a>
-    </li>
-    <li>
-      <a href="#tab3" data-toggle="tab">Itens</a>
-    </li>
+
+  <% if not @fd_produto.id %>
+      <li class="disabled">
+        <a href="#tab2" data-toggle="tab disabled">Variações</a>
+      </li>
+      <li class="disabled">
+        <a href="#tab3" data-toggle="tab disabled">Itens</a>
+      </li>
+  <%else%>
+     <li>
+        <a href="#tab2" data-toggle="tab">Variações</a>
+      </li>
+      <li>
+        <a href="#tab3" data-toggle="tab">Itens</a>
+      </li>
+  <%end%>
+
   </ul>            
 <div class="tab-content">
     <div class="tab-pane active" id="tab1"> 
@@ -47,8 +58,22 @@
         <!--Capturando usuario logado-->
         <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
 
-      </div> 
+      </div>
+    <br/>
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="submit" class="btn btn-primary btn">
+        </span> Salvar
+      </button>  
+      <input type="hidden" name="fd_produto_id" id="fd_produto_id" value ="<%=@fd_produto.id%>">
+      <div>
+        <%= link_to fd_produtos_path, :class => "btn btn-default" do %>
+         <span aria-hidden="true">&larr;</span> Voltar
+        <% end %>
+      </div>
     </div>
+
+
+   </div>
 
     <div class="tab-pane" id="tab2">
        <br/>
@@ -108,24 +133,31 @@
   </div>
   
    </div>
-
-      <div class="tab-pane" id="tab3">
+<div class="tab-pane" id="tab3">
        
        <br/><br/>
     
 <div class="row mar-bot40">
- <div class="col-lg-2">
+ <div class="col-lg-1">
  </div> 
 
    <div class="col-lg-4"> 
-       <select multiple="multiple" id="itemlist1" style="width:300px; height:300px">
+       <select multiple="multiple" id="itemlist1" style="width:350px; height:300px">
 
        </select>
     </div>
-
+  
+   <div class="col-lg-1" style="width:40px">
+      <a class="btn btn-default btn-sm" title=""  onclick="inclui_item_produto();" style="margin-left:-16px;margin-top:110px; color:green" rel="tooltip" data-original-title="Incluir">
+           <span class="glyphicon glyphicon-forward" rel="tooltip"></span>
+      </a> 
+      <a class="btn btn-default btn-sm" title="" onclick="exclui_item_produto();" style="margin-left:-16px;color:red" rel="tooltip" data-original-title="Excluir">
+           <span class="glyphicon glyphicon-backward white" rel="tooltip"></span>
+      </a> 
+   </div>
     <div class="col-lg-4">
-        <select multiple="multiple" id="itemlist2" style="width:300px; height:300px">
-       
+        <select multiple="multiple" id="itemlist2" style="width:350px; height:300px">
+     
        </select>
       </div>
      </div>
@@ -133,7 +165,7 @@
 
 <hr/>
 
-<% if not @fd_produto %>
+<% if not @fd_produto.id %>
     <div class="btn-group" role="group" aria-label="...">
       <button type="submit" class="btn btn-primary btn">
         </span> Salvar
@@ -262,6 +294,60 @@ function salva(){
        })      
     
   }
+
+function inclui_item_produto(){
+    
+    var itemsele = $('#itemlist1 option:selected').val()
+       
+    $.ajax({
+        url: '<%= salva_item_produto_path %>',
+        data :
+        {
+          fd_produto_id: $('#fd_produto_id').val()
+          ,fd_item_id: itemsele
+        },
+
+    success: function(data){
+         $("#itemlist2").empty();
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+            $('#itemlist2').append("<option value='"+item.id+"'>"+item.desc_item+"</option")
+
+           };
+
+         } 
+       })      
+}
+
+
+function exclui_item_produto(){
+
+    var itemsele = $('#itemlist2 option:selected').val()
+       
+    $.ajax({
+        url: '<%= exclui_item_produto_path %>',
+        data :
+        {
+          fd_produto_id: $('#fd_produto_id').val()
+          ,fd_itemproduto_id: itemsele
+        },
+
+    success: function(data){
+         $("#itemlist2").empty();
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+            $('#itemlist2').append("<option value='"+item.id+"'>"+item.desc_item+"</option")
+
+           };
+
+         } 
+       })
+
+ }
 
 
 busca_item();

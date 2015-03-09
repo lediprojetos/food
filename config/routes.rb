@@ -3,41 +3,23 @@ Food::Application.routes.draw do
   resources :fd_adicionaisinclusos
 
   resources :fd_itemalterados
-
   resources :fd_itempedidos
-
   resources :fd_itempedidos
-
   resources :fd_pedidos
-
   resources :fd_categoriaprodutos
-
   resources :fd_produtos
-
   resources :fd_variacaos
-
   resources :fd_formapagamentos
-
   resources :fd_statuses
-
   resources :fd_variacaoprodutos
-
   resources :fd_itensprodutos
-
   resources :fd_itensadicionals
-
   resources :fd_items
-
   resources :fd_funcionarios
-
   resources :fd_cargos
-
   resources :fd_produtos
-
   resources :fd_categoriaprodutos
-
   resources :fd_mesas
-
   resources :fd_clientes
 
   root  'static_pages#home'
@@ -72,7 +54,13 @@ Food::Application.routes.draw do
   match '/exclui_variacao_produto', to: 'fd_produtos#exclui_variacao_produto', via: 'get'
   match '/busca_items', to: 'fd_produtos#busca_item', via: 'get'
   match '/busca_itemsproduto', to: 'fd_produtos#busca_item_produto', via: 'get'
+<<<<<<< HEAD
   match '/busca_itemadicional', to: 'fd_itensadicionals#busca_itemadicional', via: 'get'
   match '/insere_adicionais', to: 'fd_adicionaisinclusos#insere_adicionais', via: 'get'
+=======
+  match '/salva_item_produto', to: 'fd_produtos#salva_item_produto', via: 'get'
+  match '/exclui_item_produto', to: 'fd_produtos#exclui_item_produto', via: 'get'
+
+>>>>>>> f107bf59ad9273f8a7453bfcfe035bf8572a464a
 
 end
