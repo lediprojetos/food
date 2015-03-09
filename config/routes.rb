@@ -68,7 +68,7 @@ Food::Application.routes.draw do
   match '/busca_item', to: 'fd_itensprodutos#busca_item', via: 'get'
   match '/insere_ingredientealterado', to: 'fd_itemalterados#insere_ingredientealterado', via: 'get'
   match '/exclui_variacao_produto', to: 'fd_produtos#exclui_variacao_produto', via: 'get'
-
-
+  match '/busca_items', to: 'fd_produtos#busca_item', via: 'get'
+  match '/busca_itemsproduto', to: 'fd_produtos#busca_item_produto', via: 'get'
 
 end
