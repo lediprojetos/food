@@ -63,15 +63,36 @@ end
 
 def busca_item_produto   
    fd_item = FdItensproduto.where(fd_produto_id: params[:fd_produto_id])
-
    fd_item_json = fd_item.map{|item|{:id => item.id, :desc_item => item.fd_item.desc_item}}
    render :json => fd_item_json
 
 end
 
+def salva_item_produto
+   
+    @fd_itemproduto = FdItensproduto.new
+    @fd_itemproduto.fd_produto_id = params[:fd_produto_id]
+    @fd_itemproduto.fd_item_id = params[:fd_item_id]
+    @fd_itemproduto.save
+      
+    fd_item = FdItensproduto.where(fd_produto_id: params[:fd_produto_id])
+    fd_item_json = fd_item.map{|item|{:id => item.id, :desc_item => item.fd_item.desc_item}}
+    render :json => fd_item_json
 
+end
 
-  # GET /fd_produtos/1
+def exclui_item_produto
+  
+  @fd_itemproduto = FdItensproduto.find(params[:fd_itemproduto_id])
+  @fd_itemproduto.destroy
+
+  fd_item = FdItensproduto.where(fd_produto_id: params[:fd_produto_id])
+  fd_item_json = fd_item.map{|item|{:id => item.id, :desc_item => item.fd_item.desc_item}}
+  render :json => fd_item_json
+
+end
+
+# GET /fd_produtos/1
   
   def show
   end
@@ -93,7 +114,8 @@ end
     @fd_produto = FdProduto.new(fd_produto_params)
 
     if @fd_produto.save
-      redirect_to @fd_produto, notice: 'Fd produto was successfully created.'
+      #render action: 'edit'
+      redirect_to edit_fd_produto_path(@fd_produto)
     else
       render action: 'new'
     end
