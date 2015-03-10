@@ -6,7 +6,7 @@ class FdAdicionaisinclusosController < ApplicationController
 
     if params[:numr_acao] == "0"
 
-      fd_adicionaisInclusos = FdAdicionaisincluso.where(:fd_intensadicional_id => params[:fd_intensadicional_id], :fd_itempedido_id => params[:fd_itempedido_id])
+      fd_adicionaisInclusos = FdAdicionaisincluso.where(:fd_itensadicional_id => params[:fd_itensadicional_id], :fd_itempedido_id => params[:fd_itempedido_id])
 
       fd_adicionaisInclusos = fd_adicionaisInclusos.first
 
@@ -16,7 +16,7 @@ class FdAdicionaisinclusosController < ApplicationController
       else
       #Caso não exista nenhum item, ele adiciona um novo
         fd_adicionaisInclusos = FdAdicionaisincluso.new
-        fd_adicionaisInclusos.fd_intensadicional_id = params[:fd_intensadicional_id]
+        fd_adicionaisInclusos.fd_itensadicional_id = params[:fd_itensadicional_id]
         fd_adicionaisInclusos.fd_itempedido_id = params[:fd_itempedido_id]
         fd_adicionaisInclusos.numr_quantidade = -1
         fd_adicionaisInclusos.save
@@ -25,7 +25,7 @@ class FdAdicionaisinclusosController < ApplicationController
 
     else
 
-      fd_adicionaisInclusos = FdAdicionaisincluso.where(:fd_intensadicional_id => params[:fd_intensadicional_id], :fd_itempedido_id => params[:fd_itempedido_id])
+      fd_adicionaisInclusos = FdAdicionaisincluso.where(:fd_itensadicional_id => params[:fd_itensadicional_id], :fd_itempedido_id => params[:fd_itempedido_id])
 
       fd_adicionaisInclusos = fd_adicionaisInclusos.first
 
@@ -35,9 +35,9 @@ class FdAdicionaisinclusosController < ApplicationController
       else
       #Caso não exista nenhum item, ele adiciona um novo
         fd_adicionaisInclusos = FdAdicionaisincluso.new
-        fd_adicionaisInclusos.fd_intensadicional_id = params[:fd_intensadicional_id]
+        fd_adicionaisInclusos.fd_itensadicional_id = params[:fd_itensadicional_id]
         fd_adicionaisInclusos.fd_itempedido_id = params[:fd_itempedido_id]
-        fd_adicionaisInclusos.numr_quantidade = -1
+        fd_adicionaisInclusos.numr_quantidade = 1
         fd_adicionaisInclusos.save
 
       end       
@@ -45,9 +45,9 @@ class FdAdicionaisinclusosController < ApplicationController
 
     end
 
-    fd_adicionaisInclusos = FdAdicionaisincluso.where(:fd_intensadicional_id => params[:fd_intensadicional_id], :fd_itempedido_id => params[:fd_itempedido_id])
+    fd_adicionaisInclusos = FdAdicionaisincluso.where(:fd_itensadicional_id => params[:fd_itensadicional_id], :fd_itempedido_id => params[:fd_itempedido_id])
 
-    json = fd_adicionaisInclusos.map {|item| {:fd_categoriaproduto_id => item.fd_itensadicionals.fd_categoriaproduto_id, :id => item.id, :fd_intensadicional_id => item.fd_intensadicional_id, :fd_itempedido_id => item.fd_itempedido_id, :numr_quantidade => item.numr_quantidade}}
+    json = fd_adicionaisInclusos.map {|item| {:fd_categoriaproduto_id => item.fd_itensadicional.fd_categoriaproduto_id, :id => item.id, :fd_itensadicional_id => item.fd_itensadicional_id, :fd_itempedido_id => item.fd_itempedido_id, :numr_quantidade => item.numr_quantidade}}
     render :json => json
 
   end  
@@ -104,6 +104,6 @@ class FdAdicionaisinclusosController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fd_adicionaisincluso_params
-      params.require(:fd_adicionaisincluso).permit(:fd_intensadicional_id, :fd_itempedido_id, :numr_quantidade)
+      params.require(:fd_adicionaisincluso).permit(:fd_itensadicional_id, :fd_itempedido_id, :numr_quantidade)
     end
 end

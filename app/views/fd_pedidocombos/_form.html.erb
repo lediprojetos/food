@@ -1,0 +1,25 @@
+<%= form_for(@fd_pedidocombo) do |f| %>
+  <% if @fd_pedidocombo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_pedidocombo.errors.count, "error") %> prohibited this fd_pedidocombo from being saved:</h2>
+
+      <ul>
+      <% @fd_pedidocombo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fd_itempedidos_id %><br>
+    <%= f.text_field :fd_itempedidos_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fd_produtos_id %><br>
+    <%= f.text_field :fd_produtos_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
