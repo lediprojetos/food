@@ -1,6 +1,15 @@
 class FdPedidocombosController < ApplicationController
   before_action :set_fd_pedidocombo, only: [:show, :edit, :update, :destroy]
 
+  def busca_trocas
+
+    fd_produtocombo = FdPedidocombo.where(:fd_itempedidos_id => params[:fd_itempedidos_id])
+
+    fd_produtocombo_json = fd_produtocombo.map {|item| {:id => item.id, :fd_produtos_id =>  item.fd_produtos_id, :fd_itempedidos_id => item.fd_itempedidos_id, :nome_produto => item.fd_produto.nome_produto}}
+    render :json => fd_produtocombo_json
+
+  end    
+
   # GET /fd_pedidocombos
   def index
     @fd_pedidocombos = FdPedidocombo.all

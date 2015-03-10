@@ -17,15 +17,15 @@ ActiveRecord::Schema.define(version: 20150310020810) do
   enable_extension "plpgsql"
 
   create_table "fd_adicionaisinclusos", force: true do |t|
-    t.integer  "fd_intensadicional_id"
+    t.integer  "fd_itensadicional_id"
     t.integer  "fd_itempedido_id"
     t.integer  "numr_quantidade"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "fd_adicionaisinclusos", ["fd_intensadicional_id"], name: "index_fd_adicionaisinclusos_on_fd_intensadicional_id", using: :btree
   add_index "fd_adicionaisinclusos", ["fd_itempedido_id"], name: "index_fd_adicionaisinclusos_on_fd_itempedido_id", using: :btree
+  add_index "fd_adicionaisinclusos", ["fd_itensadicional_id"], name: "index_fd_adicionaisinclusos_on_fd_itensadicional_id", using: :btree
 
   create_table "fd_cargos", force: true do |t|
     t.string   "nome_cargo"

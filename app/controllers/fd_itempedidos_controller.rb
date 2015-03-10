@@ -107,18 +107,25 @@ class FdItempedidosController < ApplicationController
     fd_itenspedidos.fd_funcionario_id = params[:fd_funcionario_id]
     fd_itenspedidos.save
 
-    fd_variacao = FdVariacao.find(params[:fd_variacaoproduto_id])
+    objFdVariacaoproduto = FdVariacaoproduto.find(params[:fd_variacaoproduto_id])
 
-    if fd_variacao.fd_variacao.fd_produto.fd_categoriaproduto_id == 2
 
-      fd_produtoscombo = FdProdutocombo.where(:fd_produto_id => fd_variacao.fd_variacao.fd_produto_id)
+    if objFdVariacaoproduto.fd_produto.fd_categoriaproduto_id == 2
 
-      fd_produtoscombo.map do |t|
+      fd_produtoscombo = FdProdutocombo.where(:fd_produtos_id => objFdVariacaoproduto.fd_produto_id)
 
-        FdPedidocombo.new(fd_itenspedidos.id, fd_produtoscombo.fd_produto_combo_id)
-        
+      if not fd_produtoscombo.blank?
+        fd_produtoscombo.map do |t|
+
+          #debugger
+          obj = FdPedidocombo.new
+          obj.fd_itempedidos_id = fd_itenspedidos.id
+          obj.fd_produtos_id = t.fd_produto_combo
+          obj.save
+          #(fd_itenspedidos.id, t.fd_produto_combo)
+          
+        end
       end
-
 
 
     end
