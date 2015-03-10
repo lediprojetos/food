@@ -54,13 +54,9 @@ Food::Application.routes.draw do
   match '/exclui_variacao_produto', to: 'fd_produtos#exclui_variacao_produto', via: 'get'
   match '/busca_items', to: 'fd_produtos#busca_item', via: 'get'
   match '/busca_itemsproduto', to: 'fd_produtos#busca_item_produto', via: 'get'
-<<<<<<< HEAD
   match '/busca_itemadicional', to: 'fd_itensadicionals#busca_itemadicional', via: 'get'
   match '/insere_adicionais', to: 'fd_adicionaisinclusos#insere_adicionais', via: 'get'
-=======
   match '/salva_item_produto', to: 'fd_produtos#salva_item_produto', via: 'get'
   match '/exclui_item_produto', to: 'fd_produtos#exclui_item_produto', via: 'get'
-
->>>>>>> f107bf59ad9273f8a7453bfcfe035bf8572a464a
 
 end
