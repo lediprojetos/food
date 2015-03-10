@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150309154126) do
+ActiveRecord::Schema.define(version: 20150310020810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -234,6 +234,16 @@ ActiveRecord::Schema.define(version: 20150309154126) do
 
   add_index "fd_mesas", ["fd_empresa_id"], name: "index_fd_mesas_on_fd_empresa_id", using: :btree
 
+  create_table "fd_pedidocombos", force: true do |t|
+    t.integer  "fd_itempedidos_id"
+    t.integer  "fd_produtos_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_pedidocombos", ["fd_itempedidos_id"], name: "index_fd_pedidocombos_on_fd_itempedidos_id", using: :btree
+  add_index "fd_pedidocombos", ["fd_produtos_id"], name: "index_fd_pedidocombos_on_fd_produtos_id", using: :btree
+
   create_table "fd_pedidos", force: true do |t|
     t.decimal  "valr_pedido"
     t.boolean  "flag_pago"
@@ -253,6 +263,18 @@ ActiveRecord::Schema.define(version: 20150309154126) do
   add_index "fd_pedidos", ["fd_funcionario_id"], name: "index_fd_pedidos_on_fd_funcionario_id", using: :btree
   add_index "fd_pedidos", ["fd_mesa_id"], name: "index_fd_pedidos_on_fd_mesa_id", using: :btree
   add_index "fd_pedidos", ["fd_status_id"], name: "index_fd_pedidos_on_fd_status_id", using: :btree
+
+  create_table "fd_produtocombos", force: true do |t|
+    t.integer  "fd_produtos_id"
+    t.integer  "fd_produto_combo"
+    t.integer  "integer"
+    t.integer  "user_inclusao"
+    t.integer  "user_exclusao"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_produtocombos", ["fd_produtos_id"], name: "index_fd_produtocombos_on_fd_produtos_id", using: :btree
 
   create_table "fd_produtos", force: true do |t|
     t.string   "nome_produto"
@@ -277,6 +299,16 @@ ActiveRecord::Schema.define(version: 20150309154126) do
   end
 
   add_index "fd_produtoscombos", ["fd_produto_id"], name: "index_fd_produtoscombos_on_fd_produto_id", using: :btree
+
+  create_table "fd_produtotrocacombos", force: true do |t|
+    t.integer  "fd_produtos_id"
+    t.integer  "fd_produtocombos_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_produtotrocacombos", ["fd_produtocombos_id"], name: "index_fd_produtotrocacombos_on_fd_produtocombos_id", using: :btree
+  add_index "fd_produtotrocacombos", ["fd_produtos_id"], name: "index_fd_produtotrocacombos_on_fd_produtos_id", using: :btree
 
   create_table "fd_statuses", force: true do |t|
     t.string   "nome_status"

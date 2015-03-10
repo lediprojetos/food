@@ -1,5 +1,11 @@
 Food::Application.routes.draw do
 
+  resources :fd_produtotrocacombos
+
+  resources :fd_pedidocombos
+
+  resources :fd_produtocombos
+
   resources :fd_adicionaisinclusos
 
   resources :fd_itemalterados

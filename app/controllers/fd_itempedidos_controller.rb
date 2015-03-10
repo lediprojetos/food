@@ -97,7 +97,7 @@ class FdItempedidosController < ApplicationController
   def insere_itempedido
 
     fd_itenspedidos = FdItempedido.new
-    fd_itenspedidos.desc_observacao = params[:FdItempedido]
+    fd_itenspedidos.desc_observacao = params[:desc_observacao]
     fd_itenspedidos.valr_item = params[:valr_item]
     fd_itenspedidos.tipo_atendimento = params[:tipo_atendimento]
     fd_itenspedidos.fd_empresa_id = user.fd_empresa_id
@@ -106,6 +106,22 @@ class FdItempedidosController < ApplicationController
     fd_itenspedidos.fd_status_id = params[:fd_status_id]
     fd_itenspedidos.fd_funcionario_id = params[:fd_funcionario_id]
     fd_itenspedidos.save
+
+    fd_variacao = FdVariacao.find(params[:fd_variacaoproduto_id])
+
+    if fd_variacao.fd_variacao.fd_produto.fd_categoriaproduto_id == 2
+
+      fd_produtoscombo = FdProdutocombo.where(:fd_produto_id => fd_variacao.fd_variacao.fd_produto_id)
+
+      fd_produtoscombo.map do |t|
+
+        FdPedidocombo.new(fd_itenspedidos.id, fd_produtoscombo.fd_produto_combo_id)
+        
+      end
+
+
+
+    end
 
     fd_itenspedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id])
 

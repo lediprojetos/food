@@ -242,44 +242,29 @@
 
 <script>
 
-function alteraAdicionais(fd_intensadicional_id,numr_acao,fd_itempedido_id) {
-
-  //alert(fd_intensadicional_id);
-  //alert(numr_acao);
-  //alert(fd_itempedido_id);
+function alteraAdicionais(fd_itensadicional_id,numr_acao,fd_itempedido_id) {
 
   $.ajax({
     url: '<%= insere_adicionais_path %>',
     data : 
     {
-        fd_intensadicional_id : fd_intensadicional_id
+        fd_itensadicional_id : fd_itensadicional_id
         ,numr_acao : numr_acao
         ,fd_itempedido_id : fd_itempedido_id
 
     },
     success: function(data){
-      buscaAdicionais(fd_itempedido_id);
+      var fd_categoriaproduto_id
+
+      for (var i in data) {
+        var item = data[i];
+
+         fd_categoriaproduto_id =  item.fd_categoriaproduto_id;
+      };     
+
+      buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id);
     }
   })  
-}
-
-function IngredAdiciona(tipo) {
-
-
-  if (tipo == "ingredientes") {
-    $("#divIngredientes").show();
-    $("#h4Ingredientes").show();
-
-    $("#divAdicionais").hide();
-    $("#h4Adicionais").hide();
-  } else {
-    $("#divIngredientes").hide();
-    $("#h4Ingredientes").hide();
-
-    $("#divAdicionais").show();
-    $("#h4Adicionais").show();
-  };
-
 }
 
 function buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id) {
@@ -306,7 +291,7 @@ function buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id) {
               item.numr_qtd = ""
           };
 
-          $('#tlbAdicionais').append('<tr><td>'+item.desc_item+'</td><td><span class="badge">'+item.numr_quantidade+'</span></td><td align="right"></td><td align="right"><button type="button" onclick="alteraAdicionais('+item.fd_intensadicional_id+',0,'+item.fd_itempedido_id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="alteraAdicionais('+item.fd_intensadicional_id+',1,'+item.fd_itempedido_id+')" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');    
+          $('#tlbAdicionais').append('<tr><td>'+item.desc_item+'</td><td><span class="badge">'+item.numr_quantidade+'</span></td><td align="right"></td><td align="right"><button type="button" onclick="alteraAdicionais('+item.fd_itensadicional_id+',0,'+item.fd_itempedido_id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="alteraAdicionais('+item.fd_itensadicional_id+',1,'+item.fd_itempedido_id+')" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');    
 
       };      
 
@@ -316,6 +301,25 @@ function buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id) {
       };
     }
   })  
+}
+
+function IngredAdiciona(tipo) {
+
+
+  if (tipo == "ingredientes") {
+    $("#divIngredientes").show();
+    $("#h4Ingredientes").show();
+
+    $("#divAdicionais").hide();
+    $("#h4Adicionais").hide();
+  } else {
+    $("#divIngredientes").hide();
+    $("#h4Ingredientes").hide();
+
+    $("#divAdicionais").show();
+    $("#h4Adicionais").show();
+  };
+
 }
 
 function alteraingredientes(fd_itempedido_id,numr_acao,fd_items_id) {
@@ -563,6 +567,11 @@ function buscaCategorias(father_id) {
   })  
 }
 
+function buscaItensdoCombo(combo_id){
+
+  alert(combo_id);
+  
+}
 
 function buscaprodutos(fd_categoriaproduto_id) {
 
@@ -579,7 +588,17 @@ function buscaprodutos(fd_categoriaproduto_id) {
       for (var i in data) {
         var item = data[i];
 
-          $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+')" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');         
+          //Caso seja um combo
+          if(fd_categoriaproduto_id == 2){
+
+            $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaItensdoCombo('+item.id+')" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');              
+
+          }else {
+
+            $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+')" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');         
+
+          }
+
 
       };
 

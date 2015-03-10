@@ -7,14 +7,14 @@ class FdItensadicionalsController < ApplicationController
     query = query +  " ia.id as fd_intensadicional_id1, * "
     query = query +  " from "
     query = query +  " fd_itensadicionals ia "
-    query = query +  " left join fd_adicionaisinclusos ai on ai.fd_intensadicional_id = ia.id and fd_itempedido_id = " + params[:fd_itempedido_id].to_s
+    query = query +  " left join fd_adicionaisinclusos ai on ai.fd_itensadicional_id = ia.id and fd_itempedido_id = " + params[:fd_itempedido_id].to_s
     query = query +  " inner join fd_items it on ia.fd_item_id = it.id"
     query = query +  " where "
     query = query +  " fd_categoriaproduto_id = " + params[:fd_categoriaproduto_id].to_s
 
     results = ActiveRecord::Base.connection.execute(query);
 
-    results_json = results.map {|item| {:fd_itempedido_id => params[:fd_itempedido_id], :fd_intensadicional_id => item["fd_intensadicional_id1"], :fd_item_id => item["fd_item_id"], :desc_item => item["desc_item"], :fd_categoriaproduto_id => item["fd_categoriaproduto_id"], :valr_item => item["valr_item"], :numr_quantidade => item["numr_quantidade"].blank? ? '' : item["numr_quantidade"]}}
+    results_json = results.map {|item| {:fd_itempedido_id => params[:fd_itempedido_id], :fd_itensadicional_id => item["fd_intensadicional_id1"], :fd_item_id => item["fd_item_id"], :desc_item => item["desc_item"], :fd_categoriaproduto_id => item["fd_categoriaproduto_id"], :valr_item => item["valr_item"], :numr_quantidade => item["numr_quantidade"].blank? ? '' : item["numr_quantidade"]}}
     render :json => results_json
 
   end    

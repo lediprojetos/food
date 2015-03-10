@@ -1,0 +1,29 @@
+<h1>Listing fd_produtotrocacombos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fd produtos</th>
+      <th>Fd produtocombos</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_produtotrocacombos.each do |fd_produtotrocacombo| %>
+      <tr>
+        <td><%= fd_produtotrocacombo.fd_produtos %></td>
+        <td><%= fd_produtotrocacombo.fd_produtocombos %></td>
+        <td><%= link_to 'Show', fd_produtotrocacombo %></td>
+        <td><%= link_to 'Edit', edit_fd_produtotrocacombo_path(fd_produtotrocacombo) %></td>
+        <td><%= link_to 'Destroy', fd_produtotrocacombo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd produtotrocacombo', new_fd_produtotrocacombo_path %>
