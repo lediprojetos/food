@@ -18,25 +18,31 @@
       <a href="#tab1" data-toggle="tab">Produto</a>
     </li>
 
-  <% if not @fd_produto.id %>
+<% if not @fd_produto.id %>
       <li class="disabled">
         <a href="#tab2" data-toggle="tab disabled">Variações</a>
       </li>
       <li class="disabled">
         <a href="#tab3" data-toggle="tab disabled">Itens</a>
       </li>
-  <%else%>
+<%else%>
      <li>
         <a href="#tab2" data-toggle="tab">Variações</a>
-      </li>
-      <li>
-        <a href="#tab3" data-toggle="tab">Itens</a>
-      </li>
-  <%end%>
+     </li>
+   <%if @fd_produto.fd_categoriaproduto_id != 2%>
+        <li>
+            <a href="#tab3" data-toggle="tab">Itens</a>
+        </li>
+    <%else%>
+         <li>
+            <a href="#tab4" data-toggle="tab">Itens Combo</a>
+         </li>
+    <%end%>    
+<%end%>
 
   </ul>            
-<div class="tab-content">
-    <div class="tab-pane active" id="tab1"> 
+  <div class="tab-content">
+   <div class="tab-pane active" id="tab1"> 
       <br/>
       <div class="row mar-bot40">
           <div class="col-lg-6">
@@ -57,23 +63,18 @@
   
         <!--Capturando usuario logado-->
         <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
-
-      </div>
-    <br/>
+ </div>
+  <br>
     <div class="btn-group" role="group" aria-label="...">
-      <button type="submit" class="btn btn-primary btn">
-        </span> Salvar
-      </button>  
-      <input type="hidden" name="fd_produto_id" id="fd_produto_id" value ="<%=@fd_produto.id%>">
-      <div>
+        <button type="submit" style="width:87px" class="btn btn-primary btn">
+          </span> Salvar
+        </button>  
+        <input type="hidden" name="fd_produto_id" id="fd_produto_id" value ="<%=@fd_produto.id%>">
         <%= link_to fd_produtos_path, :class => "btn btn-default" do %>
-         <span aria-hidden="true">&larr;</span> Voltar
+            <span aria-hidden="true">&larr;</span> Voltar
         <% end %>
-      </div>
-    </div>
-
-
-   </div>
+     </div>
+</div>
 
     <div class="tab-pane" id="tab2">
        <br/>
@@ -132,51 +133,78 @@
     </div>
   </div>
   
-   </div>
-<div class="tab-pane" id="tab3">
-       
-       <br/><br/>
-    
-<div class="row mar-bot40">
- <div class="col-lg-1">
- </div> 
-
-   <div class="col-lg-4"> 
-       <select multiple="multiple" id="itemlist1" style="width:350px; height:300px">
-
-       </select>
-    </div>
-  
-   <div class="col-lg-1" style="width:40px">
-      <a class="btn btn-default btn-sm" title=""  onclick="inclui_item_produto();" style="margin-left:-16px;margin-top:110px; color:green" rel="tooltip" data-original-title="Incluir">
-           <span class="glyphicon glyphicon-forward" rel="tooltip"></span>
-      </a> 
-      <a class="btn btn-default btn-sm" title="" onclick="exclui_item_produto();" style="margin-left:-16px;color:red" rel="tooltip" data-original-title="Excluir">
-           <span class="glyphicon glyphicon-backward white" rel="tooltip"></span>
-      </a> 
-   </div>
-    <div class="col-lg-4">
-        <select multiple="multiple" id="itemlist2" style="width:350px; height:300px">
-     
-       </select>
-      </div>
-     </div>
   </div>
 
-<hr/>
 
-<% if not @fd_produto.id %>
-    <div class="btn-group" role="group" aria-label="...">
-      <button type="submit" class="btn btn-primary btn">
-        </span> Salvar
-      </button>  
-<%else%>
+ <div class="tab-pane" id="tab3">
+       <br/><br/> 
+      <div class="row mar-bot40">
+       <div class="col-lg-1">
+       </div> 
 
-  <input type="hidden" name="fd_produto_id" id="fd_produto_id" value ="<%=@fd_produto.id%>">
+         <div class="col-lg-4"> 
+             <select multiple="multiple" id="itemlist1" style="width:350px; height:300px">
 
-<% end %>
-<%end%>
+             </select>
+          </div>
+        
+         <div class="col-lg-1" style="width:40px">
+            <a class="btn btn-default btn-sm" title=""  onclick="inclui_item_produto();" style="margin-left:-16px;margin-top:110px; color:green" rel="tooltip" data-original-title="Incluir">
+                 <span class="glyphicon glyphicon-forward" rel="tooltip"></span>
+            </a> 
+            <a class="btn btn-default btn-sm" title="" onclick="exclui_item_produto();" style="margin-left:-16px;color:red" rel="tooltip" data-original-title="Excluir">
+                 <span class="glyphicon glyphicon-backward white" rel="tooltip"></span>
+            </a> 
+         </div>
+          <div class="col-lg-4">
+              <select multiple="multiple" id="itemlist2" style="width:350px; height:300px">
+           
+             </select>
+          </div>
+       </div>
+    </div>
 
+ <div class="tab-pane" id="tab4">
+    <br/>
+    <div class="row mar-bot40">
+      <div class="col-lg-1">
+      </div> 
+      <div class="col-lg-8" style="width:810px"> 
+           <b>Categoria Produto</b>      
+            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria'), include_blank: true, :onchange => 'selTipoProduto()', :class => 'form-control'%>
+      </div>
+    </div>
+    <br>
+
+      <div class="row mar-bot40">
+       <div class="col-lg-1">
+       </div> 
+
+         <div class="col-lg-4"> 
+             <select multiple="multiple" id="produtolist1" style="width:350px; height:300px">
+
+             </select>
+          </div>
+        
+         <div class="col-lg-1" style="width:40px">
+            <a class="btn btn-default btn-sm" title=""  onclick="inclui_produto_item();" style="margin-left:-16px;margin-top:110px; color:green" rel="tooltip" data-original-title="Incluir">
+                 <span class="glyphicon glyphicon-forward" rel="tooltip"></span>
+            </a> 
+            <a class="btn btn-default btn-sm" title="" onclick="exclui_produto_item();" style="margin-left:-16px;color:red" rel="tooltip" data-original-title="Excluir">
+                 <span class="glyphicon glyphicon-backward white" rel="tooltip"></span>
+            </a> 
+         </div>
+          <div class="col-lg-4">
+              <select multiple="multiple" id="produtolist2" style="width:350px; height:300px">
+           
+             </select>
+          </div>
+       </div>
+    </div>
+  
+  <hr/>
+
+ <%end%>
 
 <script>
 
@@ -349,9 +377,35 @@ function exclui_item_produto(){
 
  }
 
+ function busca_produto(){
+    $.ajax({
+        url: '<%= busca_produto_path %>',
+        data :
+        {},
+
+    success: function(data){
+         $("#produtolist1").empty();
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+          $('#produtolist1').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+
+           };
+
+         } 
+       })         
+  }
+
+function selTipoProduto(){
+
+  alert('lol');
+}
+
 
 busca_item();
 busca_itemproduto();
+busca_produto();
 
  // $(function() {
  //    $("#valor_produto").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});

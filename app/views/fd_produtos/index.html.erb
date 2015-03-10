@@ -17,7 +17,7 @@
     <% @fd_produtos.each do |fd_produto| %>
       <tr>
         <td><%= fd_produto.nome_produto %></td>
-        <td><%= fd_produto.fd_categoriaproduto %></td>
+        <td><%= fd_produto.fd_categoriaproduto.desc_categoria %></td>
         <td><%= link_to 'Exibir', fd_produto %></td>
         <td><%= link_to 'Editar', edit_fd_produto_path(fd_produto) %></td>
         <td><%= link_to 'Deletar', fd_produto, method: :delete, data: { confirm: 'Are you sure?' } %></td>

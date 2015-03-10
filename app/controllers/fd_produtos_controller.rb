@@ -92,13 +92,21 @@ def exclui_item_produto
 
 end
 
+
+def busca_produto
+  
+  fd_produto = FdProduto.all
+  fd_produto_json = fd_produto.map{|item|{:id => item.id, :nome_produto => item.nome_produto}}
+  render :json => fd_produto_json
+
+end 
 # GET /fd_produtos/1
   
-  def show
-  end
+def show
+end
 
   # GET /fd_produtos/new
-  def new
+def new
     @fd_produto = FdProduto.new
     @variacao_produto = FdVariacaoproduto.where(fd_produto_id: params[:id])
   end

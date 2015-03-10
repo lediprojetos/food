@@ -310,6 +310,16 @@ ActiveRecord::Schema.define(version: 20150310020810) do
   add_index "fd_produtotrocacombos", ["fd_produtocombos_id"], name: "index_fd_produtotrocacombos_on_fd_produtocombos_id", using: :btree
   add_index "fd_produtotrocacombos", ["fd_produtos_id"], name: "index_fd_produtotrocacombos_on_fd_produtos_id", using: :btree
 
+  create_table "fd_servicos", force: true do |t|
+    t.string   "desc_servico"
+    t.integer  "numr_porcentagem"
+    t.decimal  "valr_servico"
+    t.boolean  "flag_ativo"
+    t.datetime "data_exclusao"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "fd_statuses", force: true do |t|
     t.string   "nome_status"
     t.string   "desc_status"
