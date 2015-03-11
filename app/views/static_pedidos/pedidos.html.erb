@@ -231,6 +231,40 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="mdTrocas">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 id="h4Trocas" class="modal-title">Trocas</h4>
+        <h4 id="h4Escolhas" class="modal-title" style="display:none;">Escolhas</h4>
+      </div>
+      <div class="modal-body">
+
+        <div id="divTrocas" name="divTrocas" style="display:none">
+          <!-- Tabela -->
+          <table class="table table-hover" name="tlbTrocas" id="tlbTrocas">
+            <tbody id="bodyTrocas">
+            </tbody>                                      
+          </table>
+        </div>
+
+        <div id="divEscolhas" name="divEscolhas" style="display:none">
+          <!-- Tabela -->
+          <table class="table table-hover" name="tlbEscolhas" id="tlbEscolhas">
+            <tbody id="bodyEscolhas">
+            </tbody>                                      
+          </table>
+        </div>        
+
+      </div>
+      <div class="modal-footer">
+        <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="modal fade bs-example-modal-sm" id="mdVariacoes" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -241,6 +275,114 @@
 </div>
 
 <script>
+
+function realizaTroca(fd_itempedidos_id,fd_produtos_id_desejado,fd_produtos_id_trocado) {
+
+  alert(fd_itempedidos_id);
+  alert(fd_produtos_id_desejado);
+  alert(fd_produtos_id_trocado);
+
+
+  $.ajax({
+    url: '<%= troca_produtos_combo_path %>',
+    data : 
+    {
+        fd_itempedidos_id : fd_itempedidos_id
+        ,fd_produtos_id_desejado : fd_produtos_id_desejado
+        ,fd_produtos_id_trocado : fd_produtos_id_trocado
+    },
+    success: function(data){
+
+      if (data.length > 0){
+
+        //$("#bodyEscolhas").empty();
+        //$('#mdTrocas').modal('show')
+
+        for (var i in data) {
+          var item = data[i];
+
+            //$('#tlbEscolhas').append('<tr><td>'+item.nome_produto+'</td><td align="right"><button type="button" onclick="alteraingredientes()"class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button><button type="button" onclick="exibeDivTrocas(0);" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button></td></tr>');    
+
+        };
+
+        exibeDivTrocas(1);
+      };      
+
+    }
+  })  
+}
+
+function exibeDivTrocas(tipo) {
+
+  if (tipo == 0) {
+    $("#divEscolhas").hide();
+    $("#h4Escolhas").hide();
+    $("#divTrocas").show();
+    $("#h4Trocas").show();
+  } else {
+    $("#divEscolhas").show();
+    $("#h4Escolhas").show();
+    $("#divTrocas").hide();
+    $("#h4Trocas").hide();    
+  };
+
+}
+
+function exibeTrocas(fd_produtocombos_id,fd_itempedidos_id,fd_produtos_id) {
+
+
+  $.ajax({
+    url: '<%= busca_produto_trocas_path %>',
+    data : 
+    {
+        fd_produtocombos_id : fd_produtocombos_id
+    },
+    success: function(data){
+
+      if (data.length > 0){
+
+        $("#bodyEscolhas").empty();
+        $('#mdTrocas').modal('show')
+
+        for (var i in data) {
+          var item = data[i];
+
+            $('#tlbEscolhas').append('<tr><td>'+item.nome_produto+'</td><td align="right"><button type="button" onclick="realizaTroca('+fd_itempedidos_id+','+item.fd_produtos_id+','+fd_produtos_id+')"class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button><button type="button" onclick="exibeDivTrocas(0);" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button></td></tr>');    
+
+        };
+
+        exibeDivTrocas(1);
+      };      
+
+    }
+  })  
+}
+
+function buscaTrocas(fd_itempedidos_id) {
+
+  $.ajax({
+    url: '<%= busca_trocas_path %>',
+    data : 
+    {
+        fd_itempedidos_id : fd_itempedidos_id
+    },
+    success: function(data){
+
+      $("#bodyTrocas").empty();
+      $('#mdTrocas').modal('show')
+
+      for (var i in data) {
+        var item = data[i];
+
+          $('#tlbTrocas').append('<tr><td>'+item.nome_produto+'</td><td align="right"><button type="button" onclick="exibeTrocas('+item.fd_produtos_id+','+item.fd_itempedidos_id+','+item.fd_produtos_id+')"class="btn btn-default"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button></td></tr>');    
+
+      };
+
+      exibeDivTrocas(0);
+
+    }
+  })  
+}
 
 function alteraAdicionais(fd_itensadicional_id,numr_acao,fd_itempedido_id) {
 
@@ -381,29 +523,6 @@ function excluiItensPedidos(id) {
     success: function(data){
 
       buscaItensPedidos(1);
-
-    }
-  })  
-}
-
-function buscaTrocas(fd_itempedidos_id) {
-
-  $.ajax({
-    url: '<%= busca_trocas_path %>',
-    data : 
-    {
-        fd_itempedidos_id : fd_itempedidos_id
-    },
-    success: function(data){
-
-      for (var i in data) {
-        var item = data[i];
-
-        alert(item.nome_produto);
-
-          //$('#tlbIngredientes').append('<tr><td>'+item.desc_item+'</td><td><span class="badge">'+item.numr_qtd+'</span></td><td align="right"></td><td align="right"><button type="button" onclick="alteraingredientes('+item.fd_itempedido_id+',0,'+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="alteraingredientes('+item.fd_itempedido_id+',1,'+item.id+')" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');    
-
-      };    
 
     }
   })  
