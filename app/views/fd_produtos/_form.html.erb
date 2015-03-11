@@ -98,7 +98,7 @@
           <input id="valor_produto" name="valor_produto" value="<%=%>" onkeypress="" type="text" class="form-control">
         </div>
       <div class="row" style="margin-top:18px; margin-left:30px;">
-          <button id="bntSalvar" type="button" class="btn btn-success" onclick="salva();">Incluir</button>
+          <button id="bntSalvar" type="button" class="btn btn-success" onclick="salva_variacao();">Incluir</button>
       </div>
      </div>
 
@@ -171,7 +171,7 @@
       </div> 
       <div class="col-lg-8" style="width:810px"> 
            <b>Categoria Produto</b>      
-            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria'), include_blank: true, :onchange => 'selTipoProduto()', :class => 'form-control'%>
+            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_produto()', :class => 'form-control'%>
       </div>
     </div>
     <br>
@@ -187,10 +187,10 @@
           </div>
         
          <div class="col-lg-1" style="width:40px">
-            <a class="btn btn-default btn-sm" title=""  onclick="inclui_produto_item();" style="margin-left:-16px;margin-top:110px; color:green" rel="tooltip" data-original-title="Incluir">
+            <a class="btn btn-default btn-sm" title=""  onclick="inclui_produto_combo();" style="margin-left:-16px;margin-top:110px; color:green" rel="tooltip" data-original-title="Incluir">
                  <span class="glyphicon glyphicon-forward" rel="tooltip"></span>
             </a> 
-            <a class="btn btn-default btn-sm" title="" onclick="exclui_produto_item();" style="margin-left:-16px;color:red" rel="tooltip" data-original-title="Excluir">
+            <a class="btn btn-default btn-sm" title="" onclick="exclui_produto_combo();" style="margin-left:-16px;color:red" rel="tooltip" data-original-title="Excluir">
                  <span class="glyphicon glyphicon-backward white" rel="tooltip"></span>
             </a> 
          </div>
@@ -220,7 +220,7 @@ function marcacheck(){
     }  
 }
 
-function salva(){
+function salva_variacao(){
     var variacao 
 
     if($("#check").is(":checked")){ 
@@ -254,7 +254,6 @@ function salva(){
     
   }
  
-
   function excluiIVariacaoProduto(id){ 
     $.ajax({
         url: '<%= exclui_variacao_produto_path %>',
@@ -381,7 +380,9 @@ function exclui_item_produto(){
     $.ajax({
         url: '<%= busca_produto_path %>',
         data :
-        {},
+        {
+          categoria_produto: $('#categoria_produto').val()
+        },
 
     success: function(data){
          $("#produtolist1").empty();
@@ -397,15 +398,61 @@ function exclui_item_produto(){
        })         
   }
 
-function selTipoProduto(){
+ 
+ function busca_produto_combo(){
+    $.ajax({
+        url: '<%= busca_produto_combo_path %>',
+        data :
+        {
+           fd_produto_id: $('#fd_produto_id').val()
+        },
 
-  alert('lol');
+    success: function(data){
+         $("#produtolist1").empty();
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+          $('#produtolist1').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+
+           };
+
+         } 
+       })         
+  }
+
+
+function inclui_produto_combo(){
+
+  var itemsele = $('#produtolist1 option:selected').val()
+       
+    $.ajax({
+        url: '<%= inclui_produto_combo_path %>',
+        data :
+        {
+          fd_produto_id: $('#fd_produto_id').val()
+          ,fd_produto_combo: itemsele
+        },
+
+    success: function(data){
+         $("#itemlist2").empty();
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+            $('#itemlist2').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+
+           };
+
+         } 
+       })      
+
 }
 
 
 busca_item();
 busca_itemproduto();
-busca_produto();
+//busca_produto();
 
  // $(function() {
  //    $("#valor_produto").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});

@@ -292,14 +292,6 @@ ActiveRecord::Schema.define(version: 20150310020810) do
   add_index "fd_produtos", ["fd_categoriaproduto_id"], name: "index_fd_produtos_on_fd_categoriaproduto_id", using: :btree
   add_index "fd_produtos", ["fd_empresa_id"], name: "index_fd_produtos_on_fd_empresa_id", using: :btree
 
-  create_table "fd_produtoscombos", force: true do |t|
-    t.integer  "fd_produto_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "fd_produtoscombos", ["fd_produto_id"], name: "index_fd_produtoscombos_on_fd_produto_id", using: :btree
-
   create_table "fd_produtotrocacombos", force: true do |t|
     t.integer  "fd_produtos_id"
     t.integer  "fd_produtocombos_id"
@@ -309,16 +301,6 @@ ActiveRecord::Schema.define(version: 20150310020810) do
 
   add_index "fd_produtotrocacombos", ["fd_produtocombos_id"], name: "index_fd_produtotrocacombos_on_fd_produtocombos_id", using: :btree
   add_index "fd_produtotrocacombos", ["fd_produtos_id"], name: "index_fd_produtotrocacombos_on_fd_produtos_id", using: :btree
-
-  create_table "fd_servicos", force: true do |t|
-    t.string   "desc_servico"
-    t.integer  "numr_porcentagem"
-    t.decimal  "valr_servico"
-    t.boolean  "flag_ativo"
-    t.datetime "data_exclusao"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "fd_statuses", force: true do |t|
     t.string   "nome_status"
@@ -353,10 +335,10 @@ ActiveRecord::Schema.define(version: 20150310020810) do
 
   create_table "fd_variacaos", force: true do |t|
     t.string   "desc_variacao"
+    t.boolean  "flag_global"
     t.integer  "fd_empresa_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "flag_global"
   end
 
   add_index "fd_variacaos", ["fd_empresa_id"], name: "index_fd_variacaos_on_fd_empresa_id", using: :btree

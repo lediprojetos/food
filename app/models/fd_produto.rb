@@ -5,4 +5,5 @@ class FdProduto < ActiveRecord::Base
   belongs_to :exclusao, :class_name => "FdUsuario", :foreign_key => "user_exclusao"
   has_many :fd_pedidocombo
   has_many :fd_produtotrocacombos
+  has_many :fd_produtocombo
 end
