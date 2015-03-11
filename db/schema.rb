@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20150310020810) do
   end
 
   add_index "fd_adicionaisinclusos", ["fd_itempedido_id"], name: "index_fd_adicionaisinclusos_on_fd_itempedido_id", using: :btree
-  add_index "fd_adicionaisinclusos", ["fd_itensadicional_id"], name: "index_fd_adicionaisinclusos_on_fd_itensadicional_id", using: :btree
+  add_index "fd_adicionaisinclusos", ["fd_itensadicional_id"], name: "index_fd_adicionaisinclusos_on_fd_intensadicional_id", using: :btree
 
   create_table "fd_cargos", force: true do |t|
     t.string   "nome_cargo"
@@ -335,10 +335,10 @@ ActiveRecord::Schema.define(version: 20150310020810) do
 
   create_table "fd_variacaos", force: true do |t|
     t.string   "desc_variacao"
-    t.boolean  "flag_global"
     t.integer  "fd_empresa_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "flag_global"
   end
 
   add_index "fd_variacaos", ["fd_empresa_id"], name: "index_fd_variacaos_on_fd_empresa_id", using: :btree
