@@ -1,39 +1,36 @@
-<div class="page-header">
-  <h2>Clientes</h2>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Clientes</div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nome cliente</th>
+          <th>Sexo</th>
+          <th>Tel. Celular</th>
+          <th>Tel. Fixo</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @fd_clientes.each do |fd_cliente| %>
+          <tr>
+            <td><%= fd_cliente.nome_cliente %></td>
+            <td><%= fd_cliente.desc_sexo %></td>
+            <td><%= fd_cliente.desc_celular %></td>
+            <td><%= fd_cliente.desc_telefone %></td>
+            <td><%= link_to 'Exibir', fd_cliente %></td>
+            <td><%= link_to 'Editar', edit_fd_cliente_path(fd_cliente) %></td>
+            <td><%= link_to 'Deletar', fd_cliente, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
 </div>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Nome cliente</th>
-      <th>Sexo</th>
-      <th>Tel. Celular</th>
-      <th>Tel. Fixo</th>
-      <th>Email</th>
-      <th>Data Nascimento</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @fd_clientes.each do |fd_cliente| %>
-      <tr>
-        <td><%= fd_cliente.nome_cliente %></td>
-        <td><%= fd_cliente.desc_sexo %></td>
-        <td><%= fd_cliente.desc_celular %></td>
-        <td><%= fd_cliente.desc_telefone %></td>
-        <td><%= fd_cliente.desc_email %></td>
-        <td><%= fd_cliente.data_nascimento %></td>
-        <td><%= link_to 'Exibir', fd_cliente %></td>
-        <td><%= link_to 'Editar', edit_fd_cliente_path(fd_cliente) %></td>
-        <td><%= link_to 'Deletar', fd_cliente, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'Novo', new_fd_cliente_path %>
+  <%= link_to new_fd_cliente_path, :class => "btn btn-default" do %>
+     Novo
+  <% end %>
