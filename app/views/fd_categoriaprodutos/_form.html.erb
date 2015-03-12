@@ -1,25 +1,36 @@
 <%= form_for(@fd_categoriaproduto) do |f| %>
   <% if @fd_categoriaproduto.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@fd_categoriaproduto.errors.count, "error") %> prohibited this fd_categoriaproduto from being saved:</h2>
-
-      <ul>
-      <% @fd_categoriaproduto.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  
+  <% if @fd_categoriaproduto.errors.any? %>
+  
+    <% @fd_categoriaproduto.errors.full_messages.each do |msg| %>
+        <%= msg %></br>
       <% end %>
-      </ul>
+     <% end %>
     </div>
-  <% end %>
+  <% end %>  
 
-  <div class="field">
-    <%= f.label :desc_categoria %><br>
-    <%= f.text_field :desc_categoria %>
+<div class="row mar-bot40">
+  <div class="col-lg-3">
+    <%= f.label :Categoria %><br>
+    <%= f.text_field :desc_categoria, :class => 'form-control'  %>
   </div>
-  <div class="field">
+  <div class="col-lg-3">
     <%= f.label :father_id %><br>
-    <%= f.number_field :father_id %>
+    <%= f.select :father_id, options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria', @fd_categoriaproduto.father_id), {:include_blank => true}, {:class => 'form-control'}%>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <div class="col-lg-3">
+    <%= f.label :Global %><br>
+    <%= f.check_box :flag_global %>
+  </div>  
+</div>
+<hr/>
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn">
+    </span> Salvar
+  </button>  
+
 <% end %>
