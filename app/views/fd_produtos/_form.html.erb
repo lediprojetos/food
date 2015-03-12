@@ -19,27 +19,31 @@
       <a href="#tab1" data-toggle="tab">Produto</a>
     </li>
 
-      <% if not @fd_produto.id %>
-            <li class="disabled">
-              <a href="#tab2" data-toggle="tab disabled">Variações</a>
-            </li>
-            <li class="disabled">
-              <a href="#tab3" data-toggle="tab disabled">Itens</a>
-            </li>
-      <%else%>
-           <li>
-              <a href="#tab2" data-toggle="tab">Variações</a>
-           </li>
-         <%if @fd_produto.fd_categoriaproduto_id != 2%>
-              <li>
-                  <a href="#tab3" data-toggle="tab">Itens</a>
-              </li>
-          <%else%>
-               <li>
-                  <a href="#tab4" data-toggle="tab">Itens Combo</a>
-               </li>
-          <%end%>    
-      <%end%>
+<% if not @fd_produto.id %>
+      <li class="disabled">
+        <a href="#tab2" data-toggle="tab disabled">Variações</a>
+      </li>
+      <li class="disabled">
+        <a href="#tab3" data-toggle="tab disabled">Itens</a>
+      </li>
+<%else%>
+     <li>
+        <a href="#tab2" data-toggle="tab">Variações</a>
+     </li>
+   <%if @fd_produto.fd_categoriaproduto_id != 2%>
+        <li>
+            <a href="#tab3" data-toggle="tab">Itens</a>
+        </li>
+    <%else%>
+         <li>
+            <a href="#tab4" data-toggle="tab">Itens Combo</a>
+         </li>
+         <li>
+            <a href="#tab5" data-toggle="tab">Itens Troca</a>
+         </li>
+    <%end%>    
+<%end%>
+
 
   </ul>            
   <div class="tab-content">
@@ -189,10 +193,59 @@
        </div>
     </div>
   
+<div class="tab-pane" id="tab5">
+  <br/>
+  <div class="row mar-bot40">
+     <div class="col-lg-1">
+     </div>
+      <div class="col-lg-4">
+            <select multiple="multiple" id="produtolist3" class="form-control">
+           
+            </select>
+      </div>
+      <div class="col-lg-4">
+            <select multiple="multiple" id="produtolist4" class="form-control">
+           
+            </select>
+      </div>
+  </div>
+      <br/>
+  <div class="row mar-bot40">
+    <div class="col-lg-12">  
+        <div class="panel panel-default" >
+          <div class="panel-heading"><strong>Variações</strong></div>
+            <table class="table table-hover"  id="tlbvariacao">
+              <thead>
+                <tr>
+                  <th>Item:</th>
+                  <th>Troca Por</th>
+                  <th></th>     
+                </tr>
+              </thead>
+              <tbody id="tlbvariacaolis">
+                <%@fd_produtotrocacombo.each do |troca| %>
+                  <tr>
+                    <td><%= troca.fd_produtocombo.fd_produto_combo.nome_produto%></td>
+                    <td><%= troca.fd_produto.nome_produto %></td>
+                    <td align='right'>
+                      <button type="button" onclick="excluiIVariacaoProduto('<%=variacao.id%>')"class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                    </td> 
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
 </div>
 </div>
 </div>
 </div>
+
+<input type="hidden" name="fd_produto_id" id="fd_produto_id" value ="<%=@fd_produto.id%>">
 
 <hr/>
 
@@ -405,19 +458,18 @@ function exclui_item_produto(){
         },
 
     success: function(data){
-         $("#produtolist1").empty();
+         $("#produtolist2").empty();
+         $("#produtolist3").empty();
          var options = "";
          for (var i in data){
           var item = data[i];
 
-          $('#produtolist1').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+          $('#produtolist2').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
 
            };
-
          } 
        })         
   }
-
 
 function inclui_produto_combo(){
 
@@ -476,6 +528,8 @@ function exclui_produto_combo(){
 
 busca_item();
 busca_itemproduto();
+busca_produto_combo();
+
 //busca_produto();
 
  // $(function() {
@@ -483,3 +537,9 @@ busca_itemproduto();
  // })
 
 </script>
+
+
+
+
+
+
