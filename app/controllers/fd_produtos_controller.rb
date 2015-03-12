@@ -103,8 +103,9 @@ end
 
 def busca_produto_combo
  
- fd_produtocombo = FdProdutocombo.where(fd_produtos_id: params[:fd_produto_id])
- fd_produtocombo_json = fd_produtocombo.map{|item|{:id => item.id, :nome_produto => item.fd_produto.nome_produto}}
+ fd_produtocombo = FdProdutocombo.where(fd_produto_id: params[:fd_produto_id])
+ #debugger
+ fd_produtocombo_json = fd_produtocombo.map{|item|{:id => item.id, :nome_produto => item.fd_produtocombo.nome_produto}}
  render :json => fd_produtocombo_json
 
 end
@@ -112,13 +113,22 @@ end
 def inclui_produto_combo
   
 @FdProdutocombo = FdProdutocombo.new
-@FdProdutocombo.fd_produtos_id = params[:fd_produto_id] 
+@FdProdutocombo.fd_produto_id = params[:fd_produto_id] 
 @FdProdutocombo.fd_produto_combo = params[:fd_produto_combo]
 
 @FdProdutocombo.save
 
 busca_produto_combo
 
+end
+
+def exclui_produto_combo
+
+  @FdProdutocombo = FdProdutocombo.find(params[:fd_produtocombo_id])
+
+  @FdProdutocombo.destroy
+  
+  busca_produto_combo
 end
 # GET /fd_produtos/1
   

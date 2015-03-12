@@ -435,18 +435,45 @@ function inclui_produto_combo(){
         },
 
     success: function(data){
-         $("#itemlist2").empty();
+         $("#produtolist2").empty();
          var options = "";
          for (var i in data){
           var item = data[i];
 
-            $('#itemlist2').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+            $('#produtolist2').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
 
            };
 
          } 
        })      
+}
 
+
+
+function exclui_produto_combo(){
+
+  var itemsele = $('#produtolist2 option:selected').val()
+       
+    $.ajax({
+        url: '<%= exclui_produto_combo_path %>',
+        data :
+        {
+          fd_produto_id: $('#fd_produto_id').val()
+          ,fd_produtocombo_id: itemsele
+        },
+
+    success: function(data){
+         $("#produtolist2").empty();
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+            $('#produtolist2').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+
+           };
+
+         } 
+       })      
 }
 
 
