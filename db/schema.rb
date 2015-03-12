@@ -293,14 +293,14 @@ ActiveRecord::Schema.define(version: 20150310020810) do
   add_index "fd_produtos", ["fd_empresa_id"], name: "index_fd_produtos_on_fd_empresa_id", using: :btree
 
   create_table "fd_produtotrocacombos", force: true do |t|
-    t.integer  "fd_produtos_id"
-    t.integer  "fd_produtocombos_id"
+    t.integer  "fd_produto_id"
+    t.integer  "fd_produtocombo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "fd_produtotrocacombos", ["fd_produtocombos_id"], name: "index_fd_produtotrocacombos_on_fd_produtocombos_id", using: :btree
-  add_index "fd_produtotrocacombos", ["fd_produtos_id"], name: "index_fd_produtotrocacombos_on_fd_produtos_id", using: :btree
+  add_index "fd_produtotrocacombos", ["fd_produto_id"], name: "index_fd_produtotrocacombos_on_fd_produto_id", using: :btree
+  add_index "fd_produtotrocacombos", ["fd_produtocombo_id"], name: "index_fd_produtotrocacombos_on_fd_produtocombo_id", using: :btree
 
   create_table "fd_statuses", force: true do |t|
     t.string   "nome_status"
