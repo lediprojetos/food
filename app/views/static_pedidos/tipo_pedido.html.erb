@@ -1,14 +1,29 @@
-<div class="page-header">
-  <h2>Tipo de Pedido</h2>
+<%if notice %>
+  <div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     <%= notice %>
 </div>
+<%end%>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Tipo Pedido</h3>
+  </div>
+  <div class="panel-footer" style="background-color:white;">
 
+    </br>
     <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-cutlery"></span> Mesa
     <% end %>       
     <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
-      <span class="glyphicon glyphicon-cutlery"></span> Balcão
+      <span class="glyphicon glyphicon-user"></span> Balcão
     <% end %>
     <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-phone-alt"></span> Entrega
     <% end %>         
+    </br>
+    </br>
+    
+    
+  </div>
+</div>

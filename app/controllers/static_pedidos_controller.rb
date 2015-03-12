@@ -10,7 +10,18 @@ class StaticPedidosController < ApplicationController
 
 
 	def pedidos
-		#@fd_categoriaproduto = FdCategoriaproduto.where(:father_id => nil)
-
+		@fd_mesa = FdMesa.find(params[:fd_mesa_id])
+		@fd_mesa.flag_mesaaberta = false
+		@fd_mesa.save
 	end
+
+
+	def fecha_pedido
+		@fd_mesa = FdMesa.find(params[:fd_mesa_id])
+		@fd_mesa.flag_mesaaberta = true
+		@fd_mesa.save
+
+		redirect_to tipo_pedido_path
+	end
+
 end

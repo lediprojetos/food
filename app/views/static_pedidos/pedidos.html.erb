@@ -17,7 +17,7 @@
         <div class="tab-pane active" id="tab1">
           <br/>
           <div class="panel panel-default">
-            <div class="panel-heading"><strong>Mesa Nº</strong></div>
+            <div class="panel-heading"><strong>Mesa Nº <%=@fd_mesa.numr_mesa%></strong></div>
               <table class="table table-hover " name="tlbItensPedidos" id="tlbItensPedidos">
                 <thead>
                   <tr>
@@ -40,7 +40,7 @@
           <br/>
           <div style="display:block">
           <div class="panel panel-default">
-            <div class="panel-heading"><strong>Pizzas</strong></div>
+            <div class="panel-heading"><strong><label  ID="lblAssetName"  name=<"lLlAssetName"></label></strong></div>
               <table class="table table-hover" name="tlbProdutos" id="tlbProdutos">
                 <thead>
                   <tr>
@@ -110,7 +110,7 @@
 
     <div class="panel panel-default">
       <!-- Default panel contents -->
-      <div class="panel-heading">Comanda</div>
+      <div class="panel-heading">Pedido <strong>Mesa: <%=@fd_mesa.numr_mesa%></strong></div>
       <div class="panel-body">
         <br/>
         <table width="100%" name="tlbItensComanda" id="tlbItensComanda">
@@ -186,7 +186,10 @@
             </div>
         </li>
         <li class="list-group-item">
-          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Fechar</button>
+            <%= link_to fecha_pedido_path(@fd_mesa.id), :class => "btn btn-default" do %>
+              <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Fechar
+            <% end %>
+
           <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button>
         </li>                   
       </ul>
@@ -681,7 +684,9 @@ function buscaVariacoes(fd_produto_id) {
 }
 
 
-function buscaCategorias(father_id) {
+function buscaCategorias(father_id,desc_cat) {
+
+  $('#lblAssetName').text(desc_cat);
 
   $.ajax({
     url: '<%= buscaCategoriaProdutos_path %>',
@@ -698,18 +703,12 @@ function buscaCategorias(father_id) {
       for (var i in data) {
         var item = data[i];
 
-        $("div.divCategorias").append("<button type='button' onclick='buscaCategorias("+ item.id +");' class='btn btn-default btn-lg'>" + item.desc_categoria + "</button>");
+        $("div.divCategorias").append("<button type='button' onclick='buscaCategorias("+ item.id + ",\""+ item.desc_categoria  +"\");' class='btn btn-default btn-lg'>" + item.desc_categoria + "</button>");
 
       };
 
     }
   })  
-}
-
-function buscaItensdoCombo(combo_id){
-
-  alert(combo_id);
-  
 }
 
 function buscaprodutos(fd_categoriaproduto_id) {
