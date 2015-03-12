@@ -37,6 +37,9 @@
          <li>
             <a href="#tab4" data-toggle="tab">Itens Combo</a>
          </li>
+         <li>
+            <a href="#tab5" data-toggle="tab">Itens Troca</a>
+         </li>
     <%end%>    
 <%end%>
 
@@ -202,6 +205,9 @@
        </div>
     </div>
   
+  <div class="tab-pane" id="tab5">
+    aqui é o 5
+  </div>
   <hr/>
 
  <%end%>
@@ -408,19 +414,17 @@ function exclui_item_produto(){
         },
 
     success: function(data){
-         $("#produtolist1").empty();
+         $("#produtolist2").empty();
          var options = "";
          for (var i in data){
           var item = data[i];
 
-          $('#produtolist1').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+          $('#produtolist2').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
 
-           };
-
+           };2
          } 
        })         
   }
-
 
 function inclui_produto_combo(){
 
@@ -479,6 +483,7 @@ function exclui_produto_combo(){
 
 busca_item();
 busca_itemproduto();
+busca_produto_combo();
 //busca_produto();
 
  // $(function() {
