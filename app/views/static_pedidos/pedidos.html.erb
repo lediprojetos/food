@@ -277,12 +277,6 @@
 <script>
 
 function realizaTroca(fd_itempedidos_id,fd_produtos_id_desejado,fd_produtos_id_trocado) {
-
-  alert(fd_itempedidos_id);
-  alert(fd_produtos_id_desejado);
-  alert(fd_produtos_id_trocado);
-
-
   $.ajax({
     url: '<%= troca_produtos_combo_path %>',
     data : 
@@ -293,19 +287,18 @@ function realizaTroca(fd_itempedidos_id,fd_produtos_id_desejado,fd_produtos_id_t
     },
     success: function(data){
 
+      var fd_itempedidos_id
       if (data.length > 0){
-
-        //$("#bodyEscolhas").empty();
-        //$('#mdTrocas').modal('show')
 
         for (var i in data) {
           var item = data[i];
 
-            //$('#tlbEscolhas').append('<tr><td>'+item.nome_produto+'</td><td align="right"><button type="button" onclick="alteraingredientes()"class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button><button type="button" onclick="exibeDivTrocas(0);" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button></td></tr>');    
+            fd_itempedidos_id = item.fd_itempedidos_id;
 
         };
 
-        exibeDivTrocas(1);
+        exibeDivTrocas(0);
+        buscaTrocas(fd_itempedidos_id);
       };      
 
     }
@@ -547,7 +540,7 @@ function buscaItensPedidos(fd_pedido_id) {
 
           if(item.fd_categoriaproduto_id == 2){
 
-            $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaTrocas('+item.id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
+            $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaTrocas('+item.id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
             
           } else {
 

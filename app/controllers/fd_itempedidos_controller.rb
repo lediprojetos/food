@@ -59,13 +59,14 @@ class FdItempedidosController < ApplicationController
 
   def exclui_itempedido
 
+    fd_itenspedidos = FdPedidocombo.where(:fd_itempedidos_id => params[:id])
+    fd_itenspedidos.map {|t| t.destroy}
+
     fd_itenspedidos = FdItempedido.find(params[:id])
     fd_itenspedidos.destroy
-    #fd_itenspedidos = FdItempedido.find(params[:id]) rescue nil
 
-    #debugger
 
-    #fd_itenspedidos_json = fd_itenspedidos.map {|item| {:id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id, :desc_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao, :fd_pedido_id => item.fd_pedido_id, :fd_status_id => item.fd_status_id, :fd_funcionario_id => item.fd_funcionario_id}}
+
     render json: {}, status: :no_content
 
   end   
@@ -120,7 +121,7 @@ class FdItempedidosController < ApplicationController
           #debugger
           obj = FdPedidocombo.new
           obj.fd_itempedidos_id = fd_itenspedidos.id
-          obj.fd_produtos_id = t.fd_produto_combo
+          obj.fd_produtos_id = t.fd_produto_combo.id
           obj.save
           #(fd_itenspedidos.id, t.fd_produto_combo)
           

@@ -12,15 +12,12 @@ class FdPedidocombosController < ApplicationController
 
   def troca_produtos_combo
 
-    params[:fd_itempedidos_id]
-    params[:fd_produtos_id_desejado]
-    params[:fd_produtos_id_trocado]
-
-    fd_produtocombo = FdPedidocombo.where(:fd_itempedidos_id => params[:fd_itempedidos_id])
+    fd_produtocombo = FdPedidocombo.where(:fd_itempedidos_id => params[:fd_itempedidos_id], :fd_produtos_id => params[:fd_produtos_id_trocado])
 
     fd_produtocombo.first.fd_produtos_id = params[:fd_produtos_id_desejado]
     fd_produtocombo.first.save
 
+    fd_produtocombo = FdPedidocombo.where(:fd_itempedidos_id => params[:fd_itempedidos_id])
 
     fd_produtocombo_json = fd_produtocombo.map {|item| {:id => item.id, :fd_produtos_id =>  item.fd_produtos_id, :fd_itempedidos_id => item.fd_itempedidos_id, :nome_produto => item.fd_produto.nome_produto}}
     render :json => fd_produtocombo_json
