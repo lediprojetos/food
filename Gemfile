@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby '1.9.3'
 gem 'rails', '4.0.1'
 gem 'sass-rails', '~> 4.0.0'
 gem 'validates_cpf_cnpj'
@@ -35,7 +36,7 @@ group :production do
 	gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'  
 end
 
-gem 'debugger'
+#gem 'debugger'
 gem 'will_paginate', '~> 3.0.5'
 #gem 'pdfkit'
 

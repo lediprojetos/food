@@ -1,5 +1,12 @@
-<h1>Nova Categoria Empresa</h1>
+<div class="page-header">
+  <h1>Categoria</h1>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to 'Voltar', fd_categoriaempresas_path %>
+  <%= link_to fd_categoriaempresas_path, :class => "btn btn-default" do %>
+    <span aria-hidden="true">&larr;</span> Voltar
+  <% end %>
+
+</div>
+
