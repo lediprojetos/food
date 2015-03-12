@@ -1,33 +1,42 @@
-<div class="page-header">
-  <h2>Produtos</h2>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h3 class="panel-title">Listar Produtos</h3></div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nome produto</th>
+          <th>Categoria</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @fd_produtos.each do |fd_produto| %>
+          <tr>
+            <td><%= fd_produto.nome_produto %></td>
+            <td><%= fd_produto.fd_categoriaproduto.desc_categoria %></td>
+
+          <td align='right'>
+            <div class="btn-group">
+              <%= link_to fd_produto, :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-list-alt"></span> Exibir
+              <% end %>             
+              <%= link_to edit_fd_produto_path(fd_produto), :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+              <% end %>             
+              <%= link_to fd_produto , :method => :delete,  :confirm => 'Deseja excluir o registro?', :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-trash"></span> Excluir
+              <% end %>            
+            </div>
+          </td>
+                      
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
 </div>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Nome produto</th>
-      <th>Categoria</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @fd_produtos.each do |fd_produto| %>
-      <tr>
-        <td><%= fd_produto.nome_produto %></td>
-        <td><%= fd_produto.fd_categoriaproduto.desc_categoria %></td>
-        <td><%= link_to 'Exibir', fd_produto %></td>
-        <td><%= link_to 'Editar', edit_fd_produto_path(fd_produto) %></td>
-        <td><%= link_to 'Deletar', fd_produto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to new_fd_produto_path, :class => "btn btn-default" do %>
-     Novo
-<% end %>  
+  <%= link_to new_fd_produto_path, :class => "btn btn-default btn-sm" do %>
+     <span class="glyphicon glyphicon-file"></span>Novo
+  <% end %>

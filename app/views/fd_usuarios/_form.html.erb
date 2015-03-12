@@ -1,15 +1,16 @@
 <%= form_for(@fd_usuario) do |f| %>
   <% if @fd_usuario.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@fd_usuario.errors.count, "error") %> prohibited this fd_usuario from being saved:</h2>
-
-      <ul>
-      <% @fd_usuario.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  
+  <% if @fd_usuario.errors.any? %>
+  
+    <% @fd_usuario.errors.full_messages.each do |msg| %>
+        <%= msg %></br>
       <% end %>
-      </ul>
+     <% end %>
     </div>
-  <% end %>
+  <% end %>   
 
 <div class="row mar-bot40">
   <div class="col-lg-3" >
@@ -45,11 +46,15 @@
     <%= f.password_field :desc_confirmasenha, :class => 'form-control'  %>
   </div>
 </div>
+
+  </div>
+</div>
+
 <hr/>
 
 <div class="btn-group" role="group" aria-label="...">
-  <button type="submit" class="btn btn-primary btn">
-    </span> Salvar
+  <button type="submit" class="btn btn-primary btn-sm">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
   </button>  
 
 <% end %>

@@ -1,11 +1,11 @@
-<h1>Lista de Categoria Empresa</h1>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h3 class="panel-title">Listar Categorias</h3></div>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Nome categoria</th>
-      <th></th>
-      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -14,14 +14,26 @@
     <% @fd_categoriaempresas.each do |fd_categoriaempresa| %>
       <tr>
         <td><%= fd_categoriaempresa.nome_categoria %></td>
-        <td><%= link_to 'Exibir', fd_categoriaempresa %></td>
-        <td><%= link_to 'Editar', edit_fd_categoriaempresa_path(fd_categoriaempresa) %></td>
-        <td><%= link_to 'Deletar', fd_categoriaempresa, method: :delete, data: { confirm: 'Deseja excluir?' } %></td>
-      </tr>
+          <td align='right'>
+            <div class="btn-group">
+              <%= link_to fd_categoriaempresa, :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-list-alt"></span> Exibir
+              <% end %>             
+              <%= link_to edit_fd_categoriaempresa_path(fd_categoriaempresa), :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+              <% end %>             
+              <%= link_to fd_categoriaempresa , :method => :delete,  :confirm => 'Deseja excluir o registro?', :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-trash"></span> Excluir
+              <% end %>            
+            </div>
+          </td>        
+       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
+</div>
+<%= link_to new_fd_categoriaempresa_path, :class => "btn btn-default btn-sm" do %>
+   <span class="glyphicon glyphicon-file"></span>Novo
+<% end %>
 
-<%= link_to 'Nova Categoria', new_fd_categoriaempresa_path %>

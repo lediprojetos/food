@@ -5,6 +5,12 @@
 </div>
 <%end%>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Exibir Empresa</h3>
+  </div>
+  <div class="panel-footer" style="background-color:white;">
+
 <p>
   <strong>Categoria Empresa:</strong>
   <%= @fd_empresa.fd_categoriaempresa.nome_categoria %>
@@ -86,21 +92,15 @@
   <%= @fd_empresa.fd_endereco.fd_cidade.nome_cidade %>
 </p>
 
-
-
-<hr/>
-
-<div class="btn-group" role="group" aria-label="...">
-  <button type="submit" class="btn btn-primary btn">
-    </span> Salvar
-  </button>  
-
-  <%= link_to edit_fd_empresa_path(@fd_empresa), :class => "btn btn-default" do %>
-    Editar
-  <% end %>
-
-  <%= link_to  fd_empresas_path, :class => "btn btn-default" do %>
-    Voltar
-  <% end %>  
-
+  </div>
 </div>
+
+<div class="btn-group">          
+  <%= link_to edit_fd_empresa_path(@fd_empresa), :class => "btn btn-default btn-sm" do %>
+    <span class="glyphicon glyphicon-pencil"></span> Editar
+  <% end %>
+  <%= link_to fd_empresas_path, :class => "btn btn-default btn-sm" do %>
+    <span class="glyphicon glyphicon-arrow-left"></span> Voltar
+  <% end %>       
+</div>
+
