@@ -1,15 +1,16 @@
 <%= form_for(@fd_empresa) do |f| %>
   <% if @fd_empresa.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@fd_empresa.errors.count, "error") %> prohibited this fd_empresa from being saved:</h2>
-
-      <ul>
-      <% @fd_empresa.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  
+  <% if @fd_empresa.errors.any? %>
+  
+    <% @fd_empresa.errors.full_messages.each do |msg| %>
+        <%= msg %></br>
       <% end %>
-      </ul>
+     <% end %>
     </div>
-  <% end %>
+  <% end %>  
 
 <div class="row mar-bot40">
  <div class="col-lg-1">
@@ -127,12 +128,15 @@
 
 <%end%>
 
+  </div>
+</div>
+
 <hr/>
 
 <div class="btn-group" role="group" aria-label="...">
-  <button type="submit" class="btn btn-primary btn">
-    </span> Salvar
-</button>  
+  <button type="submit" class="btn btn-primary btn-sm">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+  </button>  
 
 <% end %>
 

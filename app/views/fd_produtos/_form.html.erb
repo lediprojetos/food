@@ -1,15 +1,16 @@
 <%= form_for(@fd_produto) do |f| %>
   <% if @fd_produto.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@fd_produto.errors.count, "error") %> prohibited this fd_produto from being saved:</h2>
-
-      <ul>
-      <% @fd_produto.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  
+  <% if @fd_produto.errors.any? %>
+  
+    <% @fd_produto.errors.full_messages.each do |msg| %>
+        <%= msg %></br>
       <% end %>
-      </ul>
+     <% end %>
     </div>
-  <% end %>
+  <% end %>  
 
 
 <div class="tabbable">
@@ -43,6 +44,7 @@
     <%end%>    
 <%end%>
 
+
   </ul>            
   <div class="tab-content">
    <div class="tab-pane active" id="tab1"> 
@@ -68,104 +70,90 @@
         <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
  </div>
   <br>
-    <div class="btn-group" role="group" aria-label="...">
-        <button type="submit" style="width:87px" class="btn btn-primary btn">
-          </span> Salvar
-        </button>  
-        <input type="hidden" name="fd_produto_id" id="fd_produto_id" value ="<%=@fd_produto.id%>">
-        <%= link_to fd_produtos_path, :class => "btn btn-default" do %>
-            <span aria-hidden="true">&larr;</span> Voltar
-        <% end %>
-     </div>
+
 </div>
 
-    <div class="tab-pane" id="tab2">
-       <br/>
-      <div class="row mar-bot40">
-        <div class="col-lg-4">  
-          <div class="checkbox">
-            <label><input type="checkbox" id ="check" onclick ="marcacheck()" value="">Tamanho Único ?</label>
-          </div>
-        </div>
-      </div>
-       <br/>
-
-      <div class="row mar-bot40">
-          <div class="col-lg-4"> 
-           <b>Variação</b>      
-            <%= select_tag "variacao_id", options_from_collection_for_select(FdVariacao.all, 'id', 'desc_variacao'), include_blank: true, :class => 'form-control'%>
-
-          </div>
-        <div class="col-lg-2">
-         <b>Valor Produto</b> 
-          <input id="valor_produto" name="valor_produto" value="<%=%>" onkeypress="" type="text" class="form-control">
-        </div>
-      <div class="row" style="margin-top:18px; margin-left:30px;">
-          <button id="bntSalvar" type="button" class="btn btn-success" onclick="salva_variacao();">Incluir</button>
-      </div>
-     </div>
-
+<div class="tab-pane" id="tab2">
+  <br/>
+  <div class="row mar-bot40">
     <br/>
+    <div class="col-lg-2">  
+      <div class="checkbox">
+        <label><input type="checkbox" id ="check" onclick ="marcacheck()" value="">Tamanho Único ?</label>
+      </div>
+    </div>
+    <div class="col-lg-4"> 
+      <b>Variação</b>      
+      <%= select_tag "variacao_id", options_from_collection_for_select(FdVariacao.all, 'id', 'desc_variacao'), include_blank: true, :class => 'form-control'%>
+    </div>
+    <div class="col-lg-2">
+      <b>Valor Produto</b> 
+      <input id="valor_produto" name="valor_produto" value="<%=%>" onkeypress="" type="text" class="form-control">
+    </div>
+    <div class="row" style="margin-top:18px; margin-left:30px;">
+      <button id="bntSalvar" type="button" class="btn btn-success" onclick="salva_variacao();">Incluir</button>
+    </div>
+</div>
 
+<br/>
 
 <div class="row mar-bot40">
-<div style="display:block">
-  <div class="panel panel-default" style="width:650px; margin-left:10px;">
-    <div class="panel-heading"><strong>Variações</strong></div>
-     <table class="table table-hover"  id="tlbvariacao">
-      <thead>
-        <tr>
-          <th>Variação:</th>
-          <th>Preço</th>
-          <th></th>     
-        </tr>
-      </thead>
-      <tbody id="tlbvariacaolis">
-        <%@variacao_produto.each do |variacao| %>
-          <tr>
-            <td><%= variacao.fd_variacao.desc_variacao%></td>
-            <td><%= variacao.valr_produto %></td>
-            <td align='right'>
-              <button type="button" onclick="excluiIVariacaoProduto('<%=variacao.id%>')"class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-            </td> 
-          </tr>
-        <% end %>
-      </tbody>
-     </table>
+  <div class="col-lg-12">  
+    <div class="panel panel-default" >
+      <div class="panel-heading"><strong>Variações</strong></div>
+        <table class="table table-hover"  id="tlbvariacao">
+          <thead>
+            <tr>
+              <th>Variação:</th>
+              <th>Preço</th>
+              <th></th>     
+            </tr>
+          </thead>
+          <tbody id="tlbvariacaolis">
+            <%@variacao_produto.each do |variacao| %>
+              <tr>
+                <td><%= variacao.fd_variacao.desc_variacao%></td>
+                <td><%= variacao.valr_produto %></td>
+                <td align='right'>
+                  <button type="button" onclick="excluiIVariacaoProduto('<%=variacao.id%>')"class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                </td> 
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  
-  </div>
+</div>
 
 
- <div class="tab-pane" id="tab3">
-       <br/><br/> 
-      <div class="row mar-bot40">
-       <div class="col-lg-1">
-       </div> 
+<div class="tab-pane" id="tab3">
+     <br/><br/> 
+    <div class="row mar-bot40">
+     <div class="col-lg-1">
+     </div> 
 
-         <div class="col-lg-4"> 
-             <select multiple="multiple" id="itemlist1" style="width:350px; height:300px">
+       <div class="col-lg-4"> 
+           <select multiple="multiple" id="itemlist1"  class="form-control">
 
-             </select>
-          </div>
-        
-         <div class="col-lg-1" style="width:40px">
-            <a class="btn btn-default btn-sm" title=""  onclick="inclui_item_produto();" style="margin-left:-16px;margin-top:110px; color:green" rel="tooltip" data-original-title="Incluir">
-                 <span class="glyphicon glyphicon-forward" rel="tooltip"></span>
-            </a> 
-            <a class="btn btn-default btn-sm" title="" onclick="exclui_item_produto();" style="margin-left:-16px;color:red" rel="tooltip" data-original-title="Excluir">
-                 <span class="glyphicon glyphicon-backward white" rel="tooltip"></span>
-            </a> 
-         </div>
-          <div class="col-lg-4">
-              <select multiple="multiple" id="itemlist2" style="width:350px; height:300px">
-           
-             </select>
-          </div>
+           </select>
+        </div>
+      
+       <div class="col-lg-1" style="width:40px">
+          <a class="btn btn-default btn-sm" title=""  onclick="inclui_item_produto();" style="margin-left:-16px;margin-top:110px; color:green" rel="tooltip" data-original-title="Incluir">
+               <span class="glyphicon glyphicon-forward" rel="tooltip"></span>
+          </a> 
+          <a class="btn btn-default btn-sm" title="" onclick="exclui_item_produto();" style="margin-left:-16px;color:red" rel="tooltip" data-original-title="Excluir">
+               <span class="glyphicon glyphicon-backward white" rel="tooltip"></span>
+          </a> 
        </div>
-    </div>
+        <div class="col-lg-4">
+            <select multiple="multiple" id="itemlist2"  class="form-control">
+         
+           </select>
+        </div>
+     </div>
+  </div>
 
  <div class="tab-pane" id="tab4">
     <br/>
@@ -184,7 +172,7 @@
        </div> 
 
          <div class="col-lg-4"> 
-             <select multiple="multiple" id="produtolist1" style="width:350px; height:300px">
+             <select multiple="multiple" id="produtolist1" class="form-control" >
 
              </select>
           </div>
@@ -198,7 +186,7 @@
             </a> 
          </div>
           <div class="col-lg-4">
-              <select multiple="multiple" id="produtolist2" style="width:350px; height:300px">
+              <select multiple="multiple" id="produtolist2" class="form-control">
            
              </select>
           </div>
@@ -209,6 +197,18 @@
     aqui é o 5
   </div>
   <hr/>
+
+</div>
+</div>
+</div>
+</div>
+
+<hr/>
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn-sm">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+  </button>  
 
  <%end%>
 
@@ -491,3 +491,9 @@ busca_produto_combo();
  // })
 
 </script>
+
+
+
+
+
+

@@ -1,11 +1,13 @@
-<div class="page-header">
-  <h1>Cliente</h1>
-</div>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Novo Cliente</h3>
+  </div>
+  <div class="panel-footer" style="background-color:white;">
 <%= render 'form' %>
 
-  <%= link_to fd_clientes_path, :class => "btn btn-default" do %>
-    <span aria-hidden="true">&larr;</span> Voltar
+  <%= link_to fd_clientes_path, :class => "btn btn-default btn-sm" do %>
+    <span class="glyphicon glyphicon-arrow-left"></span> Voltar
   <% end %>
 
 </div>

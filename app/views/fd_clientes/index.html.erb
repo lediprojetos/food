@@ -1,15 +1,11 @@
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Clientes</div>
+  <div class="panel-heading"><h3 class="panel-title">Listar Cliente</h3></div>
+
     <table class="table table-hover">
       <thead>
         <tr>
           <th>Nome cliente</th>
-          <th>Sexo</th>
-          <th>Tel. Celular</th>
-          <th>Tel. Fixo</th>
-          <th></th>
-          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -18,12 +14,20 @@
         <% @fd_clientes.each do |fd_cliente| %>
           <tr>
             <td><%= fd_cliente.nome_cliente %></td>
-            <td><%= fd_cliente.desc_sexo %></td>
-            <td><%= fd_cliente.desc_celular %></td>
-            <td><%= fd_cliente.desc_telefone %></td>
-            <td><%= link_to 'Exibir', fd_cliente %></td>
-            <td><%= link_to 'Editar', edit_fd_cliente_path(fd_cliente) %></td>
-            <td><%= link_to 'Deletar', fd_cliente, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+          <td align='right'>
+            <div class="btn-group">
+              <%= link_to fd_cliente, :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-list-alt"></span> Exibir
+              <% end %>             
+              <%= link_to edit_fd_cliente_path(fd_cliente), :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+              <% end %>             
+              <%= link_to fd_cliente , :method => :delete,  :confirm => 'Deseja excluir o registro?', :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-trash"></span> Excluir
+              <% end %>            
+            </div>
+          </td>
           </tr>
         <% end %>
       </tbody>
@@ -31,6 +35,6 @@
 
 </div>
 
-  <%= link_to new_fd_cliente_path, :class => "btn btn-default" do %>
-     Novo
+  <%= link_to new_fd_cliente_path, :class => "btn btn-default btn-sm" do %>
+     <span class="glyphicon glyphicon-file"></span>Novo
   <% end %>

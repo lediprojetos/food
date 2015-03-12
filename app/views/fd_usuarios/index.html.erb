@@ -1,13 +1,12 @@
-<div class="page-header">
-  <h1>Listar Usuários</h1>
-</div>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h3 class="panel-title">Listar Usuários</h3></div>
 
 <table class="table table-hover">
   <thead>
     <tr>
       <th>Nome</th>
       <th>Login</th>
-      <th>Data Inclusao</th>
       <th></th>
     </tr>
   </thead>
@@ -17,17 +16,24 @@
       <tr>
         <td><%= fd_usuario.desc_nome %></td>
         <td><%= fd_usuario.desc_login %></td>
-        <td><%= fd_usuario.desc_senha %></td>
-        <td><%= fd_usuario.data_inclusao %></td>
-        <td><%= fd_usuario.desc_perfil %></td>
-        <td><%= link_to 'Show', fd_usuario %></td>
-        <td><%= link_to 'Edit', edit_fd_usuario_path(fd_usuario) %></td>
-        <td><%= link_to 'Destroy', fd_usuario, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td align='right'>
+            <div class="btn-group">
+              <%= link_to fd_usuario, :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-list-alt"></span> Exibir
+              <% end %>             
+              <%= link_to edit_fd_usuario_path(fd_usuario), :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+              <% end %>             
+              <%= link_to fd_usuario , :method => :delete,  :confirm => 'Deseja excluir o registro?', :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-trash"></span> Excluir
+              <% end %>            
+            </div>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
 
-  <%= link_to new_fd_usuario_path, :class => "btn btn-default" do %>
-     Novo
-  <% end %>  
+<%= link_to new_fd_usuario_path, :class => "btn btn-default btn-sm" do %>
+   <span class="glyphicon glyphicon-file"></span>Novo
+<% end %>

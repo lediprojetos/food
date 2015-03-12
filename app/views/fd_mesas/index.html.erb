@@ -5,44 +5,55 @@
 </div>
 <%end%>
 
-<%= form_tag nil, method: 'GET' do %>
-  <label >N° Mesa</label><br>
-  <div class="row">
-    <div class="col-lg-2">
-      <div class="input-group">
-        <input id="q" name="q" type="text" value ="<%=@numr_mesa%>"class="form-control" placeholder="N° mesa">
-        <span class="input-group-btn">
-          <button class="btn btn-success" type="submit" >+</button>
-        </span>
-      </div><!-- /input-group -->
-    </div><!-- /.col-lg-6 -->
-  </div><!-- /.row -->
-  <br />  
-<% end %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Exibir Usuário</h3>
+  </div>
+  <div class="panel-footer" style="background-color:white;">
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>N° Mesa</th>
-      <th>Situação Mesa</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @fd_mesas.each do |fd_mesa| %>
-      <tr>
-        <td><%= fd_mesa.numr_mesa %></td> 
-        <%if fd_mesa.flag_mesaaberta%>
-           <td>Livre</td>
-        <%else%>
-           <td>Ocupada</td>
-        <%end%>   
-        <td><%= link_to 'Deletar', fd_mesa, method: :delete, data: { confirm: 'Deseja Excluir?' } %></td>
-      </tr>
+    <%= form_tag nil, method: 'GET' do %>
+      <label >N° Mesa</label><br>
+      <div class="row">
+        <div class="col-lg-2">
+          <div class="input-group">
+            <input id="q" name="q" type="text" value ="<%=@numr_mesa%>"class="form-control" placeholder="N° mesa">
+            <span class="input-group-btn">
+              <button class="btn btn-success" type="submit" >+</button>
+            </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+      </div><!-- /.row -->
+      <br />  
     <% end %>
-  </tbody>
-</table>
 
-<br>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>N° Mesa</th>
+          <th>Situação Mesa</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @fd_mesas.each do |fd_mesa| %>
+          <tr>
+            <td><%= fd_mesa.numr_mesa %></td> 
+            <%if fd_mesa.flag_mesaaberta%>
+               <td>Livre</td>
+            <%else%>
+               <td>Ocupada</td>
+            <%end%>   
+            <td align="right">
+              <%= link_to fd_mesa , :method => :delete,  :confirm => 'Deseja excluir o registro?', :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-trash"></span> Excluir
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    </div>
+  </div>
 

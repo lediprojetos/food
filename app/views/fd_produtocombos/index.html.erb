@@ -1,29 +1,33 @@
-<h1>Listing fd_produtocombos</h1>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h3 class="panel-title">Listar Produtos</h3></div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Fd produtos</th>
+          <th>Fd produto combo</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
 
-<table>
-  <thead>
-    <tr>
-      <th>Fd produtos</th>
-      <th>Fd produto combo</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+      <tbody>
+        <% @fd_produtocombos.each do |fd_produtocombo| %>
+          <tr>
+            <td><%= fd_produtocombo.fd_produtos %></td>
+            <td><%= fd_produtocombo.fd_produto_combo %></td>
+            <td><%= link_to 'Show', fd_produtocombo %></td>
+            <td><%= link_to 'Edit', edit_fd_produtocombo_path(fd_produtocombo) %></td>
+            <td><%= link_to 'Destroy', fd_produtocombo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-  <tbody>
-    <% @fd_produtocombos.each do |fd_produtocombo| %>
-      <tr>
-        <td><%= fd_produtocombo.fd_produtos %></td>
-        <td><%= fd_produtocombo.fd_produto_combo %></td>
-        <td><%= link_to 'Show', fd_produtocombo %></td>
-        <td><%= link_to 'Edit', edit_fd_produtocombo_path(fd_produtocombo) %></td>
-        <td><%= link_to 'Destroy', fd_produtocombo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+</div>
 
-<br>
+  <%= link_to new_fd_produtocombo_path, :class => "btn btn-default btn-sm" do %>
+     <span class="glyphicon glyphicon-file"></span>Novo
+  <% end %>
 
-<%= link_to 'New Fd produtocombo', new_fd_produtocombo_path %>

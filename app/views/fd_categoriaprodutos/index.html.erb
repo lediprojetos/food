@@ -1,13 +1,11 @@
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Categorias</div>
+  <div class="panel-heading"><h3 class="panel-title">Listar Categorias</h3></div>
     <table class="table table-hover">
       <thead>
         <tr>
           <th>Categoria</th>
           <th>Filho de</th>
-          <th></th>
-          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -17,16 +15,26 @@
           <tr>
             <td><%= fd_categoriaproduto.desc_categoria %></td>
             <td><%= fd_categoriaproduto.father.desc_categoria rescue nil %></td>
-            <td><%= link_to 'Show', fd_categoriaproduto %></td>
-            <td><%= link_to 'Edit', edit_fd_categoriaproduto_path(fd_categoriaproduto) %></td>
-            <td><%= link_to 'Destroy', fd_categoriaproduto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td align='right'>
+            <div class="btn-group">
+              <%= link_to fd_categoriaproduto, :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-list-alt"></span> Exibir
+              <% end %>             
+              <%= link_to edit_fd_categoriaproduto_path(fd_categoriaproduto), :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+              <% end %>             
+              <%= link_to fd_categoriaproduto , :method => :delete,  :confirm => 'Deseja excluir o registro?', :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-trash"></span> Excluir
+              <% end %>            
+            </div>  
+            </div>          
           </tr>
         <% end %>
       </tbody>
     </table>
 
 </div>
-  <%= link_to new_fd_categoriaproduto_path, :class => "btn btn-default" do %>
-     Novo
-  <% end %>
-<br>
+
+<%= link_to new_fd_categoriaproduto_path, :class => "btn btn-default btn-sm" do %>
+   <span class="glyphicon glyphicon-file"></span>Novo
+<% end %>
