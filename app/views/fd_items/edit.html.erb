@@ -1,6 +1,18 @@
-<h1>Editing fd_item</h1>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Editar Item</h3>
+  </div>
+  <div class="panel-footer" style="background-color:white;">
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @fd_item %> |
-<%= link_to 'Back', fd_items_path %>
+  <%= link_to @fd_item , :class => "btn btn-default btn-sm" do %>
+     <span class="glyphicon glyphicon-list-alt"></span> Exibir
+  <% end %>
+
+  <%= link_to fd_items_path, :class => "btn btn-default btn-sm" do %>
+     <span class="glyphicon glyphicon-arrow-left"></span> Voltar
+  <% end %>  
+
+</div>
+

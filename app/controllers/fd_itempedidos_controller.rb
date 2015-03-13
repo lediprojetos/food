@@ -52,7 +52,7 @@ class FdItempedidosController < ApplicationController
     #qtd = fd_itenspedidos.group(:fd_variacaoproduto_id).count
 
 
-    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:fd_categoriaproduto_id =>  item.fd_variacaoproduto.fd_produto.fd_categoriaproduto_id, :id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id,:fd_produto_id => item.fd_variacaoproduto.fd_produto_id, :desc_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao, :fd_pedido_id => item.fd_pedido_id, :fd_status_id => item.fd_status_id, :fd_funcionario_id => item.fd_funcionario_id}}
+    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:fd_categoriaproduto_id =>  item.fd_variacaoproduto.fd_produto.fd_categoriaproduto_id, :id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id,:fd_produto_id => item.fd_variacaoproduto.fd_produto_id, :desc_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao, :fd_pedido_id => item.fd_pedido_id, :fd_situacao_id => item.fd_situacao_id, :fd_funcionario_id => item.fd_funcionario_id}}
     render :json => fd_itenspedidos_json
 
   end
@@ -82,7 +82,7 @@ class FdItempedidosController < ApplicationController
     fd_itemdobrado.fd_empresa_id = fd_itenspedidos.fd_empresa_id
     fd_itemdobrado.fd_variacaoproduto_id = fd_itenspedidos.fd_variacaoproduto_id
     fd_itemdobrado.fd_pedido_id = fd_itenspedidos.fd_pedido_id
-    fd_itemdobrado.fd_status_id = fd_itenspedidos.fd_status_id
+    fd_itemdobrado.fd_situacao_id = fd_itenspedidos.fd_situacao_id
     fd_itemdobrado.fd_funcionario_id = fd_itenspedidos.fd_funcionario_id
     fd_itemdobrado.save
 
@@ -90,7 +90,7 @@ class FdItempedidosController < ApplicationController
 
     #debugger
 
-    fd_itenspedidos_json = fd_itenspedidos.map {|item| { :id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id, :fd_pedido_id => item.fd_pedido_id, :fd_status_id => item.fd_status_id, :fd_funcionario_id => item.fd_funcionario_id}}
+    fd_itenspedidos_json = fd_itenspedidos.map {|item| { :id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id, :fd_pedido_id => item.fd_pedido_id, :fd_situacao_id => item.fd_situacao_id, :fd_funcionario_id => item.fd_funcionario_id}}
     render :json => fd_itenspedidos_json
 
   end  
@@ -104,7 +104,7 @@ class FdItempedidosController < ApplicationController
     fd_itenspedidos.fd_empresa_id = user.fd_empresa_id
     fd_itenspedidos.fd_variacaoproduto_id = params[:fd_variacaoproduto_id]
     fd_itenspedidos.fd_pedido_id = params[:fd_pedido_id]
-    fd_itenspedidos.fd_status_id = params[:fd_status_id]
+    fd_itenspedidos.fd_situacao_id = params[:fd_situacao_id]
     fd_itenspedidos.fd_funcionario_id = params[:fd_funcionario_id]
     fd_itenspedidos.save
 
@@ -135,7 +135,7 @@ class FdItempedidosController < ApplicationController
 
     #debugger
 
-    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id, :fd_pedido_id => item.fd_pedido_id, :fd_status_id => item.fd_status_id, :fd_funcionario_id => item.fd_funcionario_id}}
+    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id, :fd_pedido_id => item.fd_pedido_id, :fd_situacao_id => item.fd_situacao_id, :fd_funcionario_id => item.fd_funcionario_id}}
     render :json => fd_itenspedidos_json
 
   end

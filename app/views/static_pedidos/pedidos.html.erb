@@ -1,4 +1,5 @@
 <%#encoding: utf-8%>
+<input type="hidden" id="fd_pedido_id" name="fd_pedido_id" value="<%=@fd_pedido_id%>">
 <div class="row mar-bot40">
   <div class="col-lg-8">
     <div class="tabbable">
@@ -17,7 +18,7 @@
         <div class="tab-pane active" id="tab1">
           <br/>
           <div class="panel panel-default">
-            <div class="panel-heading"><strong>Mesa Nº <%=@fd_mesa.numr_mesa%></strong></div>
+            <div class="panel-heading"><strong>Mesa Nº <%=@fd_mesa.numr_mesa%> / Pedido: <%=@fd_pedido_id%></strong></div>
               <table class="table table-hover " name="tlbItensPedidos" id="tlbItensPedidos">
                 <thead>
                   <tr>
@@ -110,7 +111,7 @@
 
     <div class="panel panel-default">
       <!-- Default panel contents -->
-      <div class="panel-heading">Pedido <strong>Mesa: <%=@fd_mesa.numr_mesa%></strong></div>
+      <div class="panel-heading">Pedido <strong>Mesa: <%=@fd_mesa.numr_mesa%> / Pedido: <%=@fd_pedido_id%></strong></div>
       <div class="panel-body">
         <br/>
         <table width="100%" name="tlbItensComanda" id="tlbItensComanda">
@@ -186,7 +187,7 @@
             </div>
         </li>
         <li class="list-group-item">
-            <%= link_to fecha_pedido_path(@fd_mesa.id), :class => "btn btn-default" do %>
+            <%= link_to fecha_pedido_path(@fd_mesa.id,@fd_pedido_id), :class => "btn btn-default" do %>
               <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Fechar
             <% end %>
 
@@ -518,7 +519,7 @@ function excluiItensPedidos(id) {
     },
     success: function(data){
 
-      buscaItensPedidos(1);
+      buscaItensPedidos($('#fd_pedido_id').val());
 
     }
   })  
@@ -574,7 +575,7 @@ function alterapedido(fd_itempedido_id) {
     success: function(data){
 
       $('#mdVariacoes').modal('hide')
-      buscaItensPedidos(1);
+      buscaItensPedidos($('#fd_pedido_id').val());
     }
   })  
 }
@@ -592,7 +593,7 @@ function dobraItemPedido(fd_itempedido_id) {
     success: function(data){
 
       $('#mdVariacoes').modal('hide')
-      buscaItensPedidos(1);
+      buscaItensPedidos($('#fd_pedido_id').val());
     }
   })  
 }
@@ -607,14 +608,14 @@ function incluiItemPedido(fd_variacaoproduto_id,valr_produto) {
         ,valr_item : valr_produto
         ,tipo_atendimento : 'tipo_atendimento'
         ,fd_variacaoproduto_id : fd_variacaoproduto_id
-        ,fd_pedido_id : 1
-        ,fd_status_id : 1
+        ,fd_pedido_id : $('#fd_pedido_id').val()
+        ,fd_situacao_id : 3 //Pendente
         ,fd_funcionario_id : 1
     },
     success: function(data){
 
       $('#mdVariacoes').modal('hide')
-      buscaItensPedidos(1);
+      buscaItensPedidos($('#fd_pedido_id').val());
     }
   })  
 }
@@ -745,5 +746,5 @@ function buscaprodutos(fd_categoriaproduto_id) {
 }
 
 buscaCategorias();
-buscaItensPedidos(1);
+buscaItensPedidos($('#fd_pedido_id').val());
 </script>

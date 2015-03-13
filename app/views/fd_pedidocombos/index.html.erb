@@ -1,28 +1,30 @@
-<h1>Listing fd_pedidocombos</h1>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h3 class="panel-title">Listar Cliente</h3></div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Fd itempedidos</th>
-      <th>Fd produtos</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Fd itempedidos</th>
+          <th>Fd produtos</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @fd_pedidocombos.each do |fd_pedidocombo| %>
-      <tr>
-        <td><%= fd_pedidocombo.fd_itempedidos %></td>
-        <td><%= fd_pedidocombo.fd_produtos %></td>
-        <td><%= link_to 'Show', fd_pedidocombo %></td>
-        <td><%= link_to 'Edit', edit_fd_pedidocombo_path(fd_pedidocombo) %></td>
-        <td><%= link_to 'Destroy', fd_pedidocombo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <tbody>
+        <% @fd_pedidocombos.each do |fd_pedidocombo| %>
+          <tr>
+            <td><%= fd_pedidocombo.fd_itempedidos %></td>
+            <td><%= fd_pedidocombo.fd_produtos %></td>
+            <td><%= link_to 'Show', fd_pedidocombo %></td>
+            <td><%= link_to 'Edit', edit_fd_pedidocombo_path(fd_pedidocombo) %></td>
+            <td><%= link_to 'Destroy', fd_pedidocombo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
 <br>
 

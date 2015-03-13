@@ -1,41 +1,45 @@
-<h1>Listing fd_pedidos</h1>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h3 class="panel-title">Listar Pedidos</h3></div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Valr pedido</th>
-      <th>Flag pago</th>
-      <th>Fd empresa</th>
-      <th>Fd cliente</th>
-      <th>Fd mesa</th>
-      <th>Fd funcionario</th>
-      <th>Fd formapagamento</th>
-      <th>Fd status</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Valor</th>
+          <th>Mesa</th>
+          <th>Pagamento</th>
+          <th>Situação</th>
+          <th></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @fd_pedidos.each do |fd_pedido| %>
-      <tr>
-        <td><%= fd_pedido.valr_pedido %></td>
-        <td><%= fd_pedido.flag_pago %></td>
-        <td><%= fd_pedido.fd_empresa %></td>
-        <td><%= fd_pedido.fd_cliente %></td>
-        <td><%= fd_pedido.fd_mesa %></td>
-        <td><%= fd_pedido.fd_funcionario %></td>
-        <td><%= fd_pedido.fd_formapagamento %></td>
-        <td><%= fd_pedido.fd_status %></td>
-        <td><%= link_to 'Show', fd_pedido %></td>
-        <td><%= link_to 'Edit', edit_fd_pedido_path(fd_pedido) %></td>
-        <td><%= link_to 'Destroy', fd_pedido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <tbody>
+        <% @fd_pedidos.each do |fd_pedido| %>
+          <tr>
+            <td><%= fd_pedido.valr_pedido %></td>
+            <td><%= fd_pedido.fd_mesa.numr_mesa %></td>
+            <td><%= fd_pedido.fd_formapagamento %></td>
+            <td><%= fd_pedido.fd_situacao.nome_situacao %></td>
+            <td align="right">
+              <div class="btn-group">
+                <%= link_to fd_pedido, :class => "btn btn-default btn-sm" do %>
+                  <span class="glyphicon glyphicon-list-alt"></span> Exibir
+                <% end %>             
+                <%= link_to edit_fd_pedido_path(fd_pedido), :class => "btn btn-default btn-sm" do %>
+                  <span class="glyphicon glyphicon-pencil"></span> Editar
+                <% end %>             
+                <%= link_to fd_pedido , :method => :delete,  :confirm => 'Deseja excluir o registro?', :class => "btn btn-default btn-sm" do %>
+                  <span class="glyphicon glyphicon-trash"></span> Excluir
+                <% end %>            
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-<br>
+</div>
 
-<%= link_to 'New Fd pedido', new_fd_pedido_path %>
+  <%= link_to new_fd_pedido_path, :class => "btn btn-default btn-sm" do %>
+     <span class="glyphicon glyphicon-file"></span>Novo
+  <% end %>

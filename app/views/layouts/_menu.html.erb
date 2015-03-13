@@ -8,18 +8,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<%=root_path%>">Home</a>
+      <a class="navbar-brand" href="<%=root_path%>"><span class="glyphicon glyphicon-home"></span></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="<%=fd_clientes_path%>">Clientes <span class="sr-only">(current)</span></a></li>
-        <li><a href="<%=fd_empresas_path%>">Empresas</a></li>
-        <li><a href="<%=fd_usuarios_path%>">Usuarios</a></li>
-        <li><a href="<%=fd_mesas_path%>">Mesas</a></li>
-        <li><a href="<%=fd_categoriaprodutos_path%>">Categoria</a></li>
-        <li><a href="<%=fd_produtos_path%>">Produtos</a></li>
         <li><a href="<%=tipo_pedido_path%>">Pedidos</a></li>
         <!--
         <li class="dropdown">
@@ -41,11 +35,15 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Configuração <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li ><a href="<%=fd_clientes_path%>">Clientes <span class="sr-only">(current)</span></a></li>
+            <li><a href="<%=fd_empresas_path%>">Empresas</a></li>
+            <li><a href="<%=fd_usuarios_path%>">Usuarios</a></li>
+            <li><a href="<%=fd_mesas_path%>">Mesas</a></li>
+            <li><a href="<%=fd_categoriaprodutos_path%>">Categoria</a></li>
+            <li><a href="<%=fd_produtos_path%>">Produtos</a></li>
+            <li><a href="<%=fd_items_path%>">Itens</a></li>
             <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="<%=tipo_pedido_path%>">Pedidos</a></li>
           </ul>
         </li>
       </ul>

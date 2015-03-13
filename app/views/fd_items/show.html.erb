@@ -1,4 +1,15 @@
-<p id="notice"><%= notice %></p>
+<%if notice %>
+  <div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     <%= notice %>
+</div>
+<%end%>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Exibir item</h3>
+  </div>
+  <div class="panel-footer" style="background-color:white;">
 
 <p>
   <strong>Desc item:</strong>
@@ -15,5 +26,16 @@
   <%= @fd_item.fd_empresa %>
 </p>
 
-<%= link_to 'Edit', edit_fd_item_path(@fd_item) %> |
-<%= link_to 'Back', fd_items_path %>
+  </div>
+</div>
+
+<hr/>
+
+<div class="btn-group">          
+  <%= link_to edit_fd_item_path(@fd_item), :class => "btn btn-default btn-sm" do %>
+    <span class="glyphicon glyphicon-pencil"></span> Editar
+  <% end %>
+  <%= link_to fd_items_path, :class => "btn btn-default btn-sm" do %>
+    <span class="glyphicon glyphicon-arrow-left"></span> Voltar
+  <% end %>       
+</div>
