@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FdStatusTest < ActiveSupport::TestCase
+class FdSituacaoTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome situacao:</strong>
+  <%= @fd_situacao.nome_situacao %>
+</p>
+
+<p>
+  <strong>Desc situacao:</strong>
+  <%= @fd_situacao.desc_situacao %>
+</p>
+
+<p>
+  <strong>Data bloqueio:</strong>
+  <%= @fd_situacao.data_bloqueio %>
+</p>
+
+<%= link_to 'Edit', edit_fd_situacao_path(@fd_situacao) %> |
+<%= link_to 'Back', fd_situacoes_path %>
