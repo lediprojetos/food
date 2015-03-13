@@ -1,5 +1,9 @@
 class StaticPedidosController < ApplicationController
 
+	def lista_pedidos
+			
+	end		
+
 	def tipo_pedido
 			
 	end	
@@ -13,6 +17,14 @@ class StaticPedidosController < ApplicationController
 		@fd_mesa = FdMesa.find(params[:fd_mesa_id])
 		@fd_mesa.flag_mesaaberta = false
 		@fd_mesa.save
+
+		@fd_pedido = FdPedido.new
+		@fd_pedido.fd_mesa_id = @fd_mesa.id
+		@fd_pedido.fd_empresa_id = user.fd_empresa_id
+		@fd_pedido.fd_empresa_id = 1 #Aberto
+		@fd_pedido.save
+
+
 	end
 
 

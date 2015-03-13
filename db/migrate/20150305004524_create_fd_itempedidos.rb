@@ -7,7 +7,7 @@ class CreateFdItempedidos < ActiveRecord::Migration
       t.references :fd_empresa, index: true
       t.references :fd_variacaoproduto, index: true
       t.references :fd_pedido, index: true
-      t.references :fd_status, index: true
+      t.references :fd_situacao, index: true
       t.references :fd_funcionario, index: true
 
       t.timestamps

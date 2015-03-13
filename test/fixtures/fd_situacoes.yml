@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome_situacao: MyString
+  desc_situacao: MyString
+  data_bloqueio: 2015-03-12 22:32:35
+
+two:
+  nome_situacao: MyString
+  desc_situacao: MyString
+  data_bloqueio: 2015-03-12 22:32:35

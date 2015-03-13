@@ -1,5 +1,7 @@
 Food::Application.routes.draw do
 
+  resources :fd_situacoes
+
   resources :fd_produtotrocacombos
 
   resources :fd_pedidocombos
@@ -44,6 +46,7 @@ Food::Application.routes.draw do
   match '/logoff', to: 'fd_autentication#logoff', via: 'get'
 
   match '/tipo_pedido', to: 'static_pedidos#tipo_pedido', via: 'get'
+  match '/lista_pedidos', to: 'static_pedidos#lista_pedidos', via: 'get'
   match '/lista_mesas', to: 'static_pedidos#lista_mesas', via: 'get'
   get '/pedidos/:fd_mesa_id', to: 'static_pedidos#pedidos', as: 'pedidos'
   get '/fecha_pedido/:fd_mesa_id', to: 'static_pedidos#fecha_pedido', as: 'fecha_pedido'

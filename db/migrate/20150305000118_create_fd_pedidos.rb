@@ -8,7 +8,7 @@ class CreateFdPedidos < ActiveRecord::Migration
       t.references :fd_mesa, index: true
       t.references :fd_funcionario, index: true
       t.references :fd_formapagamento, index: true
-      t.references :fd_status, index: true
+      t.references :fd_situacao, index: true
 
       t.timestamps
     end
