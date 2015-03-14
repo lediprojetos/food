@@ -162,12 +162,12 @@
       </div> 
       <div class="col-lg-8" style="width:810px"> 
            <b>Categoria Produto</b>      
-            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_produto()', :class => 'form-control'%>
+            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_produto(this.value,1)', :class => 'form-control'%>
       </div>
     </div>
     <br>
 
-      <div class="row mar-bot40">
+    <div class="row mar-bot40">
        <div class="col-lg-1">
        </div> 
 
@@ -195,26 +195,34 @@
   
 <div class="tab-pane" id="tab5">
   <br/>
+    
+   <div class="row mar-bot40">
+       <div class="col-lg-4">
+       </div>     
+        <div class="col-lg-4"> 
+           <b>Categoria Produto</b>      
+            <%= select_tag "categoria_produtotroca", options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_produto(this.value,2)', :class => 'form-control'%>
+      </div>
+  </div>
   <div class="row mar-bot40">
-     <div class="col-lg-1">
-     </div>
       <div class="col-lg-4">
             <select multiple="multiple" id="produtolist3" class="form-control">
-           
             </select>
       </div>
       <div class="col-lg-4">
             <select multiple="multiple" id="produtolist4" class="form-control">
-           
             </select>
       </div>
+      <div class="row" >
+      <button id="bntSalvar" type="button" class="btn btn-success" onclick="inclui_produto_troca();">Incluir ></button>
+    </div>
   </div>
       <br/>
   <div class="row mar-bot40">
     <div class="col-lg-12">  
         <div class="panel panel-default" >
           <div class="panel-heading"><strong>Variações</strong></div>
-            <table class="table table-hover"  id="tlbvariacao">
+            <table class="table table-hover"  id="tlbprodutotroca">
               <thead>
                 <tr>
                   <th>Item:</th>
@@ -222,13 +230,13 @@
                   <th></th>     
                 </tr>
               </thead>
-              <tbody id="tlbvariacaolis">
+              <tbody id="tlbprodutotrocalis">
                 <%@fd_produtotrocacombo.each do |troca| %>
                   <tr>
-                    <td><%= troca.fd_produtocombo.fd_produto_combo.nome_produto%></td>
+                    <td><%= troca.fd_produtocombo.fd_produto.nome_produto%></td>
                     <td><%= troca.fd_produto.nome_produto %></td>
                     <td align='right'>
-                      <button type="button" onclick="excluiIVariacaoProduto('<%=variacao.id%>')"class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                      <button type="button" onclick="excluiIVariacaoProduto('<%=troca.id%>')"class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                     </td> 
                   </tr>
                 <% end %>
@@ -401,14 +409,14 @@ function inclui_item_produto(){
 
 function exclui_item_produto(){
 
-    var itemsele = $('#itemlist2 option:selected').val()
+    var itemsele2 = $('#itemlist2 option:selected').val()
        
     $.ajax({
         url: '<%= exclui_item_produto_path %>',
         data :
         {
           fd_produto_id: $('#fd_produto_id').val()
-          ,fd_itemproduto_id: itemsele
+          ,fd_itemproduto_id: itemsele2
         },
 
     success: function(data){
@@ -426,22 +434,26 @@ function exclui_item_produto(){
 
  }
 
- function busca_produto(){
+ function busca_produto(id,num){
+  
     $.ajax({
         url: '<%= busca_produto_path %>',
         data :
         {
-          categoria_produto: $('#categoria_produto').val()
+          categoria_produto: id
         },
 
     success: function(data){
          $("#produtolist1").empty();
+         $("#produtolist4").empty();
          var options = "";
          for (var i in data){
-          var item = data[i];
-
-          $('#produtolist1').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
-
+          var item = data[i]; 
+           if (num == 1){
+                    $('#produtolist1').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+             }else if (num == 2){
+                    $('#produtolist4').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+             }
            };
 
          } 
@@ -465,6 +477,7 @@ function exclui_item_produto(){
           var item = data[i];
 
           $('#produtolist2').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+          $('#produtolist3').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
 
            };
          } 
@@ -473,23 +486,25 @@ function exclui_item_produto(){
 
 function inclui_produto_combo(){
 
-  var itemsele = $('#produtolist1 option:selected').val()
+  var itemsele1 = $('#produtolist1 option:selected').val()
        
     $.ajax({
         url: '<%= inclui_produto_combo_path %>',
         data :
         {
           fd_produto_id: $('#fd_produto_id').val()
-          ,fd_produto_combo: itemsele
+          ,fd_produto_combo: itemsele1
         },
 
     success: function(data){
          $("#produtolist2").empty();
+         $("#produtolist3").empty();
          var options = "";
          for (var i in data){
           var item = data[i];
 
             $('#produtolist2').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+            $('#produtolist3').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
 
            };
 
@@ -498,26 +513,53 @@ function inclui_produto_combo(){
 }
 
 
+  function exclui_produto_combo(){
 
-function exclui_produto_combo(){
+    var itemsele2 = $('#produtolist2 option:selected').val()
+         
+      $.ajax({
+          url: '<%= exclui_produto_combo_path %>',
+          data :
+          {
+            fd_produto_id: $('#fd_produto_id').val()
+            ,fd_produtocombo_id: itemsele2
+          },
 
-  var itemsele = $('#produtolist2 option:selected').val()
+      success: function(data){
+           $("#produtolist2").empty();
+           var options = "";
+           for (var i in data){
+            var item = data[i];
+
+              $('#produtolist2').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+
+             };
+
+           } 
+         })      
+  }
+
+function inclui_produto_troca(){
+
+  var itemsele3 = $('#produtolist3 option:selected').val()
+  var itemsele4 = $('#produtolist4 option:selected').val()
        
     $.ajax({
-        url: '<%= exclui_produto_combo_path %>',
+        url: '<%= inclui_produto_troca_path %>',
         data :
         {
-          fd_produto_id: $('#fd_produto_id').val()
-          ,fd_produtocombo_id: itemsele
+           fd_produtocombo: itemsele3
+          ,fd_produtotroca: itemsele4
+          ,fd_produto_id: $('#fd_produto_id').val()
         },
 
     success: function(data){
-         $("#produtolist2").empty();
+         $("#tlbprodutotrocalis").empty();
          var options = "";
          for (var i in data){
           var item = data[i];
 
-            $('#produtolist2').append("<option value='"+item.id+"'>"+item.nome_produto+"</option")
+              $('#tlbprodutotroca').append('<tr><td>'+item.nome_produtocombo+'</td><td>'+item.nome_produtotroca+'</td><td align="right"><button type="button" onclick="excluiIVariacaoProduto('+item.id+');" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td></tr>')
 
            };
 
@@ -530,11 +572,6 @@ busca_item();
 busca_itemproduto();
 busca_produto_combo();
 
-//busca_produto();
-
- // $(function() {
- //    $("#valor_produto").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
- // })
 
 </script>
 

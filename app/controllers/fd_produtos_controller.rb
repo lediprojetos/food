@@ -130,6 +130,32 @@ def exclui_produto_combo
   
   busca_produto_combo
 end
+
+def inclui_produto_troca
+ 
+ @fd_produtotrocacombo = FdProdutotrocacombo.new
+
+ @fd_produtotrocacombo.fd_produtocombo_id = params[:fd_produtocombo]
+ @fd_produtotrocacombo.fd_produto_id = params[:fd_produtotroca]
+
+ @fd_produtotrocacombo.save
+
+ busca_produto_troca(params[:fd_produto_id])
+
+
+end
+
+def busca_produto_troca(fd_produto_id)
+
+   fd_produtotrocacombo = FdProdutotrocacombo.joins(:fd_produtocombo).where(fd_produtocombos: {fd_produto_id: fd_produto_id})
+   
+   #fd_produtotrocacombo = FdProdutotrocacombo.joins('INNER JOIN fd_produtocombos fp on fd_produtocombo_id = sp.id').where("fd_produto_id = ?", fd_produto_id)
+
+   fd_produtotrocacombo_json = fd_produtotrocacombo.map{|item|{:id => item.id, :nome_produtocombo => item.fd_produtocombo.fd_produto.nome_produto, :nome_produtotroca => item.fd_produto.nome_produto}}
+   
+   render :json => fd_produtotrocacombo_json
+
+end
 # GET /fd_produtos/1
   
 def show
@@ -144,10 +170,12 @@ def new
 
   # GET /fd_produtos/1/edit
   def edit
-    #debugger
+    debugger
     @variacao_produto = FdVariacaoproduto.where(fd_produto_id: params[:id])
     @fd_produtotrocacombo = FdProdutotrocacombo.joins(:fd_produtocombo).where(fd_produtocombos: {fd_produto_id: params[:id]})
     
+    
+
     #@sivic_aulas  = SivicAula.joins(:sivic_turmamoduloprofessor).where(sivic_turmamoduloprofessors: {id: params[:id]})
   end
 
