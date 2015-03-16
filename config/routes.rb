@@ -42,6 +42,7 @@ Food::Application.routes.draw do
   resources :fd_clientes
 
   root  'static_pages#home'
+  match '/report', to: 'static_pages#report', via: 'get'
 
   resources :fd_usuarios
   resources :fd_empresas
@@ -92,7 +93,5 @@ Food::Application.routes.draw do
   match '/exclui_produto_troca', to: 'fd_produtos#exclui_produto_troca', via: 'get'
   match '/inclui_item_adicinal', to: 'fd_itensadicionals#inclui_item_adicinal', via: 'get'
   match '/exclui_item_adicinal', to: 'fd_itensadicionals#exclui_item_adicinal', via: 'get'
-
- 
 
 end
