@@ -292,11 +292,11 @@ function salva_variacao(){
         url: '<%= insere_variacao_produto_path %>',
         data :
         {
-           valr_produto : $('#valor_produto').val()
+           valr_produto : $('#valor_prroduto').val()
           ,fd_variaco_id : variacao
           ,fd_produto_id: $('#fd_produto_id').val()
 
-    },
+  },
 
     success: function(data){
          $("#tlbvariacaolis").empty();

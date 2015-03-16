@@ -79,7 +79,9 @@ Food::Application.routes.draw do
   match '/exclui_produto_combo', to: 'fd_produtos#exclui_produto_combo', via: 'get'
   match '/inclui_produto_troca', to: 'fd_produtos#inclui_produto_troca', via: 'get'
   match '/exclui_produto_troca', to: 'fd_produtos#exclui_produto_troca', via: 'get'
+  match '/inclui_item_adicinal', to: 'fd_itensadicionals#inclui_item_adicinal', via: 'get'
+  match '/exclui_item_adicinal', to: 'fd_itensadicionals#exclui_item_adicinal', via: 'get'
 
-  
+ 
 
 end

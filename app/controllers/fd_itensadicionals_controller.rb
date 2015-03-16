@@ -17,7 +17,38 @@ class FdItensadicionalsController < ApplicationController
     results_json = results.map {|item| {:fd_itempedido_id => params[:fd_itempedido_id], :fd_itensadicional_id => item["fd_intensadicional_id1"], :fd_item_id => item["fd_item_id"], :desc_item => item["desc_item"], :fd_categoriaproduto_id => item["fd_categoriaproduto_id"], :valr_item => item["valr_item"], :numr_quantidade => item["numr_quantidade"].blank? ? '' : item["numr_quantidade"]}}
     render :json => results_json
 
+  end
+
+  def inclui_item_adicinal
+    fd_itensadicional = FdItensadicional.new
+    fd_itensadicional.fd_item_id = params[:fd_item_id]
+    fd_itensadicional.fd_categoriaproduto_id = params[:categoria_produto]
+    fd_itensadicional.valr_item = params[:valor_item]
+
+    fd_itensadicional.save
+
+    busca_item_adicional
+
   end    
+
+  def busca_item_adicional
+     
+      fd_itensadicional = FdItensadicional.all
+
+      fd_itensadicional_json = fd_itensadicional.map{|item|{:id =>item.id, :nome_item => item.fd_item.desc_item, :nome_categoria => item.fd_categoriaproduto.desc_categoria, :valor_item => item.valr_item}}
+      render :json => fd_itensadicional_json 
+
+  end
+
+  def exclui_item_adicinal
+
+    fd_itensadicional = FdItensadicional.find(params[:fd_item_adicional])
+    
+    fd_itensadicional.destroy
+
+    busca_item_adicional
+
+  end
 
   # GET /fd_itensadicionals
   def index
