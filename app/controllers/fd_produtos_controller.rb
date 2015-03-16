@@ -146,6 +146,14 @@ def inclui_produto_troca
 
  busca_produto_troca(params[:fd_produto_id])
 
+end
+
+def exclui_produto_troca
+
+  @fd_produtotrocacombo = FdProdutotrocacombo.find(params[:fd_produtotroca_id])    
+  @fd_produtotrocacombo.destroy
+
+  busca_produto_troca(params[:fd_produto_id])
 
 end
 
@@ -155,7 +163,7 @@ def busca_produto_troca(fd_produto_id)
    
    #fd_produtotrocacombo = FdProdutotrocacombo.joins('INNER JOIN fd_produtocombos fp on fd_produtocombo_id = sp.id').where("fd_produto_id = ?", fd_produto_id)
 
-   fd_produtotrocacombo_json = fd_produtotrocacombo.map{|item|{:id => item.id, :nome_produtocombo => item.fd_produtocombo.fd_produto.nome_produto, :nome_produtotroca => item.fd_produto.nome_produto}}
+   fd_produtotrocacombo_json = fd_produtotrocacombo.map{|item|{:id => item.id, :nome_produtocombo => item.fd_produtocombo.fd_produtocombo.nome_produto, :nome_produtotroca => item.fd_produto.nome_produto}}
    
    render :json => fd_produtotrocacombo_json
 
@@ -183,13 +191,11 @@ end
 
   # GET /fd_produtos/1/edit
   def edit
-    debugger
     @variacao_produto = FdVariacaoproduto.where(fd_produto_id: params[:id])
     @fd_produtotrocacombo = FdProdutotrocacombo.joins(:fd_produtocombo).where(fd_produtocombos: {fd_produto_id: params[:id]})
   end
 
   def edit_service
-    debugger
     @variacao_produto = FdVariacaoproduto.where(fd_produto_id: params[:id])
     @fd_produtotrocacombo = FdProdutotrocacombo.joins(:fd_produtocombo).where(fd_produtocombos: {fd_produto_id: params[:id]})
   end
@@ -209,7 +215,8 @@ end
   # PATCH/PUT /fd_produtos/1
   def update
     if @fd_produto.update(fd_produto_params)
-      redirect_to @fd_produto, notice: 'Fd produto was successfully updated.'
+      #redirect_to @fd_produto, notice: 'Fd produto was successfully updated.'
+      redirect_to edit_fd_produto_path(@fd_produto)
     else
       render action: 'edit'
     end

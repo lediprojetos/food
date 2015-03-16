@@ -1,31 +1,141 @@
-<h1>Listing fd_itensadicionals</h1>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Cadastro Itens Adicionais</h3>
+  </div>
+  <div class="panel-footer" style="background-color:white;">
 
-<table>
+
+
+<div class="row mar-bot40">
+   <div class="col-lg-4"> 
+     <select multiple="multiple" id="itemlist1"  class="form-control">
+     </select>
+   </div>
+
+  <div class="col-lg-4"> 
+           <b>Categoria Produto</b>      
+            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria'), include_blank: true, :class => 'form-control'%>
+  </div>
+  <div class="col-lg-2">
+      <b>Valor Produto</b> 
+      <input id="valor_item" name="valor_item" value="<%=%>" onkeypress="" type="text" class="form-control">
+  </div>
+  <div class="row" style="margin-top:18px; margin-left:30px;">
+      <button id="bntSalvar" type="button" class="btn btn-success" onclick="inclui_item_adicional()">Incluir</button>
+  </div>
+</div>
+
+<br/>
+
+<table class="table table-hover" id="tlbitemadicional">
   <thead>
     <tr>
-      <th>Fd item</th>
-      <th>Fd categoriaproduto</th>
-      <th>Valr item</th>
-      <th></th>
-      <th></th>
+      <th>Item Adicional</th>
+      <th>Categoria Produto</th>
+      <th>Valor item</th>
       <th></th>
     </tr>
   </thead>
 
-  <tbody>
+  <tbody id="tlbitemadicionais">
     <% @fd_itensadicionals.each do |fd_itensadicional| %>
       <tr>
-        <td><%= fd_itensadicional.fd_item %></td>
-        <td><%= fd_itensadicional.fd_categoriaproduto %></td>
+        <td><%= fd_itensadicional.fd_item.desc_item %></td>
+        <td><%= fd_itensadicional.fd_categoriaproduto.desc_categoria %></td>
         <td><%= fd_itensadicional.valr_item %></td>
-        <td><%= link_to 'Show', fd_itensadicional %></td>
-        <td><%= link_to 'Edit', edit_fd_itensadicional_path(fd_itensadicional) %></td>
-        <td><%= link_to 'Destroy', fd_itensadicional, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td align='right'>
+                  <button type="button" onclick="exclui_item_adicional('<%=fd_itensadicional.id%>')"class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+        </td> 
       </tr>
     <% end %>
   </tbody>
 </table>
 
+</div>
 <br>
 
-<%= link_to 'New Fd itensadicional', new_fd_itensadicional_path %>
+
+<script>
+
+  function busca_item(){
+    $.ajax({
+        url: '<%= busca_items_path %>',
+        data :
+        {},
+
+    success: function(data){
+         $("#itemlist1").empty();
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+          $('#itemlist1').append("<option value='"+item.id+"'>"+item.desc_item+"</option")
+
+           };
+
+         } 
+       })      
+    
+  }
+
+  function inclui_item_adicional(){
+
+    var itemsele = $('#itemlist1 option:selected').val()
+
+    $.ajax({
+        url: '<%= inclui_item_adicinal_path %>',
+        data :
+        {
+           valor_item: $('#valor_item').val()
+          ,fd_item_id: itemsele
+          ,categoria_produto: $('#categoria_produto').val()
+        },
+
+    success: function(data){
+         $("#tlbitemadicionais").empty();
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+            $('#tlbitemadicional').append('<tr><td>'+item.nome_item+'</td><td>'+item.nome_categoria+'</td><td>'+item.valor_item+'</td><td align="right"><button type="button" onclick="exclui_item_adicional('+item.id+');" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td></tr>')
+
+           };
+
+         } 
+       }) 
+
+  }
+
+
+  function exclui_item_adicional(id){
+
+
+    $.ajax({
+        url: '<%= exclui_item_adicinal_path %>',
+        data :
+        {
+
+          fd_item_adicional: id
+        },
+
+    success: function(data){
+         $("#tlbitemadicionais").empty();
+         var options = "";
+         for (var i in data){
+          var item = data[i];
+
+            $('#tlbitemadicional').append('<tr><td>'+item.nome_item+'</td><td>'+item.nome_categoria+'</td><td>'+item.valor_item+'</td><td align="right"><button type="button" onclick="exclui_item_adicional('+item.id+');" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td></tr>')
+
+           };
+
+         } 
+       }) 
+
+  }
+
+
+  busca_item();
+
+
+</script>
+ 
