@@ -15,7 +15,19 @@ Food::Application.routes.draw do
   resources :fd_itempedidos
   resources :fd_pedidos
   resources :fd_categoriaprodutos
-  resources :fd_produtos
+
+  resources :fd_produtos do
+    member do
+      get :show_service   
+      get :show_service   
+      get :edit_service   
+    end
+  end
+
+  match '/index_service', to: 'fd_produtos#index_service', via: 'get'
+  match '/new_service', to: 'fd_produtos#new_service', via: 'get'
+
+
   resources :fd_variacaos
   resources :fd_formapagamentos
   resources :fd_statuses

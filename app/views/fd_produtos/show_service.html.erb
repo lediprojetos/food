@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome produto:</strong>
+  <%= @fd_produto.nome_produto %>
+</p>
+
+<p>
+  <strong>Desc produto:</strong>
+  <%= @fd_produto.desc_produto %>
+</p>
+
+<p>
+  <strong>Numr porcentagem:</strong>
+  <%= @fd_produto.numr_porcentagem %>
+</p>
+
+<p>
+  <strong>Fd empresa:</strong>
+  <%= @fd_produto.fd_empresa %>
+</p>
+
+<p>
+  <strong>Fd categoriaproduto:</strong>
+  <%= @fd_produto.fd_categoriaproduto %>
+</p>
+
+<p>
+  <strong>Fd usuario:</strong>
+  <%= @fd_produto.fd_usuario %>
+</p>
+
+<%= link_to 'Edit', edit_fd_produto_path(@fd_produto) %> |
+<%= link_to 'Back', fd_produtos_path %>

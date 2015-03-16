@@ -16,6 +16,10 @@ class FdProdutosController < ApplicationController
     @fd_produtos = FdProduto.all
   end
 
+  def index_service
+    @fd_produtos = FdProduto.all
+  end
+
 
  def salva_variacao_produto
 
@@ -161,22 +165,33 @@ end
 def show
 end
 
+def show_service
+end
+
   # GET /fd_produtos/new
 def new
     @fd_produto = FdProduto.new
     @variacao_produto = FdVariacaoproduto.where(fd_produto_id: params[:id])
     @fd_produtotrocacombo = FdProdutotrocacombo.joins(:fd_produtocombo).where(fd_produtocombos: {fd_produto_id: params[:id]})
-  end
+end
+
+def new_service
+    @fd_produto = FdProduto.new
+    @variacao_produto = FdVariacaoproduto.where(fd_produto_id: params[:id])
+    @fd_produtotrocacombo = FdProdutotrocacombo.joins(:fd_produtocombo).where(fd_produtocombos: {fd_produto_id: params[:id]})
+end
 
   # GET /fd_produtos/1/edit
   def edit
     debugger
     @variacao_produto = FdVariacaoproduto.where(fd_produto_id: params[:id])
     @fd_produtotrocacombo = FdProdutotrocacombo.joins(:fd_produtocombo).where(fd_produtocombos: {fd_produto_id: params[:id]})
-    
-    
+  end
 
-    #@sivic_aulas  = SivicAula.joins(:sivic_turmamoduloprofessor).where(sivic_turmamoduloprofessors: {id: params[:id]})
+  def edit_service
+    debugger
+    @variacao_produto = FdVariacaoproduto.where(fd_produto_id: params[:id])
+    @fd_produtotrocacombo = FdProdutotrocacombo.joins(:fd_produtocombo).where(fd_produtocombos: {fd_produto_id: params[:id]})
   end
 
   # POST /fd_produtos

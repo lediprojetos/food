@@ -1,0 +1,50 @@
+<%= form_for(@fd_produto) do |f| %>
+  <% if @fd_produto.errors.any? %>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  
+  <% if @fd_produto.errors.any? %>
+  
+    <% @fd_produto.errors.full_messages.each do |msg| %>
+        <%= msg %></br>
+      <% end %>
+     <% end %>
+    </div>
+  <% end %>    
+
+  <div class="field">
+    <%= f.label :Nome_Serviço %><br>
+    <%= f.text_field :nome_produto, :class => 'form-control' %>
+  </div>
+  <div class="field">
+    <%= f.label :Descrição %><br>
+    <%= f.text_field :desc_produto, :class => 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Porcentagem %><br>
+    <%= f.text_field :numr_porcentagem , :class => 'form-control'%>
+  </div>
+
+  <div class="field">
+    <%= f.label :Valor %><br>
+    <input type="text" id="fd_produto_valor" name="fd_produto_valor" class="form-control">
+  </div>  
+
+  <div class="field">
+    <%= f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :fd_categoriaproduto_id, :value => 2 %>
+  </div>
+  </div>
+</div>
+
+<hr/>
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn-sm">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+  </button>  
+
+<% end %>
