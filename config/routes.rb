@@ -19,7 +19,6 @@ Food::Application.routes.draw do
   resources :fd_produtos do
     member do
       get :show_service   
-      get :show_service   
       get :edit_service   
     end
   end

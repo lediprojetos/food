@@ -1,5 +1,5 @@
 class FdProdutosController < ApplicationController
-  before_action :set_fd_produto, only: [:show, :edit, :update, :destroy]
+  before_action :set_fd_produto, only: [:show, :edit, :update, :show_service, :edit_service, :destroy]
 
   def busca_produtos
     fd_produtos = FdProduto.where(:fd_categoriaproduto_id => params[:fd_categoriaproduto_id], :fd_empresa_id => user.fd_empresa_id)
@@ -13,11 +13,11 @@ class FdProdutosController < ApplicationController
 
   # GET /fd_produtos
   def index
-    @fd_produtos = FdProduto.all
+    @fd_produtos = FdProduto.where('fd_categoriaproduto_id <> 1')
   end
 
   def index_service
-    @fd_produtos = FdProduto.all
+    @fd_produtos = FdProduto.where(:fd_categoriaproduto_id => 1)
   end
 
 
@@ -202,10 +202,22 @@ end
 
   # POST /fd_produtos
   def create
+
+
     @fd_produto = FdProduto.new(fd_produto_params)
 
     if @fd_produto.save
       #render action: 'edit'
+
+      if params[:fd_produto_valor] != ""
+        
+         fd_variacaoproduto = FdVariacaoproduto.new(:valr_produto => params[:fd_produto_valor], :fd_variaco_id => 1, :fd_produto_id => @fd_produto.id)
+         fd_variacaoproduto
+         redirect_to index_service_path
+
+         return
+      end
+
       redirect_to edit_fd_produto_path(@fd_produto)
     else
       render action: 'new'
@@ -224,8 +236,15 @@ end
 
   # DELETE /fd_produtos/1
   def destroy
+    fd_categoriaproduto_id = @fd_produto.fd_categoriaproduto_id
     @fd_produto.destroy
-    redirect_to fd_produtos_url, notice: 'Fd produto was successfully destroyed.'
+
+    if fd_categoriaproduto_id = 1
+      redirect_to index_service_path
+      return
+    else
+      redirect_to fd_produtos_url, notice: 'Fd produto was successfully destroyed.'
+    end
   end
 
   private

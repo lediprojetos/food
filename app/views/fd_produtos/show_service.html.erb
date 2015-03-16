@@ -1,4 +1,15 @@
-<p id="notice"><%= notice %></p>
+<%if notice %>
+  <div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     <%= notice %>
+</div>
+<%end%>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Exibir Serviços</h3>
+  </div>
+  <div class="panel-footer" style="background-color:white;">
 
 <p>
   <strong>Nome produto:</strong>
@@ -27,8 +38,20 @@
 
 <p>
   <strong>Fd usuario:</strong>
-  <%= @fd_produto.fd_usuario %>
+  <%#= @fd_produto.fd_usuario %>
 </p>
 
-<%= link_to 'Edit', edit_fd_produto_path(@fd_produto) %> |
-<%= link_to 'Back', fd_produtos_path %>
+
+  </div>
+</div>
+
+<hr/>
+
+<div class="btn-group">          
+  <%= link_to edit_service_fd_produto_path(@fd_produto), :class => "btn btn-default btn-sm" do %>
+    <span class="glyphicon glyphicon-pencil"></span> Editar
+  <% end %>
+  <%= link_to index_service_path, :class => "btn btn-default btn-sm" do %>
+    <span class="glyphicon glyphicon-arrow-left"></span> Voltar
+  <% end %>       
+</div>

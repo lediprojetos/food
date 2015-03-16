@@ -5,13 +5,13 @@
   </div>
   <div class="panel-footer" style="background-color:white;">
 
-<%= render 'form' %>
+<%= render 'form_service' %>
 
-  <%= link_to @fd_produto , :class => "btn btn-default btn-sm" do %>
+  <%=  link_to show_service_fd_produto_path(@fd_produto), :class => "btn btn-default btn-sm" do %>
      <span class="glyphicon glyphicon-list-alt"></span> Exibir
   <% end %>
 
-  <%= link_to fd_produtos_path, :class => "btn btn-default btn-sm" do %>
+  <%= link_to index_service_path, :class => "btn btn-default btn-sm" do %>
      <span class="glyphicon glyphicon-arrow-left"></span> Voltar
   <% end %>  
 
