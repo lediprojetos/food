@@ -126,7 +126,6 @@
   </div>
 </div>
 
-
 <div class="tab-pane" id="tab3">
      <br/><br/> 
     <div class="row mar-bot40">
@@ -140,7 +139,7 @@
         </div>
       
        <div class="col-lg-1" style="width:40px">
-          <a class="btn btn-default btn-sm" title=""  onclick="inclui_item_produto();" style="margin-left:-16px;margin-top:110px; color:green" rel="tooltip" data-original-title="Incluir">
+          <a class="btn btn-default btn-sm" title=""  onclick="inclui_item_produto();" style="margin-left:-16px;margin-top:15px; color:green" rel="tooltip" data-original-title="Incluir">
                <span class="glyphicon glyphicon-forward" rel="tooltip"></span>
           </a> 
           <a class="btn btn-default btn-sm" title="" onclick="exclui_item_produto();" style="margin-left:-16px;color:red" rel="tooltip" data-original-title="Excluir">
@@ -292,7 +291,7 @@ function salva_variacao(){
         url: '<%= insere_variacao_produto_path %>',
         data :
         {
-           valr_produto : $('#valor_prroduto').val()
+           valr_produto : $('#valor_produto').val()
           ,fd_variaco_id : variacao
           ,fd_produto_id: $('#fd_produto_id').val()
 

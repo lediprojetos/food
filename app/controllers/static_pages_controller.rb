@@ -5,4 +5,8 @@ before_action :requer_logon
   	
   end 
   
+  def report
+  end
+
+
 end
