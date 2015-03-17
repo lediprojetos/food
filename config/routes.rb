@@ -72,6 +72,7 @@ Food::Application.routes.draw do
   match '/busca_itempedido', to: 'fd_itempedidos#busca_itempedido', via: 'get'
   match '/dobra_itempedido', to: 'fd_itempedidos#dobra_itempedido', via: 'get'
   match '/exclui_itempedido', to: 'fd_itempedidos#exclui_itempedido', via: 'get'
+  match '/exclui_servicopedido', to: 'fd_itempedidos#exclui_servicopedido', via: 'get'
   match '/insere_variacao_produto', to: 'fd_produtos#salva_variacao_produto', via: 'get'
   match '/busca_item', to: 'fd_itensprodutos#busca_item', via: 'get'
   match '/insere_ingredientealterado', to: 'fd_itemalterados#insere_ingredientealterado', via: 'get'
@@ -93,5 +94,6 @@ Food::Application.routes.draw do
   match '/exclui_produto_troca', to: 'fd_produtos#exclui_produto_troca', via: 'get'
   match '/inclui_item_adicinal', to: 'fd_itensadicionals#inclui_item_adicinal', via: 'get'
   match '/exclui_item_adicinal', to: 'fd_itensadicionals#exclui_item_adicinal', via: 'get'
+  match '/busca_Servicos', to: 'fd_produtos#busca_Servicos', via: 'get'
 
 end

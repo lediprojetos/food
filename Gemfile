@@ -36,7 +36,7 @@ group :production do
 	gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'  
 end
 
-#gem 'debugger'
+gem 'debugger'
 gem 'will_paginate', '~> 3.0.5'
 #gem 'pdfkit'
 
