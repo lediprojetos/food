@@ -20,14 +20,14 @@ end
   <div lass="row mar-bot40">
     <div class="col-lg-2">
     	 <label >Data Início</label><br>
-        <input id="q" name="q" type="text" class="form-control" placeholder="Nome">
+        <input id="q" name="q" type="text" class="form-control">
     </div><!-- /.col-lg-6 -->
     <div class="col-lg-2">
     	 <label >Data Fim</label><br>
-        <input id="q" name="q" type="text" class="form-control" placeholder="Nome">
+        <input id="q" name="q" type="text" class="form-control">
     </div><!-- /.col-lg-6 -->
    
-    <div class="col-lg-4" >
+    <div class="col-lg-2" >
     	<label >Pedidos</label><br>
           <div class="checkbox">
             <label>
@@ -39,9 +39,20 @@ end
           </div>              
      </div>
 
-	 <div class="col-lg-2" >
-	   <button class="btn btn-success" type="submit" >Listar</button>
+	 <div class="col-lg-1" style="margin-top:17px;"  >
+	   <button class="btn btn-success" type="submit" >Gerar</button>
 	 </div>
+
+  <div class="col-lg-2">
+  </div>
+
+ <div class="col-lg-3" style="margin-top:0px;" >
+  <div class="input-group input-group-lg">
+    <span class="input-group-addon" id="sizing-addon1">Total</span>
+    <input type="text" class="form-control" value="<%=@valor_total%>" disabled="disabled" aria-describedby="sizing-addon1">
+  </div>
+</div>
+
  </div><!-- /.row -->
   
 <% end %>
@@ -65,8 +76,6 @@ end
         <% end %>
       </tbody>
     </table>
-
-
 
 
   </div>

@@ -4,6 +4,7 @@ class FdPedidosController < ApplicationController
 
   def relPedidos
     @fd_itempedidos = FdItempedido.all
+    @valor_total =  @fd_itempedidos.sum("valr_item")
   end
 
 
