@@ -5,4 +5,30 @@
   </div>      
 <% end %>
 
-  
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Tipo Pedido</h3>
+  </div>
+  <div class="panel-footer" style="background-color:white;">
+    <div class="row mar-bot40">
+      <div class="col-lg-3" >
+      </div>
+      <div class="col-lg-2" >
+        <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
+          <span class="glyphicon glyphicon-cutlery"></span> Mesa
+        <% end %>
+      </div>
+      <div class="col-lg-2" >
+        <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
+          <span class="glyphicon glyphicon-user"></span> Balcão
+        <% end %>
+      </div>
+      <div class="col-lg-2" >
+        <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
+          <span class="glyphicon glyphicon-phone-alt"></span> Entrega
+        <% end %>         
+      </div>
+    </br>
+    </br>
+  </div>
+</div>

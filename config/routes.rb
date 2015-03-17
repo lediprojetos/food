@@ -1,5 +1,7 @@
 Food::Application.routes.draw do
 
+  resources :fd_pedidomistos
+
   resources :fd_situacoes
 
   resources :fd_produtotrocacombos
@@ -43,6 +45,7 @@ Food::Application.routes.draw do
 
   root  'static_pages#home'
   match '/report', to: 'static_pages#report', via: 'get'
+  match '/config2', to: 'static_pages#config2', via: 'get'
 
   resources :fd_usuarios
   resources :fd_empresas

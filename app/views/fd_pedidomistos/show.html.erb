@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fd produto:</strong>
+  <%= @fd_pedidomisto.fd_produto %>
+</p>
+
+<p>
+  <strong>Fd itempedidos:</strong>
+  <%= @fd_pedidomisto.fd_itempedidos %>
+</p>
+
+<%= link_to 'Edit', edit_fd_pedidomisto_path(@fd_pedidomisto) %> |
+<%= link_to 'Back', fd_pedidomistos_path %>

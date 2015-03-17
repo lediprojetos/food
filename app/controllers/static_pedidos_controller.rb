@@ -1,7 +1,7 @@
 class StaticPedidosController < ApplicationController
 
 	def lista_pedidos
-		@fd_pedidos = FdPedido.where(:fd_mesa_id => params[:fd_mesa_id]).order(:created_at => :desc)
+		@fd_pedidos = FdPedido.where(:fd_mesa_id => params[:fd_mesa_id]).order(:created_at => :desc).limit(10)
 		@fd_mesa_id = params[:fd_mesa_id]
 	end		
 
@@ -48,9 +48,15 @@ class StaticPedidosController < ApplicationController
 		@fd_pedido.fd_situacao_id = 2
 		@fd_pedido.save
 
-		@fd_mesa = FdMesa.find(params[:fd_mesa_id])
-		@fd_mesa.flag_mesaaberta = true
-		@fd_mesa.save
+		fd_pedido = FdPedido.where(:fd_empresa_id => user.fd_empresa_id, :fd_mesa_id => params[:fd_mesa_id], :fd_situacao_id => 1)
+
+		if fd_pedido.blank?
+
+			@fd_mesa = FdMesa.find(params[:fd_mesa_id])
+			@fd_mesa.flag_mesaaberta = true
+			@fd_mesa.save
+
+		end
 
 		redirect_to tipo_pedido_path
 	end

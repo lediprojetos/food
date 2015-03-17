@@ -1,0 +1,29 @@
+<h1>Listing fd_pedidomistos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fd produto</th>
+      <th>Fd itempedidos</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_pedidomistos.each do |fd_pedidomisto| %>
+      <tr>
+        <td><%= fd_pedidomisto.fd_produto %></td>
+        <td><%= fd_pedidomisto.fd_itempedidos %></td>
+        <td><%= link_to 'Show', fd_pedidomisto %></td>
+        <td><%= link_to 'Edit', edit_fd_pedidomisto_path(fd_pedidomisto) %></td>
+        <td><%= link_to 'Destroy', fd_pedidomisto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd pedidomisto', new_fd_pedidomisto_path %>

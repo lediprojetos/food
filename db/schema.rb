@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150313013235) do
+ActiveRecord::Schema.define(version: 20150317165006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20150313013235) do
     t.integer  "fd_funcionario_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "flag_pedidomisto"
   end
 
   add_index "fd_itempedidos", ["fd_empresa_id"], name: "index_fd_itempedidos_on_fd_empresa_id", using: :btree
@@ -244,6 +245,16 @@ ActiveRecord::Schema.define(version: 20150313013235) do
   add_index "fd_pedidocombos", ["fd_itempedidos_id"], name: "index_fd_pedidocombos_on_fd_itempedidos_id", using: :btree
   add_index "fd_pedidocombos", ["fd_produtos_id"], name: "index_fd_pedidocombos_on_fd_produtos_id", using: :btree
 
+  create_table "fd_pedidomistos", force: true do |t|
+    t.integer  "fd_produto_id"
+    t.integer  "fd_itempedidos_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_pedidomistos", ["fd_itempedidos_id"], name: "index_fd_pedidomistos_on_fd_itempedidos_id", using: :btree
+  add_index "fd_pedidomistos", ["fd_produto_id"], name: "index_fd_pedidomistos_on_fd_produto_id", using: :btree
+
   create_table "fd_pedidos", force: true do |t|
     t.decimal  "valr_pedido"
     t.boolean  "flag_pago"
@@ -266,13 +277,15 @@ ActiveRecord::Schema.define(version: 20150313013235) do
 
   create_table "fd_produtocombos", force: true do |t|
     t.integer  "fd_produto_id"
-    t.integer  "integer"
     t.integer  "fd_produto_combo"
+    t.integer  "integer"
     t.integer  "user_inclusao"
     t.integer  "user_exclusao"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "fd_produtocombos", ["fd_produto_id"], name: "index_fd_produtocombos_on_fd_produto_id", using: :btree
 
   create_table "fd_produtos", force: true do |t|
     t.string   "nome_produto"
@@ -285,6 +298,8 @@ ActiveRecord::Schema.define(version: 20150313013235) do
     t.integer  "user_exclusao"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "flag_disponivel"
+    t.boolean  "flag_produtomisto"
   end
 
   add_index "fd_produtos", ["fd_categoriaproduto_id"], name: "index_fd_produtos_on_fd_categoriaproduto_id", using: :btree
