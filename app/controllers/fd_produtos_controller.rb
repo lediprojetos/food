@@ -1,10 +1,38 @@
 class FdProdutosController < ApplicationController
   before_action :set_fd_produto, only: [:show, :edit, :update, :show_service, :edit_service, :destroy]
 
+  def busca_Servicos
+
+    query = " select "
+    query = query +  " nome_produto "
+    query = query +  " ,numr_porcentagem "
+    query = query +  " ,valr_produto"  
+    query = query +  " ,fd_produto_id "  
+    query = query +  " ,vp.id as fd_variacaoproduto_id "  
+    query = query +  " ,Count(ip.id) as qtd" 
+    query = query +  " from "
+    query = query +  " fd_produtos p "
+    query = query +  " inner join fd_variacaoprodutos vp on p.id = vp.fd_produto_id "
+    query = query +  " left  join fd_itempedidos ip on ip.fd_variacaoproduto_id = vp.id and fd_pedido_id = "  + params[:fd_pedido_id].to_s
+    query = query +  " where "
+    query = query +  " p.fd_categoriaproduto_id = " + $Servicos.to_s
+
+    query = query +  " group by "
+    query = query +  "   fd_produto_id "
+    query = query +  "   ,nome_produto "
+    query = query +  "   ,numr_porcentagem "
+    query = query +  "   ,valr_produto    "
+    query = query +  "   ,vp.id    "
+
+    results = ActiveRecord::Base.connection.execute(query);
+
+    results_json = results.map {|item| {:fd_variacaoproduto_id => item["fd_variacaoproduto_id"], :qtd => item["qtd"], :fd_produto_id => item["fd_produto_id"], :nome_produto => item["nome_produto"], :numr_porcentagem => item["numr_porcentagem"], :valr_produto => item["valr_produto"]}}
+    render :json => results_json
+
+  end  
+
   def busca_produtos
     fd_produtos = FdProduto.where(:fd_categoriaproduto_id => params[:fd_categoriaproduto_id], :fd_empresa_id => user.fd_empresa_id)
-
-    #debugger
 
     fd_produtos_json = fd_produtos.map {|item| {:id => item.id, :nome_produto => item.nome_produto, :desc_produto => item.desc_produto}}
     render :json => fd_produtos_json
@@ -13,11 +41,11 @@ class FdProdutosController < ApplicationController
 
   # GET /fd_produtos
   def index
-    @fd_produtos = FdProduto.where('fd_categoriaproduto_id <> 1')
+    @fd_produtos = FdProduto.where('fd_categoriaproduto_id <> ?', $Servicos)
   end
 
   def index_service
-    @fd_produtos = FdProduto.where(:fd_categoriaproduto_id => 1)
+    @fd_produtos = FdProduto.where(:fd_categoriaproduto_id => $Servicos)
   end
 
 
@@ -160,11 +188,7 @@ end
 def busca_produto_troca(fd_produto_id)
 
    fd_produtotrocacombo = FdProdutotrocacombo.joins(:fd_produtocombo).where(fd_produtocombos: {fd_produto_id: fd_produto_id})
-   
-   #fd_produtotrocacombo = FdProdutotrocacombo.joins('INNER JOIN fd_produtocombos fp on fd_produtocombo_id = sp.id').where("fd_produto_id = ?", fd_produto_id)
-
    fd_produtotrocacombo_json = fd_produtotrocacombo.map{|item|{:id => item.id, :nome_produtocombo => item.fd_produtocombo.fd_produtocombo.nome_produto, :nome_produtotroca => item.fd_produto.nome_produto}}
-   
    render :json => fd_produtotrocacombo_json
 
 end
@@ -209,10 +233,10 @@ end
     if @fd_produto.save
       #render action: 'edit'
 
-      if params[:fd_produto_valor] != ""
+      if @fd_produto.fd_categoriaproduto_id == $Servicos
         
-         fd_variacaoproduto = FdVariacaoproduto.new(:valr_produto => params[:fd_produto_valor], :fd_variaco_id => 1, :fd_produto_id => @fd_produto.id)
-         fd_variacaoproduto
+         fd_variacaoproduto = FdVariacaoproduto.new(:valr_produto => params[:fd_produto_valor], :fd_variaco_id => $Unico, :fd_produto_id => @fd_produto.id)
+         fd_variacaoproduto.save
          redirect_to index_service_path
 
          return
@@ -228,7 +252,13 @@ end
   def update
     if @fd_produto.update(fd_produto_params)
       #redirect_to @fd_produto, notice: 'Fd produto was successfully updated.'
-      redirect_to edit_fd_produto_path(@fd_produto)
+      if @fd_produto.fd_categoriaproduto_id == $Servicos
+        redirect_to show_service_fd_produto_path(@fd_produto)
+
+        return
+      else
+        redirect_to edit_fd_produto_path(@fd_produto)
+      end
     else
       render action: 'edit'
     end
@@ -239,7 +269,7 @@ end
     fd_categoriaproduto_id = @fd_produto.fd_categoriaproduto_id
     @fd_produto.destroy
 
-    if fd_categoriaproduto_id = 1
+    if fd_categoriaproduto_id == $Servicos
       redirect_to index_service_path
       return
     else

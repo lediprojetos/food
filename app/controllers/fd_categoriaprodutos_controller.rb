@@ -12,7 +12,7 @@ class FdCategoriaprodutosController < ApplicationController
 
   # GET /fd_categoriaprodutos
   def index
-    @fd_categoriaprodutos = FdCategoriaproduto.all
+    @fd_categoriaprodutos = FdCategoriaproduto.where('id <> ? and id <> ?', $Servicos, $Combos)
   end
 
   # GET /fd_categoriaprodutos/1

@@ -1,6 +1,18 @@
 class FdItempedidosController < ApplicationController
   before_action :set_fd_itempedido, only: [:show, :edit, :update, :destroy]
 
+
+    def exclui_servicopedido
+
+    fd_itenspedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id], :fd_variacaoproduto_id => params[:fd_variacaoproduto_id])
+    
+    if not fd_itenspedidos.blank?
+      fd_itenspedidos.first.destroy
+    end
+
+    render json: {}, status: :no_content
+  end  
+
   # GET /fd_itempedidos
   def index
     @fd_itempedidos = FdItempedido.all
@@ -65,10 +77,7 @@ class FdItempedidosController < ApplicationController
     fd_itenspedidos = FdItempedido.find(params[:id])
     fd_itenspedidos.destroy
 
-
-
     render json: {}, status: :no_content
-
   end   
 
   def dobra_itempedido

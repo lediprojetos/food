@@ -65,39 +65,19 @@
           <br/>
           <div class="panel panel-default">
             <div class="panel-heading"><strong>Serviços</strong></div>
-              <table class="table table-hover">
+                <table class="table table-hover" name="tlbServicos" id="tlbServicos">
                 <thead>
                   <tr>
-                    <th>Tipo</th>
+                    <th>Produto</th>
                     <th>Preço</th>
-                    <th>Qtd.</th>
+                    <th>%</th>
+                    <th>Qtd</th>
                     <th></th>
                   </tr>
                 </thead>
 
-                <tbody>
-                  <tr>
-                    <td>Taxa Garçon</td>
-                    <td>10%</td>
-                    <td>1</td>
-                    <td align="right">
-                      <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                      </div>                    
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Cover</td>
-                    <td>R$ 5,00</td>
-                    <td>3</td>
-                    <td align="right">
-                      <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                      </div>                    
-                    </td>
-                  </tr>
+                <tbody id="bodyTlbServicos">
+                            
                 </tbody>
               </table>
             </div>        
@@ -542,19 +522,22 @@ function buscaItensPedidos(fd_pedido_id) {
       for (var i in data) {
         var item = data[i];
 
-          if(item.fd_categoriaproduto_id == 2){
+          if(item.fd_categoriaproduto_id == <%=$Combos%>){
 
             $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaTrocas('+item.id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
             
-          } else {
+          } else if (item.fd_categoriaproduto_id != <%=$Servicos%>) {
 
 
             $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
 
           };
 
+          if(item.fd_categoriaproduto_id != <%=$Servicos%>){
 
-          $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+'</td><td>'+item.valr_item+'</td><td align="right"></td></tr>');                         
+            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+'</td><td>'+item.valr_item+'</td><td align="right"></td></tr>');                         
+
+          }
 
       };
 
@@ -656,8 +639,7 @@ function buscaVariacoes(fd_produto_id) {
     {
         fd_produto_id : fd_produto_id
     },
-    success: function(data){
-
+    success: function(data){          
 
           $("div.divVariacoes").html("");
           $("div.divVariacoes").append('<a href="#" class="list-group-item disabled"><strong>Variações</strong></a>');
@@ -667,6 +649,7 @@ function buscaVariacoes(fd_produto_id) {
 
           if (data.length == 1){
               incluiItemPedido(item.id,item.valr_produto);
+              buscaservicos(<%=$Servicos%>);
           } else {
 
             $("div.divVariacoes").append('<a href="javascript:incluiItemPedido('+item.id+','+item.valr_produto+')" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
@@ -679,6 +662,8 @@ function buscaVariacoes(fd_produto_id) {
         $('#mdVariacoes').modal('show');
 
       }
+
+      
 
     }
   })  
@@ -728,7 +713,7 @@ function buscaprodutos(fd_categoriaproduto_id) {
         var item = data[i];
 
           //Caso seja um combo
-          if(fd_categoriaproduto_id == 2){
+          if(fd_categoriaproduto_id == <%=$Combos%>){
 
             $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+')" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');              
 
@@ -745,6 +730,47 @@ function buscaprodutos(fd_categoriaproduto_id) {
   })  
 }
 
+function excluiItensPedidosServicos(fd_variacaoproduto_id) {
+
+  $.ajax({
+    url: '<%= exclui_servicopedido_path %>',
+    data : 
+    {
+        fd_pedido_id : $('#fd_pedido_id').val()
+        ,fd_variacaoproduto_id : fd_variacaoproduto_id
+    },
+    success: function(data){
+
+      buscaservicos(<%=$Servicos%>);
+
+    }
+  })  
+}
+
+function buscaservicos() {
+
+  $.ajax({
+    url: '<%= busca_Servicos_path %>',
+    data : 
+    {
+        fd_pedido_id : $('#fd_pedido_id').val()
+    },
+    success: function(data){
+
+          $("#bodyTlbServicos").empty();
+
+      for (var i in data) {
+        var item = data[i];
+
+        $('#tlbServicos').append('<tr><td>'+item.nome_produto+'</td><td>'+item.valr_produto+'</td><td>'+item.numr_porcentagem+'%</td><td><span class="badge">'+item.qtd+'</span></td><td align="right"><button type="button" onclick="excluiItensPedidosServicos('+item.fd_variacaoproduto_id+')" class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="buscaVariacoes('+item.fd_produto_id+')" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');
+
+      };
+
+    }
+  })  
+}
+
+buscaservicos(<%=$Servicos%>);
 buscaCategorias();
 buscaItensPedidos($('#fd_pedido_id').val());
 </script>

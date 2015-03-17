@@ -6,4 +6,8 @@ class ApplicationController < ActionController::Base
 	protect_from_forgery with: :exception
 	helper_method :usuario_logado, :user
 
+
+	$Servicos = 1
+	$Combos = 2
+	$Unico = 1
 end
