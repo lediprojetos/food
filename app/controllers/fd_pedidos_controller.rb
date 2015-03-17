@@ -1,6 +1,12 @@
 class FdPedidosController < ApplicationController
   before_action :set_fd_pedido, only: [:show, :edit, :update, :destroy]
 
+
+  def relPedidos
+    @fd_itempedidos = FdItempedido.all
+  end
+
+
   # GET /fd_pedidos
   def index
     @fd_pedidos = FdPedido.all

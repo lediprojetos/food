@@ -1,0 +1,73 @@
+<%
+
+if params[:fechado]
+  fechado = true
+end
+
+if params[:aberto]
+  aberto = true
+end
+
+%>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Cadastro Itens Adicionais</h3>
+  </div>
+  <div class="panel-footer" style="background-color:white;">
+
+ <%= form_tag nil, method: 'GET' do %>
+  <div lass="row mar-bot40">
+    <div class="col-lg-2">
+    	 <label >Data Início</label><br>
+        <input id="q" name="q" type="text" class="form-control" placeholder="Nome">
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-2">
+    	 <label >Data Fim</label><br>
+        <input id="q" name="q" type="text" class="form-control" placeholder="Nome">
+    </div><!-- /.col-lg-6 -->
+   
+    <div class="col-lg-4" >
+    	<label >Pedidos</label><br>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="discipulador" name="discipulador" value="true" <%=fechado ? 'checked="checked"' : ''%> > Fechado
+            </label>
+            <label>
+              <input type="checkbox" id="consolidador" name="consolidador" value="true" <%=aberto ? 'checked="checked"' : ''%> > Aberto
+            </label>          
+          </div>              
+     </div>
+
+	 <div class="col-lg-2" >
+	   <button class="btn btn-success" type="submit" >Listar</button>
+	 </div>
+ </div><!-- /.row -->
+  
+<% end %>
+
+    <table class="table table-hover" >
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Data</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @fd_itempedidos.each do |fd_itempedido| %>
+          <tr>
+            <td><%= fd_itempedido.fd_variacaoproduto.fd_produto.nome_produto %></td>
+            <td><%= fd_itempedido.created_at %></td>
+            <td><%= fd_itempedido.valr_item %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+
+
+
+  </div>
+ 
