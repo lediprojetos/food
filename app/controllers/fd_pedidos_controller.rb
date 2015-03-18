@@ -3,6 +3,16 @@ class FdPedidosController < ApplicationController
 
 
   def relPedidos
+    
+  if params[:dataInicio] && params[:dataInicio] != ""
+      dateInicio =  params[:dataInicio] #+ ":00+00:00"      
+      dateInicio = dateInicio.to_datetime.strftime('%a %b %d %H:%M:%S %Z %Y')
+  end
+  if params[:dataFim] && params[:dataFim] != ""
+     dateFim = params[:dataFim] #+ #  ":00+00:00"
+     dateFim = dateFim.to_datetime.strftime('%a %b %d %H:%M:%S %Z %Y')
+  end
+   
     @fd_itempedidos = FdItempedido.all
     @valor_total =  @fd_itempedidos.sum("valr_item")
   end

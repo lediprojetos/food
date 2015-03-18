@@ -20,11 +20,11 @@ end
   <div lass="row mar-bot40">
     <div class="col-lg-2">
     	 <label >Data Início</label><br>
-        <input id="q" name="q" type="text" class="form-control">
+        <input id="dataInicio" name="dataInicio" type="text" class="form-control">
     </div><!-- /.col-lg-6 -->
     <div class="col-lg-2">
     	 <label >Data Fim</label><br>
-        <input id="q" name="q" type="text" class="form-control">
+        <input id="dataFim" name="dataFim" type="text" class="form-control">
     </div><!-- /.col-lg-6 -->
    
     <div class="col-lg-2" >
@@ -77,6 +77,14 @@ end
       </tbody>
     </table>
 
-
   </div>
  
+ <script>
+
+
+jQuery(function($){
+  $("#dataInicio").mask("99/99/9999 99:99");
+  $("#dataFim").mask("99/99/9999 99:99");
+ });
+
+ </script>
