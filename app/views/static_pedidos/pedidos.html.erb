@@ -5,6 +5,7 @@
 <input type="hidden" id="fd_pedido_id" name="fd_pedido_id" value="<%=@fd_pedido_id%>">
 <div class="row mar-bot40">
   <div class="col-lg-8">
+      <div id = "alert_placeholder_periodo"></div>  
     <div class="tabbable">
       <ul class="nav nav-tabs">
         <li class="active">
@@ -42,25 +43,45 @@
             </div>
           </div>
           <br/>
-          <div style="display:block">
-          <div class="panel panel-default">
-            <div class="panel-heading"><strong><label  ID="lblAssetName"  name=<"lLlAssetName"></label></strong></div>
-              <table class="table table-hover" name="tlbProdutos" id="tlbProdutos">
+
+          <!-- MISTOS 
+          <a class="btn btn-danger btn-xs pull-right" id="add" href="javascript:removePedidoMisto();"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>              
+          -->
+          <div id="divMistos">
+            <div class="panel panel-default">
+              <div class="panel-heading"><strong><label>Pedidos Mistos</label></strong>
+              <a class="btn btn-success btn-xs pull-right" id="add" href="<%= %>"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>              
+            </div>
+              <table class="table table-hover" name="tlbMistos" id="tlbMistos">
                 <thead>
                   <tr>
                     <th>Produto</th>
-                    <th>Preço</th>
+                    <th>Variação</th>
                     <th></th>
                   </tr>
-                </thead>
-
-                <tbody id="bodyTlbProdutos">
-                            
-                </tbody>
+                </thead>              
+                <tbody id="bodyMistos">
+                </tbody>                                      
               </table>
-            </div>   
-          </div>         
-            
+            </div>
+          </div>
+
+          <!-- PRODUTOS -->
+          <div class="panel panel-default">
+            <div class="panel-heading"><strong><label  ID="lblAssetName"  name=<"lLlAssetName"></label></strong>
+          </div>
+            <table class="table table-hover" name="tlbProdutos" id="tlbProdutos">
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Preço</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="bodyTlbProdutos">
+              </tbody>
+            </table>
+          </div>   
         </div>
 
         <div class="tab-pane" id="tab3">
@@ -100,8 +121,6 @@
         <table width="100%" name="tlbItensComanda" id="tlbItensComanda">
           <tbody id="bodyTlbComanda">
             <tr class="dotted">
-              <td align="left">Pizza Moda</td>
-              <td align="right">R$ 25,00</td>
             </tr>
           </tbody>                                      
         </table>
@@ -252,30 +271,6 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="mdMistos">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 id="h4Trocas" class="modal-title">Pedido Misto</h4>
-      </div>
-      <div class="modal-body">
-
-        <!-- Tabela -->
-        <table class="table table-hover" name="tlbMistos" id="tlbMistos">
-          <tbody id="bodyMistos">
-          </tbody>                                      
-        </table>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button"  class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-        <button type="button"  class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <div class="modal fade bs-example-modal-sm" id="mdVariacoes" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -287,16 +282,36 @@
 
 <script>
 
-$('#mdMistos').on('shown.bs.modal', function () {
+function removePedidoMisto(count){
 
-      $("#bodyMistos").empty();
+  jsonObj.splice(count,1);
+  constroiPedidoMisto();
 
-      for (var i in jsonObj) {
-        var item = jsonObj[i];
+}
 
-        $('#tlbMistos').append('<tr><td>'+item.nome_produto+'</td></tr>');          
-      }    
-})
+function constroiPedidoMisto(){
+
+  var count = 0;
+
+  $("#divMistos").show();
+  $("#bodyMistos").empty();
+
+  if (jsonObj.length == 0){
+    $("#divMistos").hide();
+  }
+
+  for (var i in jsonObj) {
+    var item = jsonObj[i];
+
+
+    $('#tlbMistos').append('<tr><td>'+item.id+'</td><td>'+item.nome_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><button type="button" onclick="removePedidoMisto('+count+');" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
+
+      count = count + 1
+  }     
+  //$(".slidingDiv").hide();
+  //$(".show_hide").show();
+
+}
 
 function realizaTroca(fd_itempedidos_id,fd_produtos_id_desejado,fd_produtos_id_trocado) {
   $.ajax({
@@ -670,8 +685,6 @@ function incluiItem(fd_produto_id) {
 
 
 function buscaVariacoes(fd_produto_id,flag_misto) {
-  alert(flag_misto);
-
   $.ajax({
     url: '<%= busca_variacaoprodutos_path %>',
     data : 
@@ -698,10 +711,10 @@ function buscaVariacoes(fd_produto_id,flag_misto) {
         } else {
 
           if (data.length == 1){
-              createJSON(item.id,item.nome_produto)
+              createJSON(item.id,item.nome_produto,item.desc_variacao)
           } else {
 
-            $("div.divVariacoes").append('<a href="javascript:createJSON('+item.id+',\''+item.nome_produto+'\')" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
+            $("div.divVariacoes").append('<a href="javascript:createJSON('+item.id+',\''+item.nome_produto+'\',\''+item.desc_variacao+'\')" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
 
           };
 
@@ -750,17 +763,35 @@ function buscaCategorias(father_id,desc_cat) {
   })  
 }
 
+function createJSON(id,nome_produto,desc_variacao) {
 
-function createJSON(id,nome_produto) {
+  var valida_variacao = false;
 
-        item = {}
-        item ["id"] = id;
-        item ["nome_produto"] = nome_produto;
+  for (var i in jsonObj) {
+    var item = jsonObj[i];
 
-        jsonObj.push(item);
+    if(item.desc_variacao != desc_variacao){
+      valida_variacao = true;
+      alert_boot('A variação do produdo deve ser igual ao primeiro: '+ item.desc_variacao+'.','warning','#alert_placeholder_periodo')
+      $('#mdVariacoes').modal('hide');
+    }
 
-         $('#mdVariacoes').modal('hide');
-        $('#mdMistos').modal('show')
+  };
+
+  if (valida_variacao == false){
+
+    item = {};
+    item ["id"] = id;
+    item ["nome_produto"] = nome_produto;
+    item ["desc_variacao"] = desc_variacao;
+
+    jsonObj.push(item);
+    $('#mdVariacoes').modal('hide');
+
+  }
+
+  constroiPedidoMisto();
+
 }
 
 
@@ -845,6 +876,12 @@ function buscaservicos() {
   })  
 }
 
+function alert_boot(message,color,place) {
+
+  $(place).html('<div class="alert alert-'+ "warning" +'" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> </div>')
+}
+
+$("#divMistos").hide();
 buscaservicos(<%=$Servicos%>);
 buscaCategorias();
 buscaItensPedidos($('#fd_pedido_id').val());
