@@ -1,4 +1,7 @@
 <%#encoding: utf-8%>
+<script>
+  jsonObj = [];
+</script>
 <input type="hidden" id="fd_pedido_id" name="fd_pedido_id" value="<%=@fd_pedido_id%>">
 <div class="row mar-bot40">
   <div class="col-lg-8">
@@ -249,6 +252,30 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="mdMistos">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 id="h4Trocas" class="modal-title">Pedido Misto</h4>
+      </div>
+      <div class="modal-body">
+
+        <!-- Tabela -->
+        <table class="table table-hover" name="tlbMistos" id="tlbMistos">
+          <tbody id="bodyMistos">
+          </tbody>                                      
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button"  class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+        <button type="button"  class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="modal fade bs-example-modal-sm" id="mdVariacoes" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -259,6 +286,17 @@
 </div>
 
 <script>
+
+$('#mdMistos').on('shown.bs.modal', function () {
+
+      $("#bodyMistos").empty();
+
+      for (var i in jsonObj) {
+        var item = jsonObj[i];
+
+        $('#tlbMistos').append('<tr><td>'+item.nome_produto+'</td></tr>');          
+      }    
+})
 
 function realizaTroca(fd_itempedidos_id,fd_produtos_id_desejado,fd_produtos_id_trocado) {
   $.ajax({
@@ -631,7 +669,8 @@ function incluiItem(fd_produto_id) {
 }
 
 
-function buscaVariacoes(fd_produto_id) {
+function buscaVariacoes(fd_produto_id,flag_misto) {
+  alert(flag_misto);
 
   $.ajax({
     url: '<%= busca_variacaoprodutos_path %>',
@@ -647,6 +686,7 @@ function buscaVariacoes(fd_produto_id) {
       for (var i in data) {
         var item = data[i];
 
+        if (flag_misto == false){
           if (data.length == 1){
               incluiItemPedido(item.id,item.valr_produto);
               buscaservicos(<%=$Servicos%>);
@@ -655,6 +695,19 @@ function buscaVariacoes(fd_produto_id) {
             $("div.divVariacoes").append('<a href="javascript:incluiItemPedido('+item.id+','+item.valr_produto+')" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
 
           };
+        } else {
+
+          if (data.length == 1){
+              createJSON(item.id,item.nome_produto)
+          } else {
+
+            $("div.divVariacoes").append('<a href="javascript:createJSON('+item.id+',\''+item.nome_produto+'\')" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
+
+          };
+
+
+        }
+
       };
 
       if (data.length != 1){
@@ -697,6 +750,20 @@ function buscaCategorias(father_id,desc_cat) {
   })  
 }
 
+
+function createJSON(id,nome_produto) {
+
+        item = {}
+        item ["id"] = id;
+        item ["nome_produto"] = nome_produto;
+
+        jsonObj.push(item);
+
+         $('#mdVariacoes').modal('hide');
+        $('#mdMistos').modal('show')
+}
+
+
 function buscaprodutos(fd_categoriaproduto_id) {
 
   $.ajax({
@@ -711,16 +778,24 @@ function buscaprodutos(fd_categoriaproduto_id) {
 
       for (var i in data) {
         var item = data[i];
-
           //Caso seja um combo
           if(fd_categoriaproduto_id == <%=$Combos%>){
 
-            $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+')" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');              
+            $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');
+            append = "";
 
           }else {
 
-            $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+')" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');         
 
+            if (item.flag_produtomisto == true){
+
+              $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',true)" class="btn btn-default"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>'); 
+
+            } else {
+
+              $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');  
+
+            };
           }
 
 
@@ -762,7 +837,7 @@ function buscaservicos() {
       for (var i in data) {
         var item = data[i];
 
-        $('#tlbServicos').append('<tr><td>'+item.nome_produto+'</td><td>'+item.valr_produto+'</td><td>'+item.numr_porcentagem+'%</td><td><span class="badge">'+item.qtd+'</span></td><td align="right"><button type="button" onclick="excluiItensPedidosServicos('+item.fd_variacaoproduto_id+')" class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="buscaVariacoes('+item.fd_produto_id+')" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');
+        $('#tlbServicos').append('<tr><td>'+item.nome_produto+'</td><td>'+item.valr_produto+'</td><td>'+item.numr_porcentagem+'%</td><td><span class="badge">'+item.qtd+'</span></td><td align="right"><button type="button" onclick="excluiItensPedidosServicos('+item.fd_variacaoproduto_id+')" class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="buscaVariacoes('+item.fd_produto_id+',false)" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');
 
       };
 

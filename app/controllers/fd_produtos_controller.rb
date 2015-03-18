@@ -34,7 +34,7 @@ class FdProdutosController < ApplicationController
   def busca_produtos
     fd_produtos = FdProduto.where(:fd_categoriaproduto_id => params[:fd_categoriaproduto_id], :fd_empresa_id => user.fd_empresa_id)
 
-    fd_produtos_json = fd_produtos.map {|item| {:id => item.id, :nome_produto => item.nome_produto, :desc_produto => item.desc_produto}}
+    fd_produtos_json = fd_produtos.map {|item| {:id => item.id, :nome_produto => item.nome_produto, :desc_produto => item.desc_produto, :flag_produtomisto => item.flag_produtomisto}}
     render :json => fd_produtos_json
 
   end
@@ -285,6 +285,6 @@ end
 
     # Only allow a trusted parameter "white list" through.
     def fd_produto_params
-      params.require(:fd_produto).permit(:nome_produto, :desc_produto, :numr_porcentagem, :fd_empresa_id, :fd_categoriaproduto_id, :fd_usuario_id)
+      params.require(:fd_produto).permit(:nome_produto, :desc_produto, :numr_porcentagem, :fd_empresa_id, :fd_categoriaproduto_id, :fd_usuario_id, :flag_produtomisto)
     end
 end

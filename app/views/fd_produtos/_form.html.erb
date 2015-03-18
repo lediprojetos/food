@@ -54,20 +54,23 @@
             <%= f.label :Categoria_produto %><br>
             <%= f.select :fd_categoriaproduto_id, options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria',@fd_produto.fd_categoriaproduto_id), {:include_blank => true}, {:onchange => 'changeState(this)', :class => 'form-control' }%>
           </div>  
-          <div class="col-lg-6">
+          <div class="col-lg-3">
             <%= f.label :Nome_Produto %><br>
             <%= f.text_field :nome_produto, :class => 'form-control' %>
           </div>
+          <div class="col-lg-3">
+             <%= f.label :Produto_Misto %><br>
+             <%= f.check_box :flag_produtomisto, :class => 'form-control' %>
+          </div>          
       </div>
   <br>
   <div class="row mar-bot40">   
-       <div class="col-lg-6">
-         <%= f.label :Descrição %><br>
-         <%= f.text_area :desc_produto, :class => 'form-control' %>
-       </div>
-  
-        <!--Capturando usuario logado-->
-        <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
+    <div class="col-lg-12">
+     <%= f.label :Descrição %><br>
+     <%= f.text_area :desc_produto, :class => 'form-control' %>
+    </div>    
+    <!--Capturando usuario logado-->
+    <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
  </div>
   <br>
 

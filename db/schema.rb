@@ -277,15 +277,13 @@ ActiveRecord::Schema.define(version: 20150317165006) do
 
   create_table "fd_produtocombos", force: true do |t|
     t.integer  "fd_produto_id"
-    t.integer  "fd_produto_combo"
     t.integer  "integer"
+    t.integer  "fd_produto_combo"
     t.integer  "user_inclusao"
     t.integer  "user_exclusao"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "fd_produtocombos", ["fd_produto_id"], name: "index_fd_produtocombos_on_fd_produto_id", using: :btree
 
   create_table "fd_produtos", force: true do |t|
     t.string   "nome_produto"

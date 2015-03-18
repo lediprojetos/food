@@ -6,7 +6,7 @@ class FdVariacaoprodutosController < ApplicationController
 
     #debugger
 
-    fd_variacaoprodutos_json = fd_variacaoprodutos.map {|item| {:id => item.id, :valr_produto => item.valr_produto, :desc_variacao => item.fd_variacao.desc_variacao}}
+    fd_variacaoprodutos_json = fd_variacaoprodutos.map {|item| {:id => item.id, :nome_produto => item.fd_produto.nome_produto, :valr_produto => item.valr_produto, :desc_variacao => item.fd_variacao.desc_variacao}}
     render :json => fd_variacaoprodutos_json    
   end
 
