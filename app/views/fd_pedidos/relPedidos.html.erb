@@ -49,7 +49,7 @@ end
  <div class="col-lg-3" style="margin-top:0px;" >
   <div class="input-group input-group-lg">
     <span class="input-group-addon" id="sizing-addon1">Total</span>
-    <input type="text" class="form-control" value="<%=@valor_total%>" disabled="disabled" aria-describedby="sizing-addon1">
+    <input type="text" class="form-control" value="<%=number_to_currency(@valor_total, unit: "R$", separator: ",", delimiter: "")%>" disabled="disabled" aria-describedby="sizing-addon1">
   </div>
 </div>
 
@@ -70,8 +70,8 @@ end
         <% @fd_itempedidos.each do |fd_itempedido| %>
           <tr>
             <td><%= fd_itempedido.fd_variacaoproduto.fd_produto.nome_produto %></td>
-            <td><%= fd_itempedido.created_at %></td>
-            <td><%= fd_itempedido.valr_item %></td>
+            <td><%= fd_itempedido.created_at.blank? ? '' : fd_itempedido.created_at.strftime("%d/%m/%Y %H:%M") %></td>
+            <td><%= number_to_currency(fd_itempedido.valr_item, unit: "R$", separator: ",", delimiter: "") %></td>
           </tr>
         <% end %>
       </tbody>

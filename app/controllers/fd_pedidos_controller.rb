@@ -1,3 +1,4 @@
+
 class FdPedidosController < ApplicationController
   before_action :set_fd_pedido, only: [:show, :edit, :update, :destroy]
 
@@ -13,8 +14,15 @@ class FdPedidosController < ApplicationController
      dateFim = dateFim.to_datetime.strftime('%a %b %d %H:%M:%S %Z %Y')
   end
    
-    @fd_itempedidos = FdItempedido.all
+    @fd_itempedidos = FdItempedido.where(created_at: (dateInicio)..dateFim)
+
+    #debugger
+
     @valor_total =  @fd_itempedidos.sum("valr_item")
+
+   #Client.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
+   # @sivic_relatoriofrequencia = SivicRelatorioscelula.where("data_reuniao >= :data_inicio AND data_reuniao <= :data_fim AND sivic_celula_id = :sivic_celula_id", {data_inicio: dateInicio, data_fim: dateFim, sivic_celula_id:  params[:sivic_celula_id]}).order("data_reuniao")
+
   end
 
 
