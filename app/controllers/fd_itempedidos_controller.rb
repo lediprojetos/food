@@ -2,12 +2,12 @@ class FdItempedidosController < ApplicationController
   before_action :set_fd_itempedido, only: [:show, :edit, :update, :destroy]
 
 
-    def exclui_servicopedido
+  def exclui_servicopedido
 
     fd_itenspedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id], :fd_variacaoproduto_id => params[:fd_variacaoproduto_id])
-    
+
     if not fd_itenspedidos.blank?
-      fd_itenspedidos.first.destroy
+    fd_itenspedidos.first.destroy
     end
 
     render json: {}, status: :no_content
@@ -64,7 +64,7 @@ class FdItempedidosController < ApplicationController
     #qtd = fd_itenspedidos.group(:fd_variacaoproduto_id).count
 
 
-    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:fd_categoriaproduto_id =>  item.fd_variacaoproduto.fd_produto.fd_categoriaproduto_id, :id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id,:fd_produto_id => item.fd_variacaoproduto.fd_produto_id, :desc_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao, :fd_pedido_id => item.fd_pedido_id, :fd_situacao_id => item.fd_situacao_id, :fd_funcionario_id => item.fd_funcionario_id}}
+    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:id => item.id, :flag_pedidomisto => item.flag_pedidomisto, :fd_categoriaproduto_id =>  item.fd_variacaoproduto.fd_produto.fd_categoriaproduto_id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id,:fd_produto_id => item.fd_variacaoproduto.fd_produto_id, :desc_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao, :fd_pedido_id => item.fd_pedido_id, :fd_situacao_id => item.fd_situacao_id, :fd_funcionario_id => item.fd_funcionario_id}}
     render :json => fd_itenspedidos_json
 
   end
@@ -104,7 +104,28 @@ class FdItempedidosController < ApplicationController
 
   end  
 
+  def insere_pedidomisto
+
+    fd_itenspedidos = FdItempedido.new
+    fd_itenspedidos.fd_empresa_id = user.fd_empresa_id
+    fd_itenspedidos.fd_variacaoproduto_id = params[:fd_variacaoproduto_id]
+    fd_itenspedidos.fd_pedido_id = params[:fd_pedido_id]
+    fd_itenspedidos.flag_pedidomisto = true
+    fd_itenspedidos.save
+    
+    fd_variacaoproduto = FdVariacaoproduto.find(params[:fd_variacaoproduto_id2])
+
+    fd_pedidomisto = FdPedidomisto.new
+    fd_pedidomisto.fd_itempedidos_id = fd_itenspedidos.id
+    fd_pedidomisto.fd_produto_id = fd_variacaoproduto.fd_produto_id
+    fd_pedidomisto.save
+
+    render json: {}
+  end  
+
   def insere_itempedido
+
+
 
     fd_itenspedidos = FdItempedido.new
     fd_itenspedidos.desc_observacao = params[:desc_observacao]

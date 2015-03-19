@@ -50,7 +50,7 @@
           <div id="divMistos">
             <div class="panel panel-default">
               <div class="panel-heading"><strong><label>Pedidos Mistos</label></strong>
-              <a class="btn btn-success btn-xs pull-right" id="add" href="<%= %>"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>              
+              <a class="btn btn-success btn-xs pull-right" id="add" href="javascript:inserePedidoMisto();"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>              
             </div>
               <table class="table table-hover" name="tlbMistos" id="tlbMistos">
                 <thead>
@@ -281,6 +281,40 @@
 </div>
 
 <script>
+
+function inserePedidoMisto(){
+
+  for (var i in jsonObj) {
+    var item = jsonObj[i];
+
+    if(i == 0){
+      fd_variacaoproduto_id = item.id;
+    }
+
+    if(i == 1){
+      fd_variacaoproduto_id2 = item.id;
+    }    
+
+  };
+
+  $.ajax({
+    url: '<%= insere_pedidomisto_path %>',
+    data : 
+    {
+        fd_variacaoproduto_id : parseInt(fd_variacaoproduto_id)
+        ,fd_variacaoproduto_id2 : parseInt(fd_variacaoproduto_id2)
+        ,fd_pedido_id : $('#fd_pedido_id').val()
+    },
+    success: function(data){
+
+      jsonObj = [];
+      constroiPedidoMisto();
+      buscaItensPedidos($('#fd_pedido_id').val());
+
+    }
+  })  
+}
+
 
 function removePedidoMisto(count){
 
@@ -583,6 +617,9 @@ function buscaItensPedidos(fd_pedido_id) {
 
 
             $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
+
+          } else if (item.flag_pedidomisto == true) {
+            
 
           };
 
