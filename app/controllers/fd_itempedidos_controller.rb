@@ -71,8 +71,13 @@ class FdItempedidosController < ApplicationController
 
   def exclui_itempedido
 
-    fd_itenspedidos = FdPedidocombo.where(:fd_itempedidos_id => params[:id])
-    fd_itenspedidos.map {|t| t.destroy}
+    #fd_itenspedidos = FdPedidocombo.where(:fd_itempedidos_id => params[:id])
+    #fd_itenspedidos.map {|t| t.destroy}
+
+    FdPedidocombo.destroy_all(:fd_itempedidos_id => params[:id])
+
+
+    FdPedidomisto.destroy_all(:fd_itempedidos_id => params[:id])
 
     fd_itenspedidos = FdItempedido.find(params[:id])
     fd_itenspedidos.destroy
@@ -106,8 +111,11 @@ class FdItempedidosController < ApplicationController
 
   def insere_pedidomisto
 
+    fd_variacaoproduto = FdVariacaoproduto.find(params[:fd_variacaoproduto_id])
+
     fd_itenspedidos = FdItempedido.new
     fd_itenspedidos.fd_empresa_id = user.fd_empresa_id
+    fd_itenspedidos.valr_item = fd_variacaoproduto.valr_produto
     fd_itenspedidos.fd_variacaoproduto_id = params[:fd_variacaoproduto_id]
     fd_itenspedidos.fd_pedido_id = params[:fd_pedido_id]
     fd_itenspedidos.flag_pedidomisto = true
@@ -126,10 +134,11 @@ class FdItempedidosController < ApplicationController
   def insere_itempedido
 
 
+    objFdVariacaoproduto = FdVariacaoproduto.find(params[:fd_variacaoproduto_id])
 
     fd_itenspedidos = FdItempedido.new
     fd_itenspedidos.desc_observacao = params[:desc_observacao]
-    fd_itenspedidos.valr_item = params[:valr_item]
+    fd_itenspedidos.valr_item = objFdVariacaoproduto.valr_produto
     fd_itenspedidos.tipo_atendimento = params[:tipo_atendimento]
     fd_itenspedidos.fd_empresa_id = user.fd_empresa_id
     fd_itenspedidos.fd_variacaoproduto_id = params[:fd_variacaoproduto_id]
@@ -138,10 +147,7 @@ class FdItempedidosController < ApplicationController
     fd_itenspedidos.fd_funcionario_id = params[:fd_funcionario_id]
     fd_itenspedidos.save
 
-    objFdVariacaoproduto = FdVariacaoproduto.find(params[:fd_variacaoproduto_id])
-
-
-    if objFdVariacaoproduto.fd_produto.fd_categoriaproduto_id == 2
+    if objFdVariacaoproduto.fd_produto.fd_categoriaproduto_id == $Combos
 
       fd_produtoscombo = FdProdutocombo.where(:fd_produtos_id => objFdVariacaoproduto.fd_produto_id)
 

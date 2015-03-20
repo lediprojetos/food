@@ -102,6 +102,7 @@ Food::Application.routes.draw do
   
   match '/insere_pedidomisto', to: 'fd_itempedidos#insere_pedidomisto', via: 'get'
 
+  match '/busca_DetalhesMistos', to: 'fd_pedidomistos#busca_DetalhesMistos', via: 'get'
 
 
 

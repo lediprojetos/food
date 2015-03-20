@@ -1,6 +1,18 @@
 class FdPedidomistosController < ApplicationController
   before_action :set_fd_pedidomisto, only: [:show, :edit, :update, :destroy]
 
+
+  def busca_DetalhesMistos
+
+
+    fd_itenspedidos = FdPedidomisto.where(:fd_itempedidos_id => params[:fd_itempedidos_id])
+
+    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:id => item.id, :fd_produto_id => item.fd_produto_id, :nome_produto => item.fd_produto.nome_produto}}
+    render :json => fd_itenspedidos_json
+
+  end
+
+
   # GET /fd_pedidomistos
   def index
     @fd_pedidomistos = FdPedidomisto.all

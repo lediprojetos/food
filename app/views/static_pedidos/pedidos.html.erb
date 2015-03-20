@@ -592,6 +592,33 @@ function excluiItensPedidos(id) {
   })  
 }
 
+function buscaDetalhesPedidosMistos(fd_itempedidos_id){
+
+  var nomeMisto = "";
+
+  $.ajax({
+    url: '<%= busca_DetalhesMistos_path %>',
+    data : 
+    {
+        fd_itempedidos_id : fd_itempedidos_id
+    },
+    success: function(data){
+
+
+        for (var i in data) {
+          var item = data[i];
+
+          nomeMisto = nomeMisto + " / " + item.nome_produto;
+
+        };
+
+    },
+    async:   false
+  })  
+
+        //alert(nomeMisto);
+        return nomeMisto;
+}
 
 function buscaItensPedidos(fd_pedido_id) {
 
@@ -611,15 +638,26 @@ function buscaItensPedidos(fd_pedido_id) {
 
           if(item.fd_categoriaproduto_id == <%=$Combos%>){
 
-            $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaTrocas('+item.id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
+            $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaTrocas('+item.id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></td></tr>');
+
+            //Dobrar pedido
+            //<button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
             
           } else if (item.fd_categoriaproduto_id != <%=$Servicos%>) {
-
-
-            $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></div></td></tr>');
-
-          } else if (item.flag_pedidomisto == true) {
             
+            if (item.flag_pedidomisto == true){
+
+              var nomeMisto = buscaDetalhesPedidosMistos(item.id);
+
+              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+" "+nomeMisto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="" type="button" class="btn btn-default"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></td></tr>');              
+
+            } else {
+              
+              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></td></tr>');
+
+            //Dobrar pedido
+            //<button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            }
 
           };
 
