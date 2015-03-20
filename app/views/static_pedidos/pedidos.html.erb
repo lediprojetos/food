@@ -3,6 +3,7 @@
   jsonObj = [];
 </script>
 <input type="hidden" id="fd_pedido_id" name="fd_pedido_id" value="<%=@fd_pedido_id%>">
+<input type="hidden" id="fd_itempedido_id" name="fd_itempedido_id" value="">
 <div class="row mar-bot40">
   <div class="col-lg-8">
       <div id = "alert_placeholder_periodo"></div>  
@@ -131,60 +132,12 @@
         <li class="list-group-item">
           <div class="row mar-bot40">
             <div class="col-lg-6">
-              <strong>Total:</strong>
-            </div>
-            <div class="col-lg-6">
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">R$</span>
-                <input type="text" class="form-control" placeholder="Total" aria-describedby="basic-addon1">
-              </div>
-            </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row mar-bot40">
-            <div class="col-lg-6">
-              <strong>Taxas:</strong>
-            </div>
-            <div class="col-lg-6">
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">R$</span>
-                <input type="text" class="form-control" placeholder="Taxas" aria-describedby="basic-addon1">
-              </div>
-            </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row mar-bot40">
-            <div class="col-lg-6">
               <strong>Total Geral:</strong>
             </div>
             <div class="col-lg-6">
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">R$</span>
                 <input type="text" class="form-control" placeholder="Total Geral" aria-describedby="basic-addon1">
-              </div>
-            </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row mar-bot40">
-            <div class="col-lg-6">
-              <strong>Dinheiro:</strong>
-            </div>
-            <div class="col-lg-6">
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">R$</span>
-                <input type="text" class="form-control" placeholder="Dinheiro" aria-describedby="basic-addon1">
-              </div>
-            </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row mar-bot40">
-            <div class="col-lg-6">
-              <strong>Troco:</strong>
-            </div>
-            <div class="col-lg-6">
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">R$</span>
-                <input type="text" class="form-control" placeholder="Troco" aria-describedby="basic-addon1">
               </div>
             </div>
         </li>
@@ -282,7 +235,40 @@
   </div>
 </div>
 
+<div class="modal fade bs-example-modal-sm" id="mdTipoAtendimento" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="list-group divTipoAtendimento">
+        <a href="javascript:escolheTipoAtendimento('entrega')" class="list-group-item"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> Entrega</a>
+        <a href="javascript:escolheTipoAtendimento('viagem')" class="list-group-item"><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Viagem</a>
+        <a href="javascript:escolheTipoAtendimento('mesa')" class="list-group-item"><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span> Mesa</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+
+function escolheTipoAtendimento(tipo_atendimento){
+
+  $.ajax({
+    url: '<%= atualiza_tipoatendimento_path %>',
+    data : 
+    {
+        tipo_atendimento : tipo_atendimento
+        ,fd_itempedido_id : $("#fd_itempedido_id").val()
+    },
+    success: function(data){
+
+      $('#mdTipoAtendimento').modal('hide');
+      buscaItensPedidos($('#fd_pedido_id').val());
+
+    }
+  })  
+
+}
+
+
 
 function inserePedidoMisto(){
 
@@ -618,12 +604,15 @@ function buscaDetalhesPedidosMistos(fd_itempedidos_id){
     async:   false
   })  
 
-        //alert(nomeMisto);
         return nomeMisto;
 }
 
-function buscaItensPedidos(fd_pedido_id) {
+function exibemodalTipoAtendimento (fd_itempedido_id){
+  $('#fd_itempedido_id').val(fd_itempedido_id); 
+  $('#mdTipoAtendimento').modal('show');
+}
 
+function buscaItensPedidos(fd_pedido_id) {
   $.ajax({
     url: '<%= busca_itempedido_path %>',
     data : 
@@ -637,10 +626,25 @@ function buscaItensPedidos(fd_pedido_id) {
 
       for (var i in data) {
         var item = data[i];
+        var tipo_atendimento = "";
+
+          if(item.tipo_atendimento == 'mesa'){
+
+            tipo_atendimento = "glyphicon glyphicon-cutlery";
+
+          } else if (item.tipo_atendimento == 'entrega') {
+
+            tipo_atendimento = "glyphicon glyphicon-plane";
+
+          } else {
+
+            tipo_atendimento = "glyphicon glyphicon-road";
+
+          } 
 
           if(item.fd_categoriaproduto_id == <%=$Combos%>){
 
-            $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaTrocas('+item.id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></td></tr>');
+            $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><button onclick="buscaTrocas('+item.id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');
 
             //Dobrar pedido
             //<button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
@@ -651,11 +655,11 @@ function buscaItensPedidos(fd_pedido_id) {
 
               var nomeMisto = buscaDetalhesPedidosMistos(item.id);
 
-              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+" "+nomeMisto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="" type="button" class="btn btn-default"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></td></tr>');              
+              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+" "+nomeMisto+'</td><td>'+item.desc_variacao+'</td><td align="right"></button><button onclick="" type="button" class="btn btn-default"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');              
 
             } else {
               
-              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><div class="btn-group" role="group"></button><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div></td></tr>');
+              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"></button><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');
 
             //Dobrar pedido
             //<button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
@@ -712,6 +716,7 @@ function dobraItemPedido(fd_itempedido_id) {
 }
 
 function incluiItemPedido(fd_variacaoproduto_id,valr_produto) {
+
 
   $.ajax({
     url: '<%= insere_itempedido_path %>',

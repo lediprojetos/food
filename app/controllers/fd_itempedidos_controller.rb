@@ -58,25 +58,25 @@ class FdItempedidosController < ApplicationController
   end
 
   def busca_itempedido
-
-
     fd_itenspedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id]).order(:fd_variacaoproduto_id)
-    #qtd = fd_itenspedidos.group(:fd_variacaoproduto_id).count
-
-
-    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:id => item.id, :flag_pedidomisto => item.flag_pedidomisto, :fd_categoriaproduto_id =>  item.fd_variacaoproduto.fd_produto.fd_categoriaproduto_id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id,:fd_produto_id => item.fd_variacaoproduto.fd_produto_id, :desc_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao, :fd_pedido_id => item.fd_pedido_id, :fd_situacao_id => item.fd_situacao_id, :fd_funcionario_id => item.fd_funcionario_id}}
+    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:tipo_atendimento => item.tipo_atendimento, :id => item.id, :flag_pedidomisto => item.flag_pedidomisto, :fd_categoriaproduto_id =>  item.fd_variacaoproduto.fd_produto.fd_categoriaproduto_id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id,:fd_produto_id => item.fd_variacaoproduto.fd_produto_id, :desc_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao, :fd_pedido_id => item.fd_pedido_id, :fd_situacao_id => item.fd_situacao_id, :fd_funcionario_id => item.fd_funcionario_id}}
     render :json => fd_itenspedidos_json
 
   end
 
+  def atualiza_tipoatendimento
+
+    fd_itenspedidos = FdItempedido.find(params[:fd_itempedido_id])
+    fd_itenspedidos.tipo_atendimento = params[:tipo_atendimento]
+    fd_itenspedidos.save
+
+    render json: {}, status: :no_content
+
+  end  
+
   def exclui_itempedido
 
-    #fd_itenspedidos = FdPedidocombo.where(:fd_itempedidos_id => params[:id])
-    #fd_itenspedidos.map {|t| t.destroy}
-
     FdPedidocombo.destroy_all(:fd_itempedidos_id => params[:id])
-
-
     FdPedidomisto.destroy_all(:fd_itempedidos_id => params[:id])
 
     fd_itenspedidos = FdItempedido.find(params[:id])
