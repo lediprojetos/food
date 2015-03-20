@@ -12,7 +12,7 @@
 					<div class="row lp-service">
 						<% @fd_mesa.each do |fd_mesa| %>
 							<div class="col-md-2 col-sm-2">
-								<%= link_to lista_pedidos_path(fd_mesa.id), :class => "btn btn-default" do %>
+								<%= link_to lista_pedidos_path(fd_mesa.id,'mesa'), :class => "btn btn-default" do %>
 									<%if fd_mesa.flag_mesaaberta == true%>
 										<%= image_tag ("table_open.png")%>
 									<%else%>

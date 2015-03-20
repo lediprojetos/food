@@ -78,6 +78,6 @@ class FdPedidosController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fd_pedido_params
-      params.require(:fd_pedido).permit(:valr_pedido, :flag_pago, :fd_empresa_id, :fd_cliente_id, :fd_mesa_id, :fd_funcionario_id, :fd_formapagamento_id, :fd_status_id)
+      params.require(:fd_pedido).permit(:tipo_atendimento, :valr_pedido, :flag_pago, :fd_empresa_id, :fd_cliente_id, :fd_mesa_id, :fd_funcionario_id, :fd_formapagamento_id, :fd_status_id)
     end
 end

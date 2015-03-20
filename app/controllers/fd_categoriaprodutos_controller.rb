@@ -3,7 +3,11 @@ class FdCategoriaprodutosController < ApplicationController
 
 
   def buscaCategoriaProdutos
-    fd_categoriaprodutos = FdCategoriaproduto.where(:father_id => params[:father_id], :flag_global => false)
+    if params[:father_id].blank?
+      fd_categoriaprodutos = FdCategoriaproduto.where('id <> ' + $Servicos.to_s)
+    else
+      fd_categoriaprodutos = FdCategoriaproduto.where('father_id = ' + params[:father_id].to_s + ' and id <> ' + $Servicos.to_s)
+    end
 
     fd_categoriaprodutos_json = fd_categoriaprodutos.map {|item| {:id => item.id, :desc_categoria => item.desc_categoria}}
     render :json => fd_categoriaprodutos_json

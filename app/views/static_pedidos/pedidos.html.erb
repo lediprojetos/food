@@ -21,8 +21,8 @@
       <div class="tab-content">
         <div class="tab-pane active" id="tab1">
           <br/>
-          <div class="panel panel-default">
-            <div class="panel-heading"><strong>Mesa Nº <%=@fd_mesa.numr_mesa%> / Pedido: <%=@fd_pedido_id%></strong></div>
+          <div class="panel panel-primary">
+            <div class="panel-heading"><strong>Mesa Nº <%=@fd_mesa.numr_mesa rescue nil%> / Pedido: <%=@fd_pedido_id%></strong></div>
               <table class="table table-hover " name="tlbItensPedidos" id="tlbItensPedidos">
                 <thead>
                   <tr>
@@ -67,7 +67,7 @@
           </div>
 
           <!-- PRODUTOS -->
-          <div class="panel panel-default">
+          <div class="panel panel-success">
             <div class="panel-heading"><strong><label  ID="lblAssetName"  name=<"lLlAssetName"></label></strong>
           </div>
             <table class="table table-hover" name="tlbProdutos" id="tlbProdutos">
@@ -87,7 +87,7 @@
         <div class="tab-pane" id="tab3">
 
           <br/>
-          <div class="panel panel-default">
+          <div class="panel panel-warning">
             <div class="panel-heading"><strong>Serviços</strong></div>
                 <table class="table table-hover" name="tlbServicos" id="tlbServicos">
                 <thead>
@@ -113,9 +113,9 @@
   </div>
   <div class="col-lg-4">
 
-    <div class="panel panel-default">
+    <div class="panel panel-danger">
       <!-- Default panel contents -->
-      <div class="panel-heading">Pedido <strong>Mesa: <%=@fd_mesa.numr_mesa%> / Pedido: <%=@fd_pedido_id%></strong></div>
+      <div class="panel-heading">Pedido <strong>Mesa: <%=@fd_mesa.numr_mesa rescue nil%> / Pedido: <%=@fd_pedido_id%></strong></div>
       <div class="panel-body">
         <br/>
         <table width="100%" name="tlbItensComanda" id="tlbItensComanda">
@@ -189,7 +189,9 @@
             </div>
         </li>
         <li class="list-group-item">
-            <%= link_to fecha_pedido_path(@fd_mesa.id,@fd_pedido_id), :class => "btn btn-default" do %>
+
+            <%fd_mesa_id = @fd_mesa.id rescue 0%>
+            <%= link_to fecha_pedido_path(fd_mesa_id,@fd_pedido_id), :class => "btn btn-default" do %>
               <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Fechar
             <% end %>
 

@@ -111,6 +111,7 @@ class FdItempedidosController < ApplicationController
 
   def insere_pedidomisto
 
+    fd_pedido = FdPedido.find(params[:fd_pedido_id])
     fd_variacaoproduto = FdVariacaoproduto.find(params[:fd_variacaoproduto_id])
 
     fd_itenspedidos = FdItempedido.new
@@ -119,6 +120,7 @@ class FdItempedidosController < ApplicationController
     fd_itenspedidos.fd_variacaoproduto_id = params[:fd_variacaoproduto_id]
     fd_itenspedidos.fd_pedido_id = params[:fd_pedido_id]
     fd_itenspedidos.flag_pedidomisto = true
+    fd_itenspedidos.tipo_atendimento = fd_pedido.tipo_atendimento
     fd_itenspedidos.save
     
     fd_variacaoproduto = FdVariacaoproduto.find(params[:fd_variacaoproduto_id2])
@@ -133,6 +135,7 @@ class FdItempedidosController < ApplicationController
 
   def insere_itempedido
 
+    fd_pedido = FdPedido.find(params[:fd_pedido_id])
 
     objFdVariacaoproduto = FdVariacaoproduto.find(params[:fd_variacaoproduto_id])
 
@@ -145,6 +148,7 @@ class FdItempedidosController < ApplicationController
     fd_itenspedidos.fd_pedido_id = params[:fd_pedido_id]
     fd_itenspedidos.fd_situacao_id = params[:fd_situacao_id]
     fd_itenspedidos.fd_funcionario_id = params[:fd_funcionario_id]
+    fd_itenspedidos.tipo_atendimento = fd_pedido.tipo_atendimento
     fd_itenspedidos.save
 
     if objFdVariacaoproduto.fd_produto.fd_categoriaproduto_id == $Combos

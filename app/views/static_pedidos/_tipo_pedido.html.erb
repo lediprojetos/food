@@ -15,10 +15,10 @@
     <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-cutlery"></span> Mesa
     <% end %>       
-    <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
+    <%= link_to lista_pedidos_path(0,'viagem'), :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-user"></span> Balcão
     <% end %>
-    <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
+    <%= link_to lista_pedidos_path(0,'entrega'), :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-phone-alt"></span> Entrega
     <% end %>         
     </br>

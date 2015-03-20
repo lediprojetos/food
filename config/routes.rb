@@ -62,9 +62,9 @@ Food::Application.routes.draw do
 
   match '/tipo_pedido', to: 'static_pedidos#tipo_pedido', via: 'get'
   match '/lista_mesas', to: 'static_pedidos#lista_mesas', via: 'get'
-  get '/pedidos/:fd_mesa_id/:fd_pedido_id', to: 'static_pedidos#pedidos', as: 'pedidos'
+  get '/pedidos/:fd_mesa_id/:fd_pedido_id/:tipo_atendimento', to: 'static_pedidos#pedidos', as: 'pedidos'
 
-  get '/lista_pedidos/:fd_mesa_id', to: 'static_pedidos#lista_pedidos', as: 'lista_pedidos'
+  get '/lista_pedidos/:fd_mesa_id/:tipo_atendimento', to: 'static_pedidos#lista_pedidos', as: 'lista_pedidos'
 
   get '/fecha_pedido/:fd_mesa_id/:fd_pedido_id', to: 'static_pedidos#fecha_pedido', as: 'fecha_pedido'
 

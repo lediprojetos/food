@@ -1,4 +1,4 @@
-<a class="btn btn-success btn-lg" href="<%=pedidos_path(@fd_mesa_id,0)%>" role="button"><span class="glyphicon glyphicon-plus"></span> Abrir Mesa </a>
+<a class="btn btn-success btn-lg" href="<%=pedidos_path(@fd_mesa_id,0,@tipo_atendimento)%>" role="button"><span class="glyphicon glyphicon-plus"></span> Abrir Mesa </a>
 
 <br/>
 <br/>
@@ -9,7 +9,7 @@
       Recentes...
     </a>
     <% @fd_pedidos.each do |fd_pedido| %>
-     <a href="<%=pedidos_path(0,fd_pedido.id)%>" class="list-group-item list-group-item-<%= fd_pedido.fd_situacao_id == 1 ? 'danger' : 'success' %>">
+     <a href="<%=pedidos_path(0,fd_pedido.id,'mesa')%>" class="list-group-item list-group-item-<%= fd_pedido.fd_situacao_id == 1 ? 'danger' : 'success' %>">
       <span class="glyphicon glyphicon-folder-<%= fd_pedido.fd_situacao_id == 1 ? 'open' : 'close' %>" aria-hidden="true"></span>
       <b>Nº</b> <%= fd_pedido.id %>
      </a>
