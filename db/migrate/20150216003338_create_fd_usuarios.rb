@@ -10,5 +10,7 @@ class CreateFdUsuarios < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    FdUsuario.create(:desc_nome => 'Diel', :desc_login =>  'diel.fari@gmail.com', :desc_senha =>  'leidof', :fd_empresa_id =>  1)
   end
 end
