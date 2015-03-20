@@ -41,7 +41,7 @@ class FdProdutosController < ApplicationController
 
   # GET /fd_produtos
   def index
-    @fd_produtos = FdProduto.where('fd_categoriaproduto_id <> ?', $Servicos)
+    @fd_produtos = FdProduto.where('fd_categoriaproduto_id <> ? and fd_empresa_id = ?', $Servicos, user.fd_empresa_id)
   end
 
   def index_service

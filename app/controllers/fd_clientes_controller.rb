@@ -4,7 +4,7 @@ class FdClientesController < ApplicationController
 
   # GET /fd_clientes
   def index
-    @fd_clientes = FdCliente.all
+    @fd_clientes = FdCliente.where(fd_empresa_id: user.fd_empresa_id)
   end
 
   # GET /fd_clientes/1
