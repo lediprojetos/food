@@ -6,22 +6,23 @@ class FdPedidosController < ApplicationController
   def relPedidos
     
   if params[:dataInicio] && params[:dataInicio] != ""
-      dateInicio =  params[:dataInicio] #+ ":00+00:00"      
+      dateInicio =  params[:dataInicio]     
       dateInicio = dateInicio.to_datetime.strftime('%a %b %d %H:%M:%S %Z %Y')
+    
+    else
+     dateInicio = Time.new - 43200
   end
   if params[:dataFim] && params[:dataFim] != ""
-     dateFim = params[:dataFim] #+ #  ":00+00:00"
+     dateFim = params[:dataFim] 
      dateFim = dateFim.to_datetime.strftime('%a %b %d %H:%M:%S %Z %Y')
+   else
+    dateFim = Time.new
   end
    
-    @fd_itempedidos = FdItempedido.where(created_at: (dateInicio)..dateFim)
+   #debugger
 
-    #debugger
-
+    @fd_itempedidos = FdItempedido.where(created_at: (dateInicio)..dateFim, fd_empresa_id: user.fd_empresa_id)
     @valor_total =  @fd_itempedidos.sum("valr_item")
-
-   #Client.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
-   # @sivic_relatoriofrequencia = SivicRelatorioscelula.where("data_reuniao >= :data_inicio AND data_reuniao <= :data_fim AND sivic_celula_id = :sivic_celula_id", {data_inicio: dateInicio, data_fim: dateFim, sivic_celula_id:  params[:sivic_celula_id]}).order("data_reuniao")
 
   end
 
