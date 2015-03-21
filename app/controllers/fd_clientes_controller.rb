@@ -51,7 +51,7 @@ class FdClientesController < ApplicationController
   # DELETE /fd_clientes/1
   def destroy
     @fd_cliente.destroy
-    redirect_to fd_clientes_url, notice: 'Registro excluído com sucesso..'
+    redirect_to fd_clientes_url, notice: 'Registro excluído com sucesso.'
   end
 
   private

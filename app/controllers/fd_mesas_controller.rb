@@ -25,7 +25,7 @@ class FdMesasController < ApplicationController
      end
    end
 
-    @fd_mesas = FdMesa.order('numr_mesa ASC').all
+    @fd_mesas = FdMesa.where(fd_empresa_id: user.fd_empresa_id, data_exclusao: nil).order('numr_mesa ASC').all
    #debugger
     if not @fd_mesas.first == nil
       @numr_mesa =  @fd_mesas.last.numr_mesa + 1
@@ -70,7 +70,9 @@ class FdMesasController < ApplicationController
 
   # DELETE /fd_mesas/1
   def destroy
-    @fd_mesa.destroy
+    @fd_mesa.user_exclusao = user.id
+    @fd_mesa.data_exclusao = Time.now
+    @fd_mesa.save
     redirect_to fd_mesas_url, notice: 'Registro excluído com sucesso.'
   end
 

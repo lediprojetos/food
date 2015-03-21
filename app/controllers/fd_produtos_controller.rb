@@ -45,7 +45,7 @@ class FdProdutosController < ApplicationController
   end
 
   def index_service
-    @fd_produtos = FdProduto.where(:fd_categoriaproduto_id => $Servicos)
+    @fd_produtos = FdProduto.where(:fd_categoriaproduto_id => $Servicos, :fd_empresa_id => user.fd_empresa_id)
   end
 
 
@@ -85,8 +85,8 @@ def exclui_variacao_produto
 end
 
 def busca_item   
-   fd_item = FdItem.all
 
+   fd_item = FdItem.where(fd_empresa_id: user.fd_empresa_id, data_exclusao: nil)
    fd_item_json = fd_item.map{|item|{:id => item.id, :desc_item => item.desc_item}}
    render :json => fd_item_json
 

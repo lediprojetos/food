@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150320020016) do
+ActiveRecord::Schema.define(version: 20150321223317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,7 +55,10 @@ ActiveRecord::Schema.define(version: 20150320020016) do
     t.integer  "user_exclusao"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "fd_empresa_id"
   end
+
+  add_index "fd_categoriaprodutos", ["fd_empresa_id"], name: "index_fd_categoriaprodutos_on_fd_empresa_id", using: :btree
 
   create_table "fd_cidades", force: true do |t|
     t.string   "nome_cidade"
@@ -278,15 +281,13 @@ ActiveRecord::Schema.define(version: 20150320020016) do
 
   create_table "fd_produtocombos", force: true do |t|
     t.integer  "fd_produto_id"
-    t.integer  "fd_produto_combo"
     t.integer  "integer"
+    t.integer  "fd_produto_combo"
     t.integer  "user_inclusao"
     t.integer  "user_exclusao"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "fd_produtocombos", ["fd_produto_id"], name: "index_fd_produtocombos_on_fd_produto_id", using: :btree
 
   create_table "fd_produtos", force: true do |t|
     t.string   "nome_produto"
