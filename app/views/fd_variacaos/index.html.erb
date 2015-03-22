@@ -1,12 +1,11 @@
-<h1>Listing fd_variacaos</h1>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h3 class="panel-title">Listar Usuários</h3></div>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Desc variacao</th>
-      <th>Fd empresa</th>
-      <th></th>
-      <th></th>
+      <th>Variação</th>
       <th></th>
     </tr>
   </thead>
@@ -15,15 +14,29 @@
     <% @fd_variacaos.each do |fd_variacao| %>
       <tr>
         <td><%= fd_variacao.desc_variacao %></td>
-        <td><%= fd_variacao.fd_empresa %></td>
-        <td><%= link_to 'Show', fd_variacao %></td>
-        <td><%= link_to 'Edit', edit_fd_variacao_path(fd_variacao) %></td>
-        <td><%= link_to 'Destroy', fd_variacao, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td align='right'>
+            <div class="btn-group">
+              <%= link_to fd_variacao, :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-list-alt"></span> Exibir
+              <% end %>             
+              <%= link_to edit_fd_variacao_path(fd_variacao), :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+              <% end %>             
+              <%= link_to fd_variacao , :method => :delete,  :confirm => 'Deseja excluir o registro?', :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-trash"></span> Excluir
+              <% end %>            
+            </div>
+          </td>
+
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
+</div>
 
-<%= link_to 'New Fd variacao', new_fd_variacao_path %>
+<%= link_to new_fd_variacao_path, :class => "btn btn-default btn-sm" do %>
+   <span class="glyphicon glyphicon-file"></span>Novo
+<% end %>
+
+<br>

@@ -22,8 +22,9 @@
     <%= f.select :father_id, options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria', @fd_categoriaproduto.father_id), {:include_blank => true}, {:class => 'form-control'}%>
   </div>
   <div class="col-lg-3">
-    <%= f.label :Global %><br>
-    <%= f.check_box :flag_global %>
+    <%#= f.label :Global %><br>
+    <%#= f.check_box :flag_global %>
+    <%= f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id %>
   </div>  
 </div>
   </div>

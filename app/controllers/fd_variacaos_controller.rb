@@ -3,7 +3,7 @@ class FdVariacaosController < ApplicationController
 
   # GET /fd_variacaos
   def index
-    @fd_variacaos = FdVariacao.all
+    @fd_variacaos = FdVariacao.where('id <> ' + $Unico.to_s + ' and fd_empresa_id = ' + user.fd_empresa_id.to_s)
   end
 
   # GET /fd_variacaos/1
