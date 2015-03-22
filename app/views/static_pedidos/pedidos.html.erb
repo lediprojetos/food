@@ -132,15 +132,27 @@
         <li class="list-group-item">
           <div class="row mar-bot40">
             <div class="col-lg-6">
+              <strong>Total:</strong>
+            </div>
+            <div class="col-lg-6">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">R$</span>
+                <input type="text" id="total" name="total" class="form-control" placeholder="Total Geral" value="" aria-describedby="basic-addon1">
+              </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row mar-bot40">
+            <div class="col-lg-6">
               <strong>Total Geral:</strong>
             </div>
             <div class="col-lg-6">
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">R$</span>
-                <input type="text" class="form-control" placeholder="Total Geral" aria-describedby="basic-addon1">
+                <input type="text" id="total_geral" name="total_geral" class="form-control" placeholder="Total Geral" value="" aria-describedby="basic-addon1">
               </div>
             </div>
-        </li>
+        </li>        
         <li class="list-group-item">
 
             <%fd_mesa_id = @fd_mesa.id rescue 0%>
@@ -626,7 +638,10 @@ function buscaItensPedidos(fd_pedido_id) {
 
       for (var i in data) {
         var item = data[i];
-        var tipo_atendimento = "";
+        var tipo_atendimento = ""; 
+
+          $("#total_geral").val(item.valr_item_total_geral);
+          $("#total").val(item.valr_item_total);
 
           if(item.tipo_atendimento == 'mesa'){
 
@@ -667,10 +682,17 @@ function buscaItensPedidos(fd_pedido_id) {
 
           };
 
+
           //if(item.fd_categoriaproduto_id != <%=$Servicos%>){
 
-            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+'</td><td align="right">'+item.valr_item+'</td></tr>');                         
+          if (item.flag_pedidomisto == true){
 
+            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+' '+nomeMisto+' '+item.desc_variacao+'</td><td align="right">'+item.valr_item+'</td></tr>');                         
+          } else {
+
+            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+' '+item.desc_variacao+'</td><td align="right">'+item.valr_item+'</td></tr>');                         
+
+          }
           //}
 
       };
@@ -967,4 +989,16 @@ $("#divMistos").hide();
 buscaservicos(<%=$Servicos%>);
 buscaCategorias();
 buscaItensPedidos($('#fd_pedido_id').val());
+
+
+jQuery(function($){
+
+$("#total_geral").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+$("#total").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+
+
+});
+ 
+
 </script>
+
