@@ -426,7 +426,7 @@ function buscaTrocas(fd_itempedidos_id) {
       for (var i in data) {
         var item = data[i];
 
-          $('#tlbTrocas').append('<tr><td>'+item.nome_produto+'</td><td align="right"><button type="button" onclick="exibeTrocas('+item.fd_produtos_id+','+item.fd_itempedidos_id+','+item.fd_produtos_id+')"class="btn btn-default"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button></td></tr>');    
+          $('#tlbTrocas').append('<tr><td>'+item.nome_produto+'</td><td align="right"><button type="button" onclick="exibeTrocas('+item.id+','+item.fd_itempedidos_id+','+item.fd_produtos_id+')"class="btn btn-default"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span></button></td></tr>');    
 
       };
 
@@ -669,7 +669,7 @@ function buscaItensPedidos(fd_pedido_id) {
 
           //if(item.fd_categoriaproduto_id != <%=$Servicos%>){
 
-            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+'</td><td>'+item.valr_item+'</td><td align="right"></td></tr>');                         
+            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+'</td><td align="right">'+item.valr_item+'</td></tr>');                         
 
           //}
 
