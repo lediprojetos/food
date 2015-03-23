@@ -78,7 +78,7 @@ class StaticPedidosController < ApplicationController
 
 
 	def lista_pedidos_geral
-		
+		@fd_itempedido = FdItempedido.where(fd_empresa_id: user.fd_empresa_id)
 	end
 
 end

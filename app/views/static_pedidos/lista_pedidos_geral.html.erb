@@ -1,1 +1,15 @@
-lista_pedidos_geral
+<table>
+  <thead>
+    <tr>
+      <th>Pedido</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_itempedido.each do |fd_itempedido| %>
+      <tr>
+        <td><%= fd_itempedido.fd_variacaoproduto.fd_produto.nome_produto %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
