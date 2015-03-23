@@ -99,11 +99,8 @@ Food::Application.routes.draw do
   match '/exclui_item_adicinal', to: 'fd_itensadicionals#exclui_item_adicinal', via: 'get'
   match '/relPedidos', to: 'fd_pedidos#relPedidos', via: 'get'
   match '/busca_Servicos', to: 'fd_produtos#busca_Servicos', via: 'get'
-  
   match '/insere_pedidomisto', to: 'fd_itempedidos#insere_pedidomisto', via: 'get'
-
   match '/busca_DetalhesMistos', to: 'fd_pedidomistos#busca_DetalhesMistos', via: 'get'
-
-
+  match '/lista_pedidos_geral', to: 'static_pedidos#lista_pedidos_geral', via: 'get'
 
 end

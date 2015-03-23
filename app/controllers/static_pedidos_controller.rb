@@ -76,4 +76,9 @@ class StaticPedidosController < ApplicationController
 		redirect_to root_path
 	end
 
+
+	def lista_pedidos_geral
+		
+	end
+
 end
