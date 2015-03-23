@@ -2,9 +2,7 @@
   <div class="panel-heading">
     <h3 class="panel-title">Cadastro Itens Adicionais</h3>
   </div>
-  <div class="panel-footer" style="background-color:white;">
-
-
+<div class="panel-footer" style="background-color:white;">
 
 <div class="row mar-bot40">
    <div class="col-lg-4"> 
@@ -14,7 +12,7 @@
 
   <div class="col-lg-4"> 
            <b>Categoria Produto</b>      
-            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria'), include_blank: true, :class => 'form-control'%>
+            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.where(fd_empresa_id: user.fd_empresa_id), 'id', 'desc_categoria'), include_blank: true, :class => 'form-control'%>
   </div>
   <div class="col-lg-2">
       <b>Valor Produto</b> 

@@ -43,7 +43,7 @@ class FdItemsController < ApplicationController
   # DELETE /fd_items/1
   def destroy
     @fd_item.data_exclusao = Time.now
-    @fd_item.user_inclusao = user.id
+    @fd_item.user_exclusao = user.id
      @fd_item.save
       redirect_to fd_items_url, notice: 'Registro excluído com sucesso.'
 
