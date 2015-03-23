@@ -1,6 +1,8 @@
 class FdProdutosController < ApplicationController
   before_action :set_fd_produto, only: [:show, :edit, :update, :show_service, :edit_service, :destroy]
 
+  include ActionView::Helpers::NumberHelper
+
   def busca_Servicos
 
     query = " select "
@@ -26,7 +28,13 @@ class FdProdutosController < ApplicationController
 
     results = ActiveRecord::Base.connection.execute(query);
 
-    results_json = results.map {|item| {:fd_variacaoproduto_id => item["fd_variacaoproduto_id"], :qtd => item["qtd"], :fd_produto_id => item["fd_produto_id"], :nome_produto => item["nome_produto"], :numr_porcentagem => item["numr_porcentagem"], :valr_produto => item["valr_produto"]}}
+    results_json = results.map {|item| {:fd_variacaoproduto_id => item["fd_variacaoproduto_id"], 
+                                        :qtd => item["qtd"], 
+                                        :fd_produto_id => item["fd_produto_id"], 
+                                        :nome_produto => item["nome_produto"], 
+                                        :numr_porcentagem => item["numr_porcentagem"].blank? ? '' : item["numr_porcentagem"], 
+                                        :valr_produto => number_to_currency((item["valr_produto"].blank? ? '' : item["valr_produto"]) , unit: "R$", separator: ",", delimiter: ".")}}
+
     render :json => results_json
 
   end  
@@ -45,7 +53,7 @@ class FdProdutosController < ApplicationController
   end
 
   def index_service
-    @fd_produtos = FdProduto.where(:fd_categoriaproduto_id => $Servicos)
+    @fd_produtos = FdProduto.where(:fd_categoriaproduto_id => $Servicos, :fd_empresa_id => user.fd_empresa_id)
   end
 
 
@@ -85,8 +93,8 @@ def exclui_variacao_produto
 end
 
 def busca_item   
-   fd_item = FdItem.all
 
+   fd_item = FdItem.where(fd_empresa_id: user.fd_empresa_id, data_exclusao: nil)
    fd_item_json = fd_item.map{|item|{:id => item.id, :desc_item => item.desc_item}}
    render :json => fd_item_json
 

@@ -1,15 +1,11 @@
-<h1>Listing fd_cargos</h1>
-
-<table>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h3 class="panel-title">Listar Cargos</h3></div>
+    <table class="table table-hover">
   <thead>
     <tr>
       <th>Nome cargo</th>
-      <th>Desc cargo</th>
-      <th>Data exclusao</th>
-      <th>Fd empresa</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Descrição cargo</th>
     </tr>
   </thead>
 
@@ -18,16 +14,27 @@
       <tr>
         <td><%= fd_cargo.nome_cargo %></td>
         <td><%= fd_cargo.desc_cargo %></td>
-        <td><%= fd_cargo.data_exclusao %></td>
-        <td><%= fd_cargo.fd_empresa %></td>
-        <td><%= link_to 'Show', fd_cargo %></td>
-        <td><%= link_to 'Edit', edit_fd_cargo_path(fd_cargo) %></td>
-        <td><%= link_to 'Destroy', fd_cargo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td align='right'>
+        <div class="btn-group">
+              <%= link_to fd_cargo, :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-list-alt"></span> Exibir
+              <% end %>             
+              <%= link_to edit_fd_cargo_path(fd_cargo), :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+              <% end %>             
+              <%= link_to fd_cargo , :method => :delete,  :confirm => 'Deseja excluir o registro?', :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-trash"></span> Excluir
+              <% end %>            
+        </div>
+      </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
+</div>
 
-<%= link_to 'New Fd cargo', new_fd_cargo_path %>
+<%= link_to new_fd_cargo_path, :class => "btn btn-default btn-sm" do %>
+   <span class="glyphicon glyphicon-file"></span>Novo
+<% end %>
+

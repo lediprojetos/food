@@ -1,33 +1,45 @@
 <%= form_for(@fd_cargo) do |f| %>
   <% if @fd_cargo.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@fd_cargo.errors.count, "error") %> prohibited this fd_cargo from being saved:</h2>
-
-      <ul>
-      <% @fd_cargo.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  
+  <% if @fd_cargo.errors.any? %>
+  
+    <% @fd_cargo.errors.full_messages.each do |msg| %>
+        <%= msg %></br>
       <% end %>
-      </ul>
+     <% end %>
     </div>
-  <% end %>
+<% end %> 
 
-  <div class="field">
+
+
+
+<div class="row mar-bot40">  
+  <div class="col-lg-12">
     <%= f.label :nome_cargo %><br>
-    <%= f.text_field :nome_cargo %>
+    <%= f.text_field :nome_cargo, :class => 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :desc_cargo %><br>
-    <%= f.text_field :desc_cargo %>
+</div>
+
+<div class="row mar-bot40">  
+  <div class="col-lg-12">
+    <%= f.label :Descrição_cargo %><br>
+    <%= f.text_field :desc_cargo, :class => 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :data_exclusao %><br>
-    <%= f.datetime_select :data_exclusao %>
-  </div>
-  <div class="field">
-    <%= f.label :fd_empresa_id %><br>
-    <%= f.text_field :fd_empresa_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+</div>
+      
+  <!--Capturando usuario logado-->
+  <%=f.hidden_field :fd_empresa_id, :value => user.fd_empresa_id%> 
+
+    </div>
+</div>
+
+<hr/>
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="submit" class="btn btn-primary btn-sm">
+    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+  </button>  
+
 <% end %>

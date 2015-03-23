@@ -52,7 +52,7 @@
       <div class="row mar-bot40">
           <div class="col-lg-6">
             <%= f.label :Categoria_produto %><br>
-            <%= f.select :fd_categoriaproduto_id, options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria',@fd_produto.fd_categoriaproduto_id), {:include_blank => true}, {:onchange => 'changeState(this)', :class => 'form-control' }%>
+            <%= f.select :fd_categoriaproduto_id, options_from_collection_for_select(FdCategoriaproduto.where(fd_empresa_id: user.fd_empresa_id), 'id', 'desc_categoria',@fd_produto.fd_categoriaproduto_id), {:include_blank => true}, {:onchange => 'changeState(this)', :class => 'form-control' }%>
           </div>  
           <div class="col-lg-3">
             <%= f.label :Nome_Produto %><br>
@@ -87,7 +87,7 @@
     </div>
     <div class="col-lg-4"> 
       <b>Variação</b>      
-      <%= select_tag "variacao_id", options_from_collection_for_select(FdVariacao.all, 'id', 'desc_variacao'), include_blank: true, :class => 'form-control'%>
+      <%= select_tag "variacao_id", options_from_collection_for_select(FdVariacao.where(fd_empresa_id: user.fd_empresa_id), 'id', 'desc_variacao'), include_blank: true, :class => 'form-control'%>
     </div>
     <div class="col-lg-2">
       <b>Valor Produto</b> 
@@ -164,7 +164,7 @@
       </div> 
       <div class="col-lg-8" style="width:810px"> 
            <b>Categoria Produto</b>      
-            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_produto(this.value,1)', :class => 'form-control'%>
+            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.where(fd_empresa_id: user.fd_empresa_id), 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_produto(this.value,1)', :class => 'form-control'%>
       </div>
     </div>
     <br>
@@ -200,11 +200,11 @@
     
    <div class="row mar-bot40">
        <div class="col-lg-4">
-        <label style="margin-top:20px;">Itens Combo           Troca Por ></label>
+        <label style="margin-top:20px;">Itens Combo Troca Por ></label>
        </div>     
         <div class="col-lg-4"> 
            <b>Categoria Produto</b>      
-            <%= select_tag "categoria_produtotroca", options_from_collection_for_select(FdCategoriaproduto.all, 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_produto(this.value,2)', :class => 'form-control'%>
+            <%= select_tag "categoria_produtotroca", options_from_collection_for_select(FdCategoriaproduto.where(fd_empresa_id: user.fd_empresa_id), 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_produto(this.value,2)', :class => 'form-control'%>
       </div>
   </div>
   <div class="row mar-bot40">

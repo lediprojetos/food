@@ -13,7 +13,5 @@ class CreateFdEmpresas < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    FdEmpresa.create(:desc_razaosocial => 'Ledi Pizzaria', :desc_nomefantasia =>  'Ledi Pizzaria')
   end
 end

@@ -3,9 +3,26 @@ class FdPedidocombosController < ApplicationController
 
   def busca_trocas
 
-    fd_produtocombo = FdPedidocombo.where(:fd_itempedidos_id => params[:fd_itempedidos_id])
+    fd_produtocombos_id = FdItempedido.find(params[:fd_itempedidos_id]) 
+    fd_produtocombos_id = fd_produtocombos_id.fd_variacaoproduto.fd_produto_id
 
-    fd_produtocombo_json = fd_produtocombo.map {|item| {:id => item.id, :fd_produtos_id =>  item.fd_produtos_id, :fd_itempedidos_id => item.fd_itempedidos_id, :nome_produto => item.fd_produto.nome_produto}}
+    #fd_produtocombo = FdPedidocombo.joins('inner join fd_produtocombos pc on pc.fd_produto_combo = fd_produtos_id and fd_produto_id = ' +fd_produtocombos_id.to_s).where(:fd_itempedidos_id => params[:fd_itempedidos_id])
+
+    query = "select pc.id as id, pr.nome_produto from  "
+    query = query + "fd_pedidocombos pdc "
+    query = query + "inner join fd_produtocombos pc on  pc.fd_produto_combo = fd_produtos_id and fd_produto_id = " +fd_produtocombos_id.to_s
+    query = query + "inner join fd_produtos pr on  pr.id = fd_produto_combo "
+    query = query + " where  fd_itempedidos_id =  " + params[:fd_itempedidos_id].to_s
+
+    results = ActiveRecord::Base.connection.execute(query);
+
+
+    #debugger
+
+    fd_produtocombo_json = results.map {|item| {:id => item["id"], 
+                                                :fd_produto_id =>  item["fd_produto_id"], 
+                                                :fd_itempedidos_id => item["fd_itempedidos_id"],
+                                                :nome_produto => item["nome_produto"]}}
     render :json => fd_produtocombo_json
 
   end
@@ -14,7 +31,7 @@ class FdPedidocombosController < ApplicationController
 
     fd_produtocombo = FdPedidocombo.where(:fd_itempedidos_id => params[:fd_itempedidos_id], :fd_produtos_id => params[:fd_produtos_id_trocado])
 
-    fd_produtocombo.first.fd_produtos_id = params[:fd_produtos_id_desejado]
+    fd_produtocombo.first.fd_produto_id = params[:fd_produtos_id_desejado]
     fd_produtocombo.first.save
 
     fd_produtocombo = FdPedidocombo.where(:fd_itempedidos_id => params[:fd_itempedidos_id])

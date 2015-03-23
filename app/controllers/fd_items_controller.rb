@@ -1,9 +1,10 @@
+#encoding: utf-8
 class FdItemsController < ApplicationController
   before_action :set_fd_item, only: [:show, :edit, :update, :destroy]
 
   # GET /fd_items
   def index
-    @fd_items = FdItem.all
+    @fd_items = FdItem.where(fd_empresa_id: user.fd_empresa_id)
   end
 
   # GET /fd_items/1
@@ -24,7 +25,7 @@ class FdItemsController < ApplicationController
     @fd_item = FdItem.new(fd_item_params)
 
     if @fd_item.save
-      redirect_to @fd_item, notice: 'Fd item was successfully created.'
+      redirect_to @fd_item, notice: 'Registro inserido com sucesso.'
     else
       render action: 'new'
     end
@@ -33,7 +34,7 @@ class FdItemsController < ApplicationController
   # PATCH/PUT /fd_items/1
   def update
     if @fd_item.update(fd_item_params)
-      redirect_to @fd_item, notice: 'Fd item was successfully updated.'
+      redirect_to @fd_item, notice: 'Registro alterado com sucesso.'
     else
       render action: 'edit'
     end
@@ -41,8 +42,11 @@ class FdItemsController < ApplicationController
 
   # DELETE /fd_items/1
   def destroy
-    @fd_item.destroy
-    redirect_to fd_items_url, notice: 'Fd item was successfully destroyed.'
+    @fd_item.data_exclusao = Time.now
+    @fd_item.user_exclusao = user.id
+     @fd_item.save
+      redirect_to fd_items_url, notice: 'Registro excluído com sucesso.'
+
   end
 
   private

@@ -141,6 +141,20 @@
 
 
 <script>
+
+
+
+
+jQuery(function($){
+
+  $("#fd_cliente_data_nascimento").mask("99/99/9999");
+  $("#fd_cliente_desc_cpf").mask("999.999.999.99");
+  $("#fd_cliente_desc_celular").mask("(99)9999-9999");
+  $("#fd_cliente_desc_telefone").mask("(99)9999-9999");
+  $("#fd_cliente_fd_endereco_attributes_numr_cep").mask("99.999-999");
+
+
+});
  
     function changeState(state){
         $.ajax({
