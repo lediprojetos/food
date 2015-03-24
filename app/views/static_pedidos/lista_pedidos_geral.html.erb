@@ -18,7 +18,6 @@
   <thead>
     <tr>
       <th>Pedido</th>
-      <th>Situação</th>
       <th>Para</th>
     </tr>
   </thead>
@@ -30,7 +29,7 @@
         <td><h4><%=fd_itempedido.fd_situacao.nome_situacao%></h4></td>
         <td><h4><%=fd_itempedido.tipo_atendimento%></h4></td>
         <td align='right'>
-          <button type="button" onclick="excluiIVariacaoProduto('<%=fd_itempedido.id%>')"class="btn btn-success" style="width:100px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Pronto!</h5></button>
+          <button type="button" onclick="excluiIVariacaoProduto('<%=fd_itempedido.id%>')"class="btn btn-success" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Pronto!</h5></button>
          </td> 
       </tr>
     <% end %>
@@ -57,15 +56,21 @@
           var item = data[i];
           var para = "";
               
-              if (item.tipo_atendimento = "mesa"){
+              if (item.tipo_atendimento == "mesa"){
                   para = "Servir Mesa " + item.mesa
-                }else if(item.tipo_atendimento = "entrega"){
+                }else if(item.tipo_atendimento == "entrega"){
                   para = "Entrega"
-                }else if(item.tipo_atendimento = "viagem"){
+                }else if(item.tipo_atendimento == "viagem"){
                   para = "Viagem"
                 }
-
-              $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+item.situacao+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Pronto</h5></button></td></tr>')
+        
+              if (item.situacao == "Solicitado"){
+                  $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Pronto</h5></button></td></tr>')
+             }if(item.situacao == "Pronto" && item.tipo_atendimento == "entrega"){
+                $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Entregue</h5></button></td></tr>')
+             }if(item.situacao == "Entregue"){
+               $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>OK</h5></button></td></tr>')
+             }
             };
            } 
          })      
@@ -88,15 +93,21 @@
           var item = data[i];
           var para = "";
               
-              if (item.tipo_atendimento = "mesa"){
+              if (item.tipo_atendimento == "mesa"){
                   para = "Servir Mesa " + item.mesa
-                }else if(item.tipo_atendimento = "entrega"){
+                }else if(item.tipo_atendimento == "entrega"){
                   para = "Entrega"
-                }else if(item.tipo_atendimento = "viagem"){
+                }else if(item.tipo_atendimento == "viagem"){
                   para = "Viagem"
                 }
 
-              $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+item.situacao+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><h5>Pronto</h5></button></td></tr>')
+             if (item.situacao == "Solicitado"){
+                  $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Pronto</h5></button></td></tr>')
+             }if(item.situacao == "Pronto" && item.tipo_atendimento == "entrega"){
+                $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Entregue</h5></button></td></tr>')
+             }if(item.situacao == "Entregue"){
+               $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>OK</h5></button></td></tr>')
+             }
             };
            } 
          })      
@@ -106,7 +117,7 @@
  busca_pedidos();
 
 
-  var segundos = 3
+  var segundos = 10
   window.setInterval('busca_pedidos()', segundos* 1000);
 
 </script>
