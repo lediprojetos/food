@@ -45,6 +45,9 @@ Food::Application.routes.draw do
   root  'static_pages#home'
   match '/report', to: 'static_pages#report', via: 'get'
   match '/config2', to: 'static_pages#config2', via: 'get'
+  match '/inclui_cliente', to: 'fd_clientes#inclui_cliente', via: 'get'
+  match '/atualiza_cliente', to: 'fd_clientes#atualiza_cliente', via: 'get'
+  match '/buscaCliente', to: 'fd_clientes#buscaCliente', via: 'get'
 
   resources :fd_usuarios
   resources :fd_empresas

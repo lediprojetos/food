@@ -50,6 +50,8 @@ class StaticPedidosController < ApplicationController
 			@fd_pedido_id = @fd_pedido.id
 
 			@fd_mesa = @fd_pedido.fd_mesa
+
+			@fd_cliente_id = @fd_pedido.fd_cliente_id
 		end
 
 
