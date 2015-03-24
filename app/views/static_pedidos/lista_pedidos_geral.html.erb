@@ -1,15 +1,67 @@
-<table>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">
+  <div class="row mar-bot40">
+      <div class="col-lg-6"> 
+           <b>Categoria</b>      
+            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.where(fd_empresa_id: user.fd_empresa_id), 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_produto(this.value,1)', :class => 'form-control'%>
+      </div>
+     <div class="col-lg-6"> 
+      <b>Situação</b>      
+            <%= select_tag "situacao", options_from_collection_for_select(FdSituacao.all, 'id', 'nome_situacao'), include_blank: true, :onchange => 'busca_produto(this.value,1)', :class => 'form-control'%>
+      </div>
+    </div>
+    </div>
+
+
+<table class="table table-hover"  id="tlbpedido">
   <thead>
     <tr>
       <th>Pedido</th>
+      <th>Situação</th>
     </tr>
   </thead>
 
-  <tbody>
+  <tbody id="lbpedidos">
     <% @fd_itempedido.each do |fd_itempedido| %>
       <tr>
-        <td><%= fd_itempedido.fd_variacaoproduto.fd_produto.nome_produto %></td>
+        <td><h4><%=fd_itempedido.fd_variacaoproduto.fd_produto.nome_produto %></h4></td>
+        <td><h4><%=fd_itempedido.fd_situacao.nome_situacao%></h4></td>
+        <td align='right'>
+          <button type="button" onclick="excluiIVariacaoProduto('<%=fd_itempedido.id%>')"class="btn btn-success" style="width:100px"><h5>Pronto!</h5></button>
+         </td> 
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
+
+
+<script>
+
+  function busca_pedidos(){
+
+      $.ajax({
+          url: '<%= busca_pedidos_geral_path %>',
+          data :
+          {
+            categoria_produto: $('#categoria_produto').val()
+            ,situacao: $('#situacao').val()
+          },
+
+      success: function(data){
+        $("#lbpedidos").empty();
+         for (var i in data){
+          var item = data[i];
+              $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+item.situacao+'</h4></td><td align="right"><button type="button" onclick="excluiIVariacaoProduto('+item.id+');" class="btn btn-success" style="width:100px"><h5>Pronto!...</h5></button></td></tr>')
+            };
+           } 
+         })      
+  }
+
+
+
+var segundos = 15
+window.setInterval('busca_pedidos()', segundos* 1000);
+
+</script>

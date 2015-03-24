@@ -81,4 +81,16 @@ class StaticPedidosController < ApplicationController
 		@fd_itempedido = FdItempedido.where(fd_empresa_id: user.fd_empresa_id)
 	end
 
+   def busca_pedidos_geral
+   
+   fd_pedido = FdItempedido.joins('INNER JOIN fd_variacaoprodutos vp on fd_variacaoproduto_id = vp.id 
+   	                               INNER JOIN fd_produtos pr on vp.fd_produto_id = pr.id
+   	                               ').where('pr.fd_categoriaproduto_id = ? and fd_situacao_id = ?',params[:categoria_produto], params[:situacao])
+
+   fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :situacao => item.fd_situacao.nome_situacao}}
+   render :json => fd_pedido_json
+
+
+   end
+
 end
