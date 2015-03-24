@@ -59,6 +59,10 @@ class FdProdutosController < ApplicationController
 
  def salva_variacao_produto
 
+    params[:valr_produto] = params[:valr_produto].gsub('R$', '')
+    params[:valr_produto] = params[:valr_produto].gsub('.', '')
+    params[:valr_produto] = params[:valr_produto].gsub(',', '.').to_f   
+
 
   fd_validacao = FdVariacaoproduto.where(fd_variaco_id: params[:fd_variaco_id] ,fd_produto_id: params[:fd_produto_id])
 
@@ -74,7 +78,7 @@ class FdProdutosController < ApplicationController
 
     fd_variacao = FdVariacaoproduto.where(fd_produto_id: params[:fd_produto_id])
 
-    fd_variacao_json = fd_variacao.map{|item|{:id => item.id, :valr_produto => item.valr_produto, :desc_variacao => item.fd_variacao.desc_variacao}} 
+    fd_variacao_json = fd_variacao.map{|item|{:id => item.id, :valr_produto => (number_to_currency( item.valr_produto, unit: "R$", separator: ",", delimiter: ".")), :desc_variacao => item.fd_variacao.desc_variacao}} 
     render :json => fd_variacao_json
 
 end
@@ -108,7 +112,7 @@ def busca_item_produto
 
 end
 
-def salva_item_produto
+def salva_item_produto  
    
     @fd_itemproduto = FdItensproduto.new
     @fd_itemproduto.fd_produto_id = params[:fd_produto_id]

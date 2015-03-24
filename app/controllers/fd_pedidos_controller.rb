@@ -3,6 +3,22 @@ class FdPedidosController < ApplicationController
   before_action :set_fd_pedido, only: [:show, :edit, :update, :destroy]
 
 
+  def efetua_pagamento
+
+    params[:valr_pedido] = params[:valr_pedido].gsub('R$', '')
+    params[:valr_pedido] = params[:valr_pedido].gsub('.', '')
+    params[:valr_pedido] = params[:valr_pedido].gsub(',', '.').to_f    
+
+    fd_pedido = FdPedido.find(params[:fd_pedido_id])
+    fd_pedido.valr_pedido = params[:valr_pedido]
+    fd_pedido.flag_pago = true
+    fd_pedido.save
+
+    render :json => {}
+
+  end
+
+
   def relPedidos
     
   if params[:dataInicio] && params[:dataInicio] != ""

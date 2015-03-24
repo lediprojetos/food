@@ -108,6 +108,9 @@ Food::Application.routes.draw do
   match '/lista_pedidos_geral', to: 'static_pedidos#lista_pedidos_geral', via: 'get'
   match '/busca_pedidos_geral', to: 'static_pedidos#busca_pedidos_geral', via: 'get'
 
+  match '/efetua_pagamento', to: 'fd_pedidos#efetua_pagamento', via: 'get'
+  
+
   
 
 end
