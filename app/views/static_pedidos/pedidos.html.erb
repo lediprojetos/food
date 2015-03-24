@@ -92,7 +92,7 @@
         <div class="tab-pane" id="tab3">
 
           <br/>
-          <div class="panel panel-warning">
+          <div class="panel panel-info">
             <div class="panel-heading"><strong>Serviços</strong></div>
               <table class="table table-hover" name="tlbServicos" id="tlbServicos">
                 <thead>
@@ -174,100 +174,6 @@
       </div>
     </div>
   </div>
-  <script>
-
-function limparcliente(){
-
-        $("#txtNomeCliente").val("");
-        $("#txtTelefoneCliente").val("");
-        $("#txtRua").val("");
-        $("#txtQuadra").val("");
-        $("#txtLote").val("");
-        $("#txtBairro").val("");
-        $("#txtReferencia").val("");
-
-}
-
-function atualizaCliente(fd_cliente_id){
-
-  $.ajax({
-    url: '<%= atualiza_cliente_path %>',
-    data : 
-    {
-        fd_cliente_id : fd_cliente_id
-        ,fd_pedido_id : $("#fd_pedido_id").val()
-    },
-    success: function(data){
-
-        for (var i in data) {
-          var item = data[i];
-
-          $("#txtNomeCliente").val(item.nome_cliente);
-          $("#txtTelefoneCliente").val(item.desc_telefone);
-          $("#txtRua").val(item.nome_rua);
-          $("#txtQuadra").val(item.numr_quadra);
-          $("#txtLote").val(item.numr_lote);
-          $("#txtBairro").val(item.nome_bairro);
-          $("#txtReferencia").val(item.desc_pontoreferencia);
-
-        };   
-
-    }
-  })  
-
-}
-
-
-function incluiCliente(){
-
-  $.ajax({
-    url: '<%= inclui_cliente_path %>',
-    data : 
-    {
-        nome_cliente : $("#txtNomeCliente").val()
-        ,desc_telefone : $("#txtTelefoneCliente").val()
-        ,nome_rua : $("#txtRua").val()
-        ,numr_quadra : $("#txtQuadra").val()
-        ,numr_lote : $("#txtLote").val()
-        ,nome_bairro : $("#txtBairro").val()
-        ,desc_pontoreferencia : $("#txtReferencia").val()
-        ,fd_pedido_id : $("#fd_pedido_id").val()
-    },
-    success: function(data){
-
-        //alert('goddamnn yeahh!!')
-
-    }
-  })  
-
-}
-
-function buscaCliente(){
-
-  $.ajax({
-    url: '<%= buscaCliente_path %>',
-    data : 
-    {
-        nome_cliente : $("#txtNomeCliente").val()
-    },
-    success: function(data){
-
-        $("div.divClientes").html("");
-
-        for (var i in data) {
-          var item = data[i];
-
-            $("div.divClientes").append('<a href="javascript:atualizaCliente('+item.fd_cliente_id+')" class="list-group-item">' + item.nome_cliente + '<span class="badge">+</span></a>');
-
-        };      
-
-
-    }
-  })  
-
-}
-
-  </script>
   <div class="col-lg-4">
 
     <div class="panel panel-danger">
@@ -293,29 +199,17 @@ function buscaCliente(){
             <div class="col-lg-6">
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">R$</span>
-                <input type="text" id="total" name="total" class="form-control" placeholder="Total Geral" value="" aria-describedby="basic-addon1">
+                <input type="text" id="total" name="total" class="form-control" placeholder="Total" value="" aria-describedby="basic-addon1">
               </div>
             </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row mar-bot40">
-            <div class="col-lg-6">
-              <strong>Total Geral:</strong>
-            </div>
-            <div class="col-lg-6">
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">R$</span>
-                <input type="text" id="total_geral" name="total_geral" class="form-control" placeholder="Total Geral" value="" aria-describedby="basic-addon1">
-              </div>
-            </div>
-        </li>        
+        </li>       
         <li class="list-group-item">
 
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Salvar</button>
+            <button type="button" class="btn btn-success" onclick="efetuarPagamento();"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Pagar </button>
 
             <%fd_mesa_id = @fd_mesa.id rescue 0%>
-            <%= link_to fecha_pedido_path(fd_mesa_id,@fd_pedido_id), :class => "btn btn-default" do %>
-              <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Fechar
+            <%= link_to fecha_pedido_path(fd_mesa_id,@fd_pedido_id), :class => "btn btn-danger not-visited" do %>
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Fechar Pedido
             <% end %>
 
         </li>                   
@@ -416,7 +310,118 @@ function buscaCliente(){
   </div>
 </div>
 
-<script> 
+<script>
+
+
+function efetuarPagamento(){
+
+  $.ajax({
+    url: '<%= efetua_pagamento_path %>',
+    data : 
+    {
+        valr_pedido : $("#total").val()
+        ,fd_pedido_id : $("#fd_pedido_id").val()
+    },
+    success: function(data){
+
+      alert_boot('Pagamento realizado com sucesso.','success','#alert_placeholder_periodo')
+
+    }
+  })  
+}
+
+function limparcliente(){
+
+        $("#txtNomeCliente").val("");
+        $("#txtTelefoneCliente").val("");
+        $("#txtRua").val("");
+        $("#txtQuadra").val("");
+        $("#txtLote").val("");
+        $("#txtBairro").val("");
+        $("#txtReferencia").val("");
+
+}
+
+function atualizaCliente(fd_cliente_id){
+
+  $.ajax({
+    url: '<%= atualiza_cliente_path %>',
+    data : 
+    {
+        fd_cliente_id : fd_cliente_id
+        ,fd_pedido_id : $("#fd_pedido_id").val()
+    },
+    success: function(data){
+
+        for (var i in data) {
+          var item = data[i];
+
+          $("#txtNomeCliente").val(item.nome_cliente);
+          $("#txtTelefoneCliente").val(item.desc_telefone);
+          $("#txtRua").val(item.nome_rua);
+          $("#txtQuadra").val(item.numr_quadra);
+          $("#txtLote").val(item.numr_lote);
+          $("#txtBairro").val(item.nome_bairro);
+          $("#txtReferencia").val(item.desc_pontoreferencia);
+
+          alert_boot('Cliente incluído com sucesso.','success','#alert_placeholder_periodo')
+
+        };   
+
+    }
+  })  
+
+}
+
+
+function incluiCliente(){
+
+  $.ajax({
+    url: '<%= inclui_cliente_path %>',
+    data : 
+    {
+        nome_cliente : $("#txtNomeCliente").val()
+        ,desc_telefone : $("#txtTelefoneCliente").val()
+        ,nome_rua : $("#txtRua").val()
+        ,numr_quadra : $("#txtQuadra").val()
+        ,numr_lote : $("#txtLote").val()
+        ,nome_bairro : $("#txtBairro").val()
+        ,desc_pontoreferencia : $("#txtReferencia").val()
+        ,fd_pedido_id : $("#fd_pedido_id").val()
+    },
+    success: function(data){
+
+        alert_boot('Cliente incluído com sucesso.','success','#alert_placeholder_periodo')
+
+    }
+  })  
+
+}
+
+function buscaCliente(){
+
+  $.ajax({
+    url: '<%= buscaCliente_path %>',
+    data : 
+    {
+        nome_cliente : $("#txtNomeCliente").val()
+    },
+    success: function(data){
+
+        $("div.divClientes").html("");
+
+        for (var i in data) {
+          var item = data[i];
+
+            $("div.divClientes").append('<a href="javascript:atualizaCliente('+item.fd_cliente_id+')" class="list-group-item list-group-item-info">' + item.nome_cliente + '<span class="badge">+</span></a>');
+
+        };      
+
+
+    }
+  })  
+
+} 
 
 function escolheTipoAtendimento(tipo_atendimento){
 
@@ -431,6 +436,8 @@ function escolheTipoAtendimento(tipo_atendimento){
 
       $('#mdTipoAtendimento').modal('hide');
       buscaItensPedidos($('#fd_pedido_id').val());
+
+      alert_boot('Atendimento alterado para: '+tipo_atendimento+'.','success','#alert_placeholder_periodo')
 
     }
   })  
@@ -467,6 +474,7 @@ function inserePedidoMisto(){
       jsonObj = [];
       constroiPedidoMisto();
       buscaItensPedidos($('#fd_pedido_id').val());
+      alert_boot('Item incluído com sucesso.','success','#alert_placeholder_periodo')
 
     }
   })  
@@ -498,9 +506,7 @@ function constroiPedidoMisto(){
     $('#tlbMistos').append('<tr><td>'+item.id+'</td><td>'+item.nome_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><button type="button" onclick="removePedidoMisto('+count+');" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
 
       count = count + 1
-  }     
-  //$(".slidingDiv").hide();
-  //$(".show_hide").show();
+  }
 
 }
 
@@ -744,6 +750,7 @@ function excluiItensPedidos(id) {
     success: function(data){
 
       buscaItensPedidos($('#fd_pedido_id').val());
+      alert_boot('Item excluído com sucesso.','warning','#alert_placeholder_periodo')
 
     }
   })  
@@ -790,15 +797,21 @@ function buscaItensPedidos(fd_pedido_id) {
     },
     success: function(data){
 
-          $("#bodyTlbItensPedidos").empty();
-          $("#bodyTlbComanda").empty();
+      var total_geral = 0
+      var valr_item_total = 0
+
+      $("#bodyTlbItensPedidos").empty();
+      $("#bodyTlbComanda").empty();
+      $("#total").val('');
 
       for (var i in data) {
         var item = data[i];
         var tipo_atendimento = ""; 
 
-          $("#total_geral").val(item.valr_item_total_geral);
-          $("#total").val(item.valr_item_total);
+          total_geral = item.valr_item_total_geral;
+          valr_item_total = item.valr_item_total
+
+          $("#total").val(total_geral);
 
           if(item.tipo_atendimento == 'mesa'){
 
@@ -853,6 +866,9 @@ function buscaItensPedidos(fd_pedido_id) {
           //}
 
       };
+            $('#tlbItensComanda').append('<tr style="height:20px;"><td></td><td align="right"></td></tr>');                         
+            $('#tlbItensComanda').append('<tr class="dotted"><td>Total</td><td align="right">'+valr_item_total+'</td></tr>');                         
+            $('#tlbItensComanda').append('<tr class="dotted"><td>Total + taxas %</td><td align="right">'+total_geral+'</td></tr>');                         
 
     }
   })  
@@ -1140,7 +1156,11 @@ function buscaservicos() {
 
 function alert_boot(message,color,place) {
 
-  $(place).html('<div class="alert alert-'+ "warning" +'" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> </div>')
+  $(place).html('<div class="alert alert-'+ color +'" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> </div>')
+
+  $(place).fadeTo(2000, 500).slideUp(500, function(){
+  
+  }); 
 }
 
 $("#divMistos").hide();
@@ -1152,7 +1172,6 @@ atualizaCliente($('#fd_cliente_id').val());
 
 jQuery(function($){
 
-$("#total_geral").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
 $("#total").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
 $("#txtTelefoneCliente").mask("(99)9999-9999")
 

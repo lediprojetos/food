@@ -116,7 +116,7 @@
             <%@variacao_produto.each do |variacao| %>
               <tr>
                 <td><%= variacao.fd_variacao.desc_variacao%></td>
-                <td><%= variacao.valr_produto %></td>
+                <td><%= number_to_currency(variacao.valr_produto, unit: "R$", separator: ",", delimiter: ".")%></td>
                 <td align='right'>
                   <button type="button" onclick="excluiIVariacaoProduto('<%=variacao.id%>')"class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                 </td> 
@@ -269,6 +269,7 @@
 
 <script>
 
+$("#valor_produto").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
 
 function marcacheck(){
     
