@@ -57,7 +57,6 @@ class StaticPedidosController < ApplicationController
 
 	end
 
-
 	def fecha_pedido
 		@fd_pedido = FdPedido.find(params[:fd_pedido_id])
 		@fd_pedido.fd_situacao_id = 2
@@ -79,19 +78,53 @@ class StaticPedidosController < ApplicationController
 	end
 
 
-	def lista_pedidos_geral
+  def lista_pedidos_geral
 		@fd_itempedido = FdItempedido.where(fd_empresa_id: user.fd_empresa_id)
-	end
+		#@fd_itempedido  = FdItempedido.new
+  end
 
-   def busca_pedidos_geral
+  def busca_pedidos_geral
    
+
+  if params[:situacao] != "" and  params[:categoria_produto] != ""
+
    fd_pedido = FdItempedido.joins('INNER JOIN fd_variacaoprodutos vp on fd_variacaoproduto_id = vp.id 
    	                               INNER JOIN fd_produtos pr on vp.fd_produto_id = pr.id
    	                               ').where('pr.fd_categoriaproduto_id = ? and fd_situacao_id = ?',params[:categoria_produto], params[:situacao])
 
-   fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :situacao => item.fd_situacao.nome_situacao}}
+   fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :situacao => item.fd_situacao.nome_situacao, :tipo_atendimento => item.tipo_atendimento, :mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}
+   render :json => fd_pedido_json
+   
+   else
+
+   fd_pedido  = FdItempedido.where(fd_empresa_id: user.fd_empresa_id)
+   fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :situacao => item.fd_situacao.nome_situacao, :tipo_atendimento => item.tipo_atendimento, :mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}
    render :json => fd_pedido_json
 
+   end
+   
+
+   end
+
+
+ def muda_sitaucao_pedido
+
+    @fd_pedido = FdItempedido.find(params[:fd_itempedido])
+
+    if @fd_pedido.fd_situacao_id == 1
+       @fd_pedido.fd_situacao_id = 2
+    
+    elsif @fd_pedido.fd_situacao_id == 2		
+    
+      @fd_pedido.fd_situacao_id = 3
+
+    end
+
+   @fd_pedido.save
+    
+   fd_pedido  = FdItempedido.where(fd_empresa_id: user.fd_empresa_id)
+   fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :situacao => item.fd_situacao.nome_situacao, :tipo_atendimento => item.tipo_atendimento, :mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}
+   render :json => fd_pedido_json
 
    end
 

@@ -107,6 +107,7 @@ Food::Application.routes.draw do
   match '/busca_DetalhesMistos', to: 'fd_pedidomistos#busca_DetalhesMistos', via: 'get'
   match '/lista_pedidos_geral', to: 'static_pedidos#lista_pedidos_geral', via: 'get'
   match '/busca_pedidos_geral', to: 'static_pedidos#busca_pedidos_geral', via: 'get'
+  match '/muda_sitaucao_pedido', to: 'static_pedidos#muda_sitaucao_pedido', via: 'get'
 
   
 

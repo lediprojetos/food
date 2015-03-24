@@ -19,6 +19,7 @@
     <tr>
       <th>Pedido</th>
       <th>Situação</th>
+      <th>Para</th>
     </tr>
   </thead>
 
@@ -27,8 +28,9 @@
       <tr>
         <td><h4><%=fd_itempedido.fd_variacaoproduto.fd_produto.nome_produto %></h4></td>
         <td><h4><%=fd_itempedido.fd_situacao.nome_situacao%></h4></td>
+        <td><h4><%=fd_itempedido.tipo_atendimento%></h4></td>
         <td align='right'>
-          <button type="button" onclick="excluiIVariacaoProduto('<%=fd_itempedido.id%>')"class="btn btn-success" style="width:100px"><h5>Pronto!</h5></button>
+          <button type="button" onclick="excluiIVariacaoProduto('<%=fd_itempedido.id%>')"class="btn btn-success" style="width:100px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Pronto!</h5></button>
          </td> 
       </tr>
     <% end %>
@@ -53,15 +55,58 @@
         $("#lbpedidos").empty();
          for (var i in data){
           var item = data[i];
-              $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+item.situacao+'</h4></td><td align="right"><button type="button" onclick="excluiIVariacaoProduto('+item.id+');" class="btn btn-success" style="width:100px"><h5>Pronto!...</h5></button></td></tr>')
+          var para = "";
+              
+              if (item.tipo_atendimento = "mesa"){
+                  para = "Servir Mesa " + item.mesa
+                }else if(item.tipo_atendimento = "entrega"){
+                  para = "Entrega"
+                }else if(item.tipo_atendimento = "viagem"){
+                  para = "Viagem"
+                }
+
+              $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+item.situacao+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Pronto</h5></button></td></tr>')
+            };
+           } 
+         })      
+  }
+
+   function muda_situacao(id){
+
+      $.ajax({
+          url: '<%= muda_sitaucao_pedido_path %>',
+          data :
+          {
+            categoria_produto: $('#categoria_produto').val()
+            ,situacao: $('#situacao').val()
+            ,fd_itempedido: id 
+          },
+
+      success: function(data){
+        $("#lbpedidos").empty();
+         for (var i in data){
+          var item = data[i];
+          var para = "";
+              
+              if (item.tipo_atendimento = "mesa"){
+                  para = "Servir Mesa " + item.mesa
+                }else if(item.tipo_atendimento = "entrega"){
+                  para = "Entrega"
+                }else if(item.tipo_atendimento = "viagem"){
+                  para = "Viagem"
+                }
+
+              $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+item.situacao+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><h5>Pronto</h5></button></td></tr>')
             };
            } 
          })      
   }
 
 
+ busca_pedidos();
 
-var segundos = 15
-window.setInterval('busca_pedidos()', segundos* 1000);
+
+  var segundos = 3
+  window.setInterval('busca_pedidos()', segundos* 1000);
 
 </script>
