@@ -4,6 +4,7 @@
 </script>
 <input type="hidden" id="fd_pedido_id" name="fd_pedido_id" value="<%=@fd_pedido_id%>">
 <input type="hidden" id="fd_itempedido_id" name="fd_itempedido_id" value="">
+<input type="hidden" id="fd_cliente_id" name="fd_cliente_id" value="<%=@fd_cliente_id%>">
 <div class="row mar-bot40">
   <div class="col-lg-8">
       <div id = "alert_placeholder_periodo"></div>  
@@ -17,7 +18,10 @@
         </li>
         <li>
           <a href="#tab3" data-toggle="tab">Serviços</a>
-        </li>               
+        </li>
+        <li>
+          <a href="#tab4" data-toggle="tab">Cliente</a>
+        </li>  
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab1">
@@ -90,7 +94,7 @@
           <br/>
           <div class="panel panel-warning">
             <div class="panel-heading"><strong>Serviços</strong></div>
-                <table class="table table-hover" name="tlbServicos" id="tlbServicos">
+              <table class="table table-hover" name="tlbServicos" id="tlbServicos">
                 <thead>
                   <tr>
                     <th>Produto</th>
@@ -100,18 +104,170 @@
                     <th></th>
                   </tr>
                 </thead>
-
                 <tbody id="bodyTlbServicos">
-                            
                 </tbody>
               </table>
             </div>        
 
             
-        </div>        
+        </div>
+        <div class="tab-pane" id="tab4">
+          <br/>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Clientes</h3>
+            </div>
+            <div class="panel-footer" style="background-color:white;">
+              <div class="row">
+                <div class="col-lg-5">
+                  <label>Nome</label>
+                  <input type="text" id="txtNomeCliente" onkeyup="buscaCliente();" class="form-control">
+                </div>
+                <div class="col-lg-3">
+                  <label>Telefone</label>
+                  <input type="text" id="txtTelefoneCliente" class="form-control">
+                </div>
+                <div class="col-lg-2">
+                  <label>&nbsp;</label>
+                  <button type="button" onclick="incluiCliente();" class="btn btn-success form-control"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar</button>
+                </div>                  
+                <div class="col-lg-2">
+                  <label>&nbsp;</label>
+                  <button type="button" onclick="limparcliente();" class="btn btn-danger form-control"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Limpar</button>
+                </div>                  
+              </div>
+            </div>
+            <div class="list-group divClientes">
+            </div>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Endereços</h3>
+            </div>
+            <div class="panel-footer" style="background-color:white;">
+                
+              <div class="row">
+                <div class="col-lg-6">
+                  <label>Rua</label>
+                  <input type="text" id="txtRua" class="form-control">
+                </div>
+                <div class="col-lg-3">
+                  <label>Quadra</label>
+                  <input type="text" id="txtQuadra" class="form-control">
+                </div>
+                <div class="col-lg-3">
+                  <label>Lote</label>
+                  <input type="text" id="txtLote" class="form-control">
+                </div>
+                <div class="col-lg-4">
+                  <label>Bairro</label>
+                  <input type="text" id="txtBairro" class="form-control">
+                </div>
+                <div class="col-lg-8">
+                  <label>Referencia</label>
+                  <input type="text" id="txtReferencia" class="form-control">
+                </div>                             
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <script>
+
+function limparcliente(){
+
+        $("#txtNomeCliente").val("");
+        $("#txtTelefoneCliente").val("");
+        $("#txtRua").val("");
+        $("#txtQuadra").val("");
+        $("#txtLote").val("");
+        $("#txtBairro").val("");
+        $("#txtReferencia").val("");
+
+}
+
+function atualizaCliente(fd_cliente_id){
+
+  $.ajax({
+    url: '<%= atualiza_cliente_path %>',
+    data : 
+    {
+        fd_cliente_id : fd_cliente_id
+        ,fd_pedido_id : $("#fd_pedido_id").val()
+    },
+    success: function(data){
+
+        for (var i in data) {
+          var item = data[i];
+
+          $("#txtNomeCliente").val(item.nome_cliente);
+          $("#txtTelefoneCliente").val(item.desc_telefone);
+          $("#txtRua").val(item.nome_rua);
+          $("#txtQuadra").val(item.numr_quadra);
+          $("#txtLote").val(item.numr_lote);
+          $("#txtBairro").val(item.nome_bairro);
+          $("#txtReferencia").val(item.desc_pontoreferencia);
+
+        };   
+
+    }
+  })  
+
+}
+
+
+function incluiCliente(){
+
+  $.ajax({
+    url: '<%= inclui_cliente_path %>',
+    data : 
+    {
+        nome_cliente : $("#txtNomeCliente").val()
+        ,desc_telefone : $("#txtTelefoneCliente").val()
+        ,nome_rua : $("#txtRua").val()
+        ,numr_quadra : $("#txtQuadra").val()
+        ,numr_lote : $("#txtLote").val()
+        ,nome_bairro : $("#txtBairro").val()
+        ,desc_pontoreferencia : $("#txtReferencia").val()
+        ,fd_pedido_id : $("#fd_pedido_id").val()
+    },
+    success: function(data){
+
+        //alert('goddamnn yeahh!!')
+
+    }
+  })  
+
+}
+
+function buscaCliente(){
+
+  $.ajax({
+    url: '<%= buscaCliente_path %>',
+    data : 
+    {
+        nome_cliente : $("#txtNomeCliente").val()
+    },
+    success: function(data){
+
+        $("div.divClientes").html("");
+
+        for (var i in data) {
+          var item = data[i];
+
+            $("div.divClientes").append('<a href="javascript:atualizaCliente('+item.fd_cliente_id+')" class="list-group-item">' + item.nome_cliente + '<span class="badge">+</span></a>');
+
+        };      
+
+
+    }
+  })  
+
+}
+
+  </script>
   <div class="col-lg-4">
 
     <div class="panel panel-danger">
@@ -155,12 +311,13 @@
         </li>        
         <li class="list-group-item">
 
+            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Salvar</button>
+
             <%fd_mesa_id = @fd_mesa.id rescue 0%>
             <%= link_to fecha_pedido_path(fd_mesa_id,@fd_pedido_id), :class => "btn btn-default" do %>
               <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Fechar
             <% end %>
 
-          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button>
         </li>                   
       </ul>
     </div>
@@ -259,7 +416,7 @@
   </div>
 </div>
 
-<script>
+<script> 
 
 function escolheTipoAtendimento(tipo_atendimento){
 
@@ -924,11 +1081,11 @@ function buscaprodutos(fd_categoriaproduto_id) {
 
             if (item.flag_produtomisto == true){
 
-              $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',true)" class="btn btn-default"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>'); 
+              $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',true)" class="btn btn-warning"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>'); 
 
             } else {
 
-              $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');  
+              $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');  
 
             };
           }
@@ -952,6 +1109,7 @@ function excluiItensPedidosServicos(fd_variacaoproduto_id) {
     success: function(data){
 
       buscaservicos(<%=$Servicos%>);
+      buscaItensPedidos($('#fd_pedido_id').val());
 
     }
   })  
@@ -989,12 +1147,14 @@ $("#divMistos").hide();
 buscaservicos(<%=$Servicos%>);
 buscaCategorias();
 buscaItensPedidos($('#fd_pedido_id').val());
+atualizaCliente($('#fd_cliente_id').val());
 
 
 jQuery(function($){
 
 $("#total_geral").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
 $("#total").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+$("#txtTelefoneCliente").mask("(99)9999-9999")
 
 
 });
