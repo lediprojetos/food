@@ -79,31 +79,40 @@ class StaticPedidosController < ApplicationController
 
 
   def lista_pedidos_geral
-		@fd_itempedido = FdItempedido.where(fd_empresa_id: user.fd_empresa_id)
+	#@fd_itempedido = FdItempedido.where(fd_empresa_id: user.fd_empresa_id)
 		#@fd_itempedido  = FdItempedido.new
   end
 
   def busca_pedidos_geral
    
 
-  if params[:situacao] != "" and  params[:categoria_produto] != ""
+  if params[:situacao] == "" 
+     params[:situacao] = 0
+  end
+
+  if  params[:categoria_produto] == ""
+  	params[:categoria_produto] = 0
+  end
 
    fd_pedido = FdItempedido.joins('INNER JOIN fd_variacaoprodutos vp on fd_variacaoproduto_id = vp.id 
    	                               INNER JOIN fd_produtos pr on vp.fd_produto_id = pr.id
-   	                               ').where('pr.fd_categoriaproduto_id = ? and fd_situacao_id = ?',params[:categoria_produto], params[:situacao])
+   	                               ').where('pr.fd_categoriaproduto_id = ? and fd_situacao_id = ?',params[:categoria_produto], params[:situacao]).order('created_at DESC') rescue nil
+  
+    fd_pedido.each do |fd_pedido|
+      
+    fd_pedido.desc_pedido = fd_pedido.fd_variacaoproduto.fd_produto.nome_produto
 
-   fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :situacao => item.fd_situacao.nome_situacao, :tipo_atendimento => item.tipo_atendimento, :mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}
-   render :json => fd_pedido_json
-   
-   else
+    if fd_pedido.flag_pedidomisto
+       misto = FdPedidomisto.where(fd_itempedidos_id: fd_pedido.id) 	    
+	    misto.each do |m|    	
+	    	 fd_pedido.desc_pedido = fd_pedido.desc_pedido + '/' + m.fd_produto.nome_produto
+	    end
+    end
 
-   fd_pedido  = FdItempedido.where(fd_empresa_id: user.fd_empresa_id)
-   fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :situacao => item.fd_situacao.nome_situacao, :tipo_atendimento => item.tipo_atendimento, :mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}
-   render :json => fd_pedido_json
+    end
 
-   end
-   
-
+     fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.desc_pedido, :situacao => item.fd_situacao.nome_situacao, :tipo_atendimento => item.tipo_atendimento, :mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}  	
+     render :json => fd_pedido_json   
    end
 
 
@@ -121,10 +130,8 @@ class StaticPedidosController < ApplicationController
     end
 
    @fd_pedido.save
-    
-   fd_pedido  = FdItempedido.where(fd_empresa_id: user.fd_empresa_id)
-   fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.fd_variacaoproduto.fd_produto.nome_produto, :situacao => item.fd_situacao.nome_situacao, :tipo_atendimento => item.tipo_atendimento, :mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}
-   render :json => fd_pedido_json
+   
+   busca_pedidos_geral
 
    end
 

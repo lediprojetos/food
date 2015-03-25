@@ -4,11 +4,11 @@
   <div class="row mar-bot40">
       <div class="col-lg-6"> 
            <b>Categoria</b>      
-            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.where(fd_empresa_id: user.fd_empresa_id), 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_produto(this.value,1)', :class => 'form-control'%>
+            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.where(fd_empresa_id: user.fd_empresa_id), 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_pedidos()', :class => 'form-control'%>
       </div>
      <div class="col-lg-6"> 
       <b>Situação</b>      
-            <%= select_tag "situacao", options_from_collection_for_select(FdSituacao.all, 'id', 'nome_situacao'), include_blank: true, :onchange => 'busca_produto(this.value,1)', :class => 'form-control'%>
+            <%= select_tag "situacao", options_from_collection_for_select(FdSituacao.all, 'id', 'nome_situacao'), include_blank: true, :onchange => 'busca_pedidos()', :class => 'form-control'%>
       </div>
     </div>
     </div>
@@ -23,16 +23,6 @@
   </thead>
 
   <tbody id="lbpedidos">
-    <% @fd_itempedido.each do |fd_itempedido| %>
-      <tr>
-        <td><h4><%=fd_itempedido.fd_variacaoproduto.fd_produto.nome_produto %></h4></td>
-        <td><h4><%=fd_itempedido.fd_situacao.nome_situacao%></h4></td>
-        <td><h4><%=fd_itempedido.tipo_atendimento%></h4></td>
-        <td align='right'>
-          <button type="button" onclick="excluiIVariacaoProduto('<%=fd_itempedido.id%>')"class="btn btn-success" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Pronto!</h5></button>
-         </td> 
-      </tr>
-    <% end %>
   </tbody>
 </table>
 </div>
@@ -64,12 +54,14 @@
                   para = "Viagem"
                 }
         
-              if (item.situacao == "Solicitado"){
-                  $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Pronto</h5></button></td></tr>')
+             if (item.situacao == "Solicitado"){
+                  $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Pronto</button></td></tr>')
              }if(item.situacao == "Pronto" && item.tipo_atendimento == "entrega"){
-                $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Entregue</h5></button></td></tr>')
-             }if(item.situacao == "Entregue"){
-               $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>OK</h5></button></td></tr>')
+                $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> OK</button></td></tr>')
+             }if(item.situacao == "Pronto" && item.tipo_atendimento == "mesa" ){
+               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
+             }if(item.situacao == "Entregue" && item.tipo_atendimento == "entrega" ){
+               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
              }
             };
            } 
@@ -102,11 +94,13 @@
                 }
 
              if (item.situacao == "Solicitado"){
-                  $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Pronto</h5></button></td></tr>')
+                  $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Pronto</button></td></tr>')
              }if(item.situacao == "Pronto" && item.tipo_atendimento == "entrega"){
-                $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>Entregue</h5></button></td></tr>')
-             }if(item.situacao == "Entregue"){
-               $('#tlbpedido').append('<tr><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h5>OK</h5></button></td></tr>')
+                $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> OK</button></td></tr>')
+             }if(item.situacao == "Pronto" && item.tipo_atendimento == "mesa" ){
+               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
+             }if(item.situacao == "Entregue" && item.tipo_atendimento == "entrega" ){
+               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
              }
             };
            } 
