@@ -156,6 +156,7 @@ class FdItempedidosController < ApplicationController
     fd_itenspedidos.fd_variacaoproduto_id = params[:fd_variacaoproduto_id]
     fd_itenspedidos.fd_pedido_id = params[:fd_pedido_id]
     fd_itenspedidos.flag_pedidomisto = true
+    fd_itenspedidos.fd_situacao_id = 1
     fd_itenspedidos.tipo_atendimento = fd_pedido.tipo_atendimento
     fd_itenspedidos.save
     
