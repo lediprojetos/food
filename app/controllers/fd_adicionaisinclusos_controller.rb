@@ -4,15 +4,32 @@ class FdAdicionaisinclusosController < ApplicationController
 
   def insere_adicionais
 
+    fd_adicionaisInclusos = FdAdicionaisincluso.where(:fd_itensadicional_id => params[:fd_itensadicional_id], :fd_itempedido_id => params[:fd_itempedido_id])
+
+    fd_adicionaisInclusos = fd_adicionaisInclusos.first
+
+    fd_itempedido = FdItempedido.find(params[:fd_itempedido_id])
+
+    fd_itempedido.flag_itemadicional = true
+    fd_itempedido.save
+
     if params[:numr_acao] == "0"
-
-      fd_adicionaisInclusos = FdAdicionaisincluso.where(:fd_itensadicional_id => params[:fd_itensadicional_id], :fd_itempedido_id => params[:fd_itempedido_id])
-
-      fd_adicionaisInclusos = fd_adicionaisInclusos.first
 
       if not fd_adicionaisInclusos.blank?
         fd_adicionaisInclusos.numr_quantidade = (fd_adicionaisInclusos.numr_quantidade - 1)
         fd_adicionaisInclusos.save
+
+        if fd_adicionaisInclusos.numr_quantidade == 0
+          fd_adicionaisInclusos.destroy
+
+          fd_adicionaisInclusosGeral = FdAdicionaisincluso.where(:fd_itempedido_id => params[:fd_itempedido_id])
+
+          if fd_adicionaisInclusosGeral.blank?
+            fd_itempedido.flag_itemadicional = false
+            fd_itempedido.save          
+          end
+          
+        end
       else
       #Caso não exista nenhum item, ele adiciona um novo
         fd_adicionaisInclusos = FdAdicionaisincluso.new
@@ -25,13 +42,22 @@ class FdAdicionaisinclusosController < ApplicationController
 
     else
 
-      fd_adicionaisInclusos = FdAdicionaisincluso.where(:fd_itensadicional_id => params[:fd_itensadicional_id], :fd_itempedido_id => params[:fd_itempedido_id])
-
-      fd_adicionaisInclusos = fd_adicionaisInclusos.first
-
       if not fd_adicionaisInclusos.blank?
         fd_adicionaisInclusos.numr_quantidade = (fd_adicionaisInclusos.numr_quantidade + 1)
         fd_adicionaisInclusos.save
+        if fd_adicionaisInclusos.numr_quantidade == 0
+          fd_adicionaisInclusos.destroy
+
+          fd_adicionaisInclusosGeral = FdAdicionaisincluso.where(:fd_itempedido_id => params[:fd_itempedido_id])
+
+          if fd_adicionaisInclusosGeral.blank?
+
+            fd_itempedido.flag_itemadicional = false
+            fd_itempedido.save          
+
+          end
+
+        end        
       else
       #Caso não exista nenhum item, ele adiciona um novo
         fd_adicionaisInclusos = FdAdicionaisincluso.new

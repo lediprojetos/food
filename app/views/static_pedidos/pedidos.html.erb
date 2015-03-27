@@ -9,18 +9,18 @@
   <div class="col-lg-8">
       <div id = "alert_placeholder_periodo"></div>  
     <div class="tabbable">
-      <ul class="nav nav-tabs">
+      <ul class="nav nav-pills nav-justified">
         <li class="active">
-          <a href="#tab1" data-toggle="tab">Pedido</a>
+          <a href="#tab1" data-toggle="tab"><strong>Pedido</strong></a>
         </li>
         <li >
-          <a href="#tab2" data-toggle="tab">Produtos</a>
+          <a href="#tab2" data-toggle="tab"><strong>Produtos</strong></a>
         </li>
         <li>
-          <a href="#tab3" data-toggle="tab">Serviços</a>
+          <a href="#tab3" data-toggle="tab"><strong>Serviços</strong></a>
         </li>
         <li>
-          <a href="#tab4" data-toggle="tab">Cliente</a>
+          <a href="#tab4" data-toggle="tab"><strong>Cliente</strong></a>
         </li>  
       </ul>
       <div class="tab-content">
@@ -203,17 +203,23 @@
               </div>
             </div>
         </li>       
-        <li class="list-group-item">
-
-            <button type="button" class="btn btn-success" onclick="efetuarPagamento();"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Pagar </button>
-
-            <%fd_mesa_id = @fd_mesa.id rescue 0%>
-            <%= link_to fecha_pedido_path(fd_mesa_id,@fd_pedido_id), :class => "btn btn-danger not-visited" do %>
-              <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Fechar Pedido
-            <% end %>
-
-        </li>                   
       </ul>
+      <div class="panel-body">
+            <div class="row mar-bot40">
+              <div class="col-lg-12">
+                <button type="button" class="btn btn-success btn-md form-control" onclick="efetuarPagamento();"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Pagar </button>  
+              </div>
+            <div class="row mar-bot40">
+            <br/>
+            </div>
+              <div class="col-lg-12">
+                <%fd_mesa_id = @fd_mesa.id rescue 0%>
+                <%= link_to fecha_pedido_path(fd_mesa_id,@fd_pedido_id), :class => "btn btn-danger btn-md form-control" do %>
+                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Fechar Pedido
+                <% end %>
+              </div>
+            </div>
+      </div>      
     </div>
 
   </div>
@@ -302,9 +308,9 @@
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="list-group divTipoAtendimento">
-        <a href="javascript:escolheTipoAtendimento('entrega')" class="list-group-item"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> Entrega</a>
-        <a href="javascript:escolheTipoAtendimento('viagem')" class="list-group-item"><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Viagem</a>
-        <a href="javascript:escolheTipoAtendimento('mesa')" class="list-group-item"><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span> Mesa</a>
+        <a href="javascript:escolheTipoAtendimento('entrega')" class="list-group-item"><h4 class="list-group-item-heading"><span class="glyphicon glyphicon-plane success" aria-hidden="true"></span> Entrega</h4></a>
+        <a href="javascript:escolheTipoAtendimento('viagem')" class="list-group-item"><h4 class="list-group-item-heading"><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Viagem</h4></a>
+        <a href="javascript:escolheTipoAtendimento('mesa')" class="list-group-item"><h4 class="list-group-item-heading"><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span> Mesa</h4></a>
       </div>
     </div>
   </div>
@@ -611,7 +617,7 @@ function buscaTrocas(fd_itempedidos_id) {
   })  
 }
 
-function alteraAdicionais(fd_itensadicional_id,numr_acao,fd_itempedido_id) {
+function alteraAdicionais(fd_itensadicional_id,numr_acao,fd_itempedido_id,fd_categoriaproduto_id) {
 
   $.ajax({
     url: '<%= insere_adicionais_path %>',
@@ -623,13 +629,16 @@ function alteraAdicionais(fd_itensadicional_id,numr_acao,fd_itempedido_id) {
 
     },
     success: function(data){
-      var fd_categoriaproduto_id
+      //var fd_categoriaproduto_id
 
       for (var i in data) {
         var item = data[i];
 
-         fd_categoriaproduto_id =  item.fd_categoriaproduto_id;
+         //fd_categoriaproduto_id =  item.fd_categoriaproduto_id;
       };     
+
+      //alert(fd_itempedido_id);
+      //alert(fd_categoriaproduto_id);
 
       buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id);
     }
@@ -657,7 +666,7 @@ function buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id) {
               item.numr_qtd = ""
           };
 
-          $('#tlbAdicionais').append('<tr><td>'+item.desc_item+'</td><td><span class="badge">'+item.numr_quantidade+'</span></td><td align="right"></td><td align="right"><button type="button" onclick="alteraAdicionais('+item.fd_itensadicional_id+',0,'+item.fd_itempedido_id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="alteraAdicionais('+item.fd_itensadicional_id+',1,'+item.fd_itempedido_id+')" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');    
+          $('#tlbAdicionais').append('<tr><td>'+item.desc_item+'</td><td><span class="badge">'+item.numr_quantidade+'</span></td><td align="right"></td><td align="right"><button type="button" onclick="alteraAdicionais('+item.fd_itensadicional_id+',0,'+item.fd_itempedido_id+','+fd_categoriaproduto_id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="alteraAdicionais('+item.fd_itensadicional_id+',1,'+item.fd_itempedido_id+','+fd_categoriaproduto_id+')" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');    
 
       };      
 
@@ -789,6 +798,9 @@ function exibemodalTipoAtendimento (fd_itempedido_id){
 }
 
 function buscaItensPedidos(fd_pedido_id) {
+
+  montaComanda(fd_pedido_id);
+
   $.ajax({
     url: '<%= busca_itempedido_path %>',
     data : 
@@ -801,17 +813,10 @@ function buscaItensPedidos(fd_pedido_id) {
       var valr_item_total = 0
 
       $("#bodyTlbItensPedidos").empty();
-      $("#bodyTlbComanda").empty();
-      $("#total").val('');
 
       for (var i in data) {
         var item = data[i];
         var tipo_atendimento = ""; 
-
-          total_geral = item.valr_item_total_geral;
-          valr_item_total = item.valr_item_total
-
-          $("#total").val(total_geral);
 
           if(item.tipo_atendimento == 'mesa'){
 
@@ -840,11 +845,11 @@ function buscaItensPedidos(fd_pedido_id) {
 
               var nomeMisto = buscaDetalhesPedidosMistos(item.id);
 
-              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+" "+nomeMisto+'</td><td>'+item.desc_variacao+'</td><td align="right"></button><button onclick="" type="button" class="btn btn-default"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');              
+              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+" "+nomeMisto+'</td><td>'+item.desc_variacao+'</td><td align="right"></button><button onclick="" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default btn-lg"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default btn-lg"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');              
 
             } else {
               
-              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"></button><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');
+              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"></button><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default btn-lg"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default btn-lg"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');
 
             //Dobrar pedido
             //<button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
@@ -852,28 +857,60 @@ function buscaItensPedidos(fd_pedido_id) {
 
           };
 
-
-          //if(item.fd_categoriaproduto_id != <%=$Servicos%>){
-
-          if (item.flag_pedidomisto == true){
-
-            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+' '+nomeMisto+' '+item.desc_variacao+'</td><td align="right">'+item.valr_item+'</td></tr>');                         
-          } else {
-
-            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+' '+item.desc_variacao+'</td><td align="right">'+item.valr_item+'</td></tr>');                         
-
-          }
-          //}
-
       };
-            $('#tlbItensComanda').append('<tr style="height:20px;"><td></td><td align="right"></td></tr>');                         
-            $('#tlbItensComanda').append('<tr class="dotted"><td>Total</td><td align="right">'+valr_item_total+'</td></tr>');                         
-            $('#tlbItensComanda').append('<tr class="dotted"><td>Total + taxas %</td><td align="right">'+total_geral+'</td></tr>');                         
 
     }
   })  
 }
 
+function montaComanda(fd_pedido_id){
+
+
+$.ajax({
+    url: '<%= busca_itemcomanda_path %>',
+    data : 
+    {
+        fd_pedido_id : fd_pedido_id
+    },
+    success: function(data){
+
+      var total_geral = 0
+      var valr_item_total = 0
+
+      $("#bodyTlbComanda").empty();
+      $("#total").val('');
+
+      for (var i in data) {
+        var item = data[i];
+        var tipo_atendimento = ""; 
+
+          total_geral = item.valr_item_total_geral;
+          valr_item_total = item.valr_item_total
+
+          $("#total").val(total_geral);
+
+          if (item.flag_pedidomisto == true){
+
+            var nomeMisto = buscaDetalhesPedidosMistos(item.id);
+
+            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+' '+nomeMisto+' '+item.desc_variacao+'</td><td align="right">'+item.valr_item+'</td></tr>');                         
+
+          } else {
+
+            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+' '+item.desc_variacao+'</td><td align="right">'+item.valr_item+'</td></tr>');                         
+
+          }
+
+      };
+
+      $('#tlbItensComanda').append('<tr style="height:20px;"><td></td><td align="right"></td></tr>');                         
+      $('#tlbItensComanda').append('<tr class="dotted"><td>Total</td><td align="right">'+valr_item_total+'</td></tr>');                         
+      $('#tlbItensComanda').append('<tr class="dotted"><td>Total + taxas %</td><td align="right">'+total_geral+'</td></tr>');                         
+
+    }
+  })  
+
+}
 
 function alterapedido(fd_itempedido_id) {
 
@@ -1028,7 +1065,7 @@ function buscaCategorias(father_id,desc_cat) {
     buscaprodutos(father_id);
 
     $("div.divCategorias").html("");
-    $("div.divCategorias").append("<button type='button' onclick='buscaCategorias();' class='btn btn-primary btn-lg'>Geral</button>");
+    $("div.divCategorias").append("<button type='button' onclick='buscaCategorias();' class='btn btn-success btn-lg'>Geral</button>");
       for (var i in data) {
         var item = data[i];
 
@@ -1097,11 +1134,11 @@ function buscaprodutos(fd_categoriaproduto_id) {
 
             if (item.flag_produtomisto == true){
 
-              $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',true)" class="btn btn-warning"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>'); 
+              $('#tlbProdutos').append('<tr><td><strong>'+item.nome_produto+'</strong></td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',true)" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>'); 
 
             } else {
 
-              $('#tlbProdutos').append('<tr><td>'+item.nome_produto+'</td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');  
+              $('#tlbProdutos').append('<tr><td><strong>'+item.nome_produto+'</strong></td><td>R$</td><td align="right"><button type="button" onclick="buscaVariacoes('+item.id+',false)" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');  
 
             };
           }

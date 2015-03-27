@@ -60,7 +60,7 @@ class FdItempedidosController < ApplicationController
     redirect_to fd_itempedidos_url, notice: 'Fd itempedido was successfully destroyed.'
   end
 
-  def busca_itempedido
+  def busca_itemcomanda
 
     fd_pedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id])
     porcentagem = 0
@@ -79,6 +79,23 @@ class FdItempedidosController < ApplicationController
 
     fd_itenspedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id]).order(:id)
 
+    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:tipo_atendimento => item.tipo_atendimento,
+                                                        :id => item.id, 
+                                                        :flag_pedidomisto => item.flag_pedidomisto, 
+                                                        :valr_item => (item.valr_item.blank? ? (item.fd_variacaoproduto.fd_produto.numr_porcentagem.to_s + '%') : (number_to_currency( item.valr_item, unit: "R$", separator: ",", delimiter: "."))),
+                                                        :desc_produto => (item.fd_variacaoproduto.fd_produto.nome_produto rescue nil), 
+                                                        :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao == 'Único' ? '' : item.fd_variacaoproduto.fd_variacao.desc_variacao, 
+                                                        :valr_item_total =>number_to_currency(@total_pedido, unit: "", separator: ",", delimiter: "."), 
+                                                        :valr_item_total_geral =>number_to_currency(@totalgeral_pedido, unit: "", separator: ",", delimiter: "."), 
+                                                        :fd_funcionario_id => item.fd_funcionario_id}}
+    render :json => fd_itenspedidos_json
+
+end
+
+  def busca_itempedido
+
+    fd_itenspedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id]).order(:id)
+
     fd_itenspedidos_json = fd_itenspedidos.map {|item| {:tipo_atendimento => item.tipo_atendimento, 
                                                         :id => item.id,
                                                         :flag_pedidomisto => item.flag_pedidomisto, 
@@ -93,8 +110,6 @@ class FdItempedidosController < ApplicationController
                                                         :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao == 'Único' ? '' : item.fd_variacaoproduto.fd_variacao.desc_variacao, 
                                                         :fd_pedido_id => item.fd_pedido_id, 
                                                         :fd_situacao_id => item.fd_situacao_id, 
-                                                        :valr_item_total =>number_to_currency(@total_pedido, unit: "", separator: ",", delimiter: "."), 
-                                                        :valr_item_total_geral =>number_to_currency(@totalgeral_pedido, unit: "", separator: ",", delimiter: "."), 
                                                         :fd_funcionario_id => item.fd_funcionario_id}}
     render :json => fd_itenspedidos_json
 
@@ -148,23 +163,39 @@ class FdItempedidosController < ApplicationController
   def insere_pedidomisto
 
     fd_pedido = FdPedido.find(params[:fd_pedido_id])
+
+
     fd_variacaoproduto = FdVariacaoproduto.find(params[:fd_variacaoproduto_id])
+    fd_variacaoproduto2 = FdVariacaoproduto.find(params[:fd_variacaoproduto_id2])
+
+    if fd_variacaoproduto.valr_produto > fd_variacaoproduto2.valr_produto
+
+      fd_variacaoproduto_maior = fd_variacaoproduto
+      fd_variacaoproduto_menor = fd_variacaoproduto2
+
+    else
+
+      fd_variacaoproduto_maior = fd_variacaoproduto2
+      fd_variacaoproduto_menor = fd_variacaoproduto      
+
+    end
+
+
 
     fd_itenspedidos = FdItempedido.new
     fd_itenspedidos.fd_empresa_id = user.fd_empresa_id
-    fd_itenspedidos.valr_item = fd_variacaoproduto.valr_produto
-    fd_itenspedidos.fd_variacaoproduto_id = params[:fd_variacaoproduto_id]
+    fd_itenspedidos.valr_item = fd_variacaoproduto_maior.valr_produto
+    fd_itenspedidos.fd_variacaoproduto_id = fd_variacaoproduto_maior.id
     fd_itenspedidos.fd_pedido_id = params[:fd_pedido_id]
     fd_itenspedidos.flag_pedidomisto = true
     fd_itenspedidos.fd_situacao_id = 1
     fd_itenspedidos.tipo_atendimento = fd_pedido.tipo_atendimento
     fd_itenspedidos.save
     
-    fd_variacaoproduto = FdVariacaoproduto.find(params[:fd_variacaoproduto_id2])
 
     fd_pedidomisto = FdPedidomisto.new
     fd_pedidomisto.fd_itempedidos_id = fd_itenspedidos.id
-    fd_pedidomisto.fd_produto_id = fd_variacaoproduto.fd_produto_id
+    fd_pedidomisto.fd_produto_id = fd_variacaoproduto_menor.fd_produto_id
     fd_pedidomisto.save
 
     render json: {}

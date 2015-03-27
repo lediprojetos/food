@@ -77,6 +77,7 @@ Food::Application.routes.draw do
   match '/atualiza_tipoatendimento', to: 'fd_itempedidos#atualiza_tipoatendimento', via: 'get'
   
   match '/busca_itempedido', to: 'fd_itempedidos#busca_itempedido', via: 'get'
+  match '/busca_itemcomanda', to: 'fd_itempedidos#busca_itemcomanda', via: 'get'
   match '/dobra_itempedido', to: 'fd_itempedidos#dobra_itempedido', via: 'get'
   match '/exclui_itempedido', to: 'fd_itempedidos#exclui_itempedido', via: 'get'
   match '/exclui_servicopedido', to: 'fd_itempedidos#exclui_servicopedido', via: 'get'
