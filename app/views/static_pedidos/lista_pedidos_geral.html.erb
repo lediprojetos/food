@@ -45,9 +45,9 @@
         $("#lbpedidos").empty();
          for (var i in data){
           var item = data[i];
-          var para = "";
-          var tamanho = ""
-              
+          var para = "", tamanho = "", itemmais = "", itemmenos = "";
+      
+
               if (item.tipo_atendimento == "mesa"){
                   para = "Servir Mesa " + item.mesa
                 }else if(item.tipo_atendimento == "entrega"){
@@ -63,15 +63,24 @@
               }else if(item.tamanho == "Grande"){
                 tamanho = "G"
               }  
-        
+            
+             if (item.itemmais != ""){
+                item.itemmais = "+ " + item.itemmais 
+             }
+             
+             if (item.itemmenos != ""){
+                item.itemmenos = "- " + item.itemmenos 
+             }
+
+
              if (item.situacao == "Solicitado"){
-                  $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Pronto</button></td></tr>')
+                  $('#tlbpedido').append('<tr class="warning"><td><h4>'+item.nome_produto+'</h4><h7 style="color:green;font-style:italic"><br/>'+item.itemmais+'</h7><h7 style="color:red;font-style: italic"><br/>'+item.itemmenos+'</h7></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Pronto</button></td></tr>')
              }if(item.situacao == "Pronto" && item.tipo_atendimento == "entrega"){
-                $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> OK</button></td></tr>')
+                $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4><h7 style="color:green;font-style: italic"><br/>'+item.itemmais+'</h7><h7 style="color:red;font-style: italic"><br/>'+item.itemmenos+'</h7></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> OK</button></td></tr>')
              }if(item.situacao == "Pronto" && item.tipo_atendimento == "mesa" ){
-               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
+               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4><h7 style="color:green;font-style: italic"><br/>'+item.itemmais+'</h7><h7 style="color:red;font-style: italic"><br/>'+item.itemmenos+'</h7></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
              }if(item.situacao == "Entregue" && item.tipo_atendimento == "entrega" ){
-               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
+               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4><h7 style="color:green;font-style: italic"><br/>'+item.itemmais+'</h7><h7 style="color:red;font-style: italic"><br/>'+item.itemmenos+'</h7></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
              }
             };
            } 
@@ -93,8 +102,9 @@
         $("#lbpedidos").empty();
          for (var i in data){
           var item = data[i];
-          var para = "";
-              
+          var para = "", tamanho = "", itemmais = "", itemmenos = "";
+      
+
               if (item.tipo_atendimento == "mesa"){
                   para = "Servir Mesa " + item.mesa
                 }else if(item.tipo_atendimento == "entrega"){
@@ -103,22 +113,31 @@
                   para = "Viagem"
                 }
 
-             if(item.tamanho == "Pequena"){
+              if(item.tamanho == "Pequena"){
                   tamanho = "P"
               }else if(item.tamanho == "Média"){
                 tamanho = "M"
               }else if(item.tamanho == "Grande"){
                 tamanho = "G"
               }  
-        
+            
+             if (item.itemmais != ""){
+                item.itemmais = "+ " + item.itemmais 
+             }
+             
+             if (item.itemmenos != ""){
+                item.itemmenos = "- " + item.itemmenos 
+             }
+
+
              if (item.situacao == "Solicitado"){
-                  $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Pronto</button></td></tr>')
+                  $('#tlbpedido').append('<tr class="warning"><td><h4>'+item.nome_produto+'</h4><h7 style="color:green;font-style:italic"><br/>'+item.itemmais+'</h7><h7 style="color:red;font-style: italic"><br/>'+item.itemmenos+'</h7></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Pronto</button></td></tr>')
              }if(item.situacao == "Pronto" && item.tipo_atendimento == "entrega"){
-                $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> OK</button></td></tr>')
+                $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4><h7 style="color:green;font-style: italic"><br/>'+item.itemmais+'</h7><h7 style="color:red;font-style: italic"><br/>'+item.itemmenos+'</h7></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"><button type="button" onclick="muda_situacao('+item.id+');" class="btn btn-success  btn-lg" rel="tooltip" style="width:120px"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> OK</button></td></tr>')
              }if(item.situacao == "Pronto" && item.tipo_atendimento == "mesa" ){
-               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
+               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4><h7 style="color:green;font-style: italic"><br/>'+item.itemmais+'</h7><h7 style="color:red;font-style: italic"><br/>'+item.itemmenos+'</h7></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
              }if(item.situacao == "Entregue" && item.tipo_atendimento == "entrega" ){
-               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
+               $('#tlbpedido').append('<tr class="danger"><td><h4>'+item.nome_produto+'</h4><h7 style="color:green;font-style: italic"><br/>'+item.itemmais+'</h7><h7 style="color:red;font-style: italic"><br/>'+item.itemmenos+'</h7></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
              }
             };
            } 

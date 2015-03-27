@@ -11,33 +11,41 @@ def desc_pedido
     @desc_pedido
 end
 
+# setter
+def desc_pedido=(val)
+  @desc_pedido = val
+end 
+
+def desc_ingredientemenos
+    @desc_ingredientemenos
+end
+
+# setter
+def desc_ingredientemenos=(val)
+  @desc_ingredientemenos = val
+end 
+
+def desc_ingredientemais
+    @desc_ingredientemais
+end
+
+# setter
+def desc_ingredientemais=(val)
+  @desc_ingredientemais = val
+end 
+
+def desc_itemadicional
+    @desc_itemadicional
+end
+
+# setter
+def desc_itemadicional=(val)
+   @desc_itemadicional = val
+end 
+
 
 def desc_variaco
 	return self.fd_variacaoproduto.fd_variacao.desc_variacao
 end
-
-
-# setter
-def desc_pedido=(val)
-  @desc_pedido = val
-end 
-
-def desc_itemalterados
-    @desc_pedido
-end
-
-# setter
-def desc_itemalterados=(val)
-  @desc_pedido = val
-end 
-
-def desc_pedido
-    @desc_pedido
-end
-
-# setter
-def desc_pedido=(val)
-  @desc_pedido = val
-end 
 
 end

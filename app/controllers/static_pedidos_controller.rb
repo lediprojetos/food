@@ -107,11 +107,41 @@ class StaticPedidosController < ApplicationController
 	    	 fd_pedido.desc_pedido = fd_pedido.desc_pedido + '/' + m.fd_produto.nome_produto
 	    end
     end
+    
+    fd_pedido.desc_ingredientemenos = ""
+    fd_pedido.desc_ingredientemais = ""
+    if fd_pedido.flag_itemalterado
+      item_alterado = FdItemalterado.where(fd_itempedido_id: fd_pedido.id) 	    
+	  item_alterado.each do |alterado| 
+	   if alterado.numr_quntidade < 1   	
+	    	 fd_pedido.desc_ingredientemenos = fd_pedido.desc_ingredientemenos + ' ' + alterado.fd_item.desc_item + ', '
+ 	   end
+ 	 end
+    end
+   
+   fd_pedido.desc_itemadicional = ""
+   if fd_pedido.flag_itemadicional
+      item_adicional = FdAdicionaisincluso.where(fd_itempedido_id: fd_pedido.id)
+    
+      item_adicional.each do |add|
+       if add.numr_quantidade > 0        
+       		fd_pedido.desc_itemadicional = fd_pedido.desc_itemadicional + ' ' + add.fd_itensadicional.fd_item.desc_item + ', '
+       end
+      end
+   end
 
     end
 
-     fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.desc_pedido, :situacao => item.fd_situacao.nome_situacao, :tipo_atendimento => item.tipo_atendimento, :tamanho => item.desc_variaco, :mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}  	
+     fd_pedido_json = fd_pedido.map{|item|{:id => item.id, 
+     										:nome_produto => item.desc_pedido, 
+     										:situacao => item.fd_situacao.nome_situacao, 
+     										:tipo_atendimento => item.tipo_atendimento, 
+     										:tamanho => item.desc_variaco, 
+     										:itemmais => item.desc_itemadicional,
+     										:itemmenos => item.desc_ingredientemenos, 
+     										:mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}  	
      render :json => fd_pedido_json   
+   
    end
 
 
@@ -132,6 +162,6 @@ class StaticPedidosController < ApplicationController
    
    busca_pedidos_geral
 
-   end
+  end
 
 end
