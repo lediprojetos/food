@@ -54,7 +54,6 @@ class StaticPedidosController < ApplicationController
 			@fd_cliente_id = @fd_pedido.fd_cliente_id
 		end
 
-
 	end
 
 	def fecha_pedido
@@ -111,7 +110,7 @@ class StaticPedidosController < ApplicationController
 
     end
 
-     fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.desc_pedido, :situacao => item.fd_situacao.nome_situacao, :tipo_atendimento => item.tipo_atendimento, :tamanho => item.fd_variacaoproduto.fd_variacao.desc_variacao, :mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}  	
+     fd_pedido_json = fd_pedido.map{|item|{:id => item.id, :nome_produto => item.desc_pedido, :situacao => item.fd_situacao.nome_situacao, :tipo_atendimento => item.tipo_atendimento, :tamanho => item.desc_variaco, :mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}  	
      render :json => fd_pedido_json   
    end
 

@@ -11,6 +11,30 @@ def desc_pedido
     @desc_pedido
 end
 
+
+def desc_variaco
+	return self.fd_variacaoproduto.fd_variacao.desc_variacao
+end
+
+
+# setter
+def desc_pedido=(val)
+  @desc_pedido = val
+end 
+
+def desc_itemalterados
+    @desc_pedido
+end
+
+# setter
+def desc_itemalterados=(val)
+  @desc_pedido = val
+end 
+
+def desc_pedido
+    @desc_pedido
+end
+
 # setter
 def desc_pedido=(val)
   @desc_pedido = val
