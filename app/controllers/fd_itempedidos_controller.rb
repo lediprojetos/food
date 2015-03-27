@@ -92,7 +92,7 @@ class FdItempedidosController < ApplicationController
 
 end
 
-  def busca_itempedido
+  def busca_itempedido  
 
     fd_itenspedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id]).order(:id)
 
