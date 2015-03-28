@@ -60,7 +60,32 @@ class FdItempedidosController < ApplicationController
     redirect_to fd_itempedidos_url, notice: 'Fd itempedido was successfully destroyed.'
   end
 
+  def busca_itemcomanda_adicionais
+
+    fd_adicionais = FdAdicionaisincluso.joins('inner join fd_itempedidos ip on ip.id = fd_itempedido_id inner join fd_itensadicionals ia on fd_itensadicional_id = ia.id').where('ip.fd_pedido_id = ?', params[:fd_pedido_id])
+
+    #teste = fd_adicionais.sum(:valr_item)
+
+    fd_adicionais_json = fd_adicionais.map {|item| {:fd_adicionaisinclusos_id => item.id,
+                                                    :desc_produto => item.fd_itensadicional.fd_item.desc_item,
+                                                    :numr_quantidade => item.numr_quantidade,
+                                                    :valr_item => number_to_currency((item.fd_itensadicional.valr_item * item.numr_quantidade), unit: "R$", separator: ",", delimiter: ".")}}
+
+    render :json => fd_adicionais_json
+
+end
+
   def busca_itemcomanda
+
+    @total_pedido = 0
+
+    fd_adicionais = FdAdicionaisincluso.joins('inner join fd_itempedidos ip on ip.id = fd_itempedido_id inner join fd_itensadicionals ia on fd_itensadicional_id = ia.id').where('ip.fd_pedido_id = ?', params[:fd_pedido_id])    
+
+    fd_adicionais.each do |ad|
+
+      @total_pedido = (@total_pedido + ad.fd_itensadicional.valr_item) * ad.numr_quantidade.to_i
+
+    end
 
     fd_pedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id])
     porcentagem = 0
@@ -73,7 +98,7 @@ class FdItempedidosController < ApplicationController
 
     end
 
-    @total_pedido = FdItempedido.sum(:valr_item, :conditions => {:fd_pedido_id => params[:fd_pedido_id]})
+    @total_pedido = (@total_pedido + FdItempedido.sum(:valr_item, :conditions => {:fd_pedido_id => params[:fd_pedido_id]}))
 
     @totalgeral_pedido = @total_pedido + (@total_pedido / 100) * porcentagem
 

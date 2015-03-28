@@ -641,6 +641,7 @@ function alteraAdicionais(fd_itensadicional_id,numr_acao,fd_itempedido_id,fd_cat
       //alert(fd_categoriaproduto_id);
 
       buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id);
+      buscaItensPedidos($('#fd_pedido_id').val());
     }
   })  
 }
@@ -863,6 +864,30 @@ function buscaItensPedidos(fd_pedido_id) {
   })  
 }
 
+function montaComanda2(fd_pedido_id){
+
+
+$.ajax({
+    url: '<%= busca_itemcomanda_adicionais_path %>',
+    data : 
+    {
+        fd_pedido_id : fd_pedido_id
+    },
+    success: function(data){
+
+      for (var i in data) {
+        var item = data[i];
+
+          $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.numr_quantidade+'X '+item.desc_produto+'</td><td align="right">'+item.valr_item+'</td></tr>');
+
+      };
+
+    },
+    async:   false
+  })  
+
+}
+
 function montaComanda(fd_pedido_id){
 
 
@@ -891,7 +916,7 @@ $.ajax({
 
           if (item.flag_pedidomisto == true){
 
-            var nomeMisto = buscaDetalhesPedidosMistos(item.id);
+            var nomeMisto = buscaDetalhesPedidosMistos(item.id); 
 
             $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+' '+nomeMisto+' '+item.desc_variacao+'</td><td align="right">'+item.valr_item+'</td></tr>');                         
 
@@ -902,6 +927,8 @@ $.ajax({
           }
 
       };
+
+      montaComanda2(fd_pedido_id);
 
       $('#tlbItensComanda').append('<tr style="height:20px;"><td></td><td align="right"></td></tr>');                         
       $('#tlbItensComanda').append('<tr class="dotted"><td>Total</td><td align="right">'+valr_item_total+'</td></tr>');                         
