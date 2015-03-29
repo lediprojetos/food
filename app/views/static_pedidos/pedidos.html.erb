@@ -192,6 +192,21 @@
       <!-- List group -->
       <ul class="list-group">
         <li class="list-group-item">
+          <div class="row">
+            <div class="col-lg-6">
+              <strong>Entrega:</strong>
+            </div>            
+            <div class="col-lg-6">
+              <div class="input-group">
+                <input type="text" id="valr_entrega" class="form-control" placeholder="Entrega">
+                <span class="input-group-btn">
+                  <button class="btn btn-success" type="button" onclick="inserirEntrega();">OK!</button>
+                </span>
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
+        </li>        
+        <li class="list-group-item">
           <div class="row mar-bot40">
             <div class="col-lg-6">
               <strong>Total:</strong>
@@ -317,6 +332,24 @@
 </div>
 
 <script>
+
+function inserirEntrega(){
+
+  $.ajax({
+    url: '<%= insere_entrega_path %>',
+    data : 
+    {
+        valr_entrega : $("#valr_entrega").val()
+        ,fd_pedido_id : $("#fd_pedido_id").val()
+    },
+    success: function(data){
+
+      montaComanda($("#fd_pedido_id").val());
+      //alert_boot('Pagamento realizado com sucesso.','success','#alert_placeholder_periodo')
+
+    }
+  })  
+}
 
 
 function efetuarPagamento(){
@@ -877,10 +910,12 @@ $.ajax({
 
       for (var i in data) {
         var item = data[i];
-
+        
           $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.numr_quantidade+'X '+item.desc_produto+'</td><td align="right">'+item.valr_item+'</td></tr>');
 
+
       };
+
 
     },
     async:   false
@@ -901,6 +936,7 @@ $.ajax({
 
       var total_geral = 0
       var valr_item_total = 0
+      var valr_entrega = 'R$ 0,00'
 
       $("#bodyTlbComanda").empty();
       $("#total").val('');
@@ -908,6 +944,7 @@ $.ajax({
       for (var i in data) {
         var item = data[i];
         var tipo_atendimento = ""; 
+        valr_entrega = item.valr_entrega;
 
           total_geral = item.valr_item_total_geral;
           valr_item_total = item.valr_item_total
@@ -929,6 +966,13 @@ $.ajax({
       };
 
       montaComanda2(fd_pedido_id);
+
+      //alert(valr_entrega);
+      if(valr_entrega != 'R$ 0,00'){
+
+        $('#tlbItensComanda').append('<tr class="dotted"><td>Entrega</td><td align="right">'+valr_entrega+'</td></tr>');
+        $("#valr_entrega").val(valr_entrega);
+      }      
 
       $('#tlbItensComanda').append('<tr style="height:20px;"><td></td><td align="right"></td></tr>');                         
       $('#tlbItensComanda').append('<tr class="dotted"><td>Total</td><td align="right">'+valr_item_total+'</td></tr>');                         
@@ -1046,7 +1090,7 @@ function buscaVariacoes(fd_produto_id,flag_misto) {
               buscaservicos(<%=$Servicos%>);
           } else {
 
-            $("div.divVariacoes").append('<a href="javascript:incluiItemPedido('+item.id+','+item.valr_produto+')" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
+            $("div.divVariacoes").append('<a href="javascript:incluiItemPedido('+item.id+','+item.valr_produto+')" class="list-group-item"><h2>' + item.desc_variacao + '</h2></a>');
 
           };
         } else {
@@ -1055,7 +1099,7 @@ function buscaVariacoes(fd_produto_id,flag_misto) {
               createJSON(item.id,item.nome_produto,item.desc_variacao)
           } else {
 
-            $("div.divVariacoes").append('<a href="javascript:createJSON('+item.id+',\''+item.nome_produto+'\',\''+item.desc_variacao+'\')" class="list-group-item">' + item.desc_variacao + '<span class="badge">+</span></a>');
+            $("div.divVariacoes").append('<a href="javascript:createJSON('+item.id+',\''+item.nome_produto+'\',\''+item.desc_variacao+'\')" class="list-group-item"><h2>' + item.desc_variacao + '</h2></a>');
 
           };
 
@@ -1092,7 +1136,7 @@ function buscaCategorias(father_id,desc_cat) {
     buscaprodutos(father_id);
 
     $("div.divCategorias").html("");
-    $("div.divCategorias").append("<button type='button' onclick='buscaCategorias();' class='btn btn-success btn-lg'>Geral</button>");
+    $("div.divCategorias").append("<button type='button' onclick='buscaCategorias();' class='btn btn-success btn-lg'>Categorias</button>");
       for (var i in data) {
         var item = data[i];
 
@@ -1237,6 +1281,7 @@ atualizaCliente($('#fd_cliente_id').val());
 jQuery(function($){
 
 $("#total").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+$("#valr_entrega").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
 $("#txtTelefoneCliente").mask("(99)9999-9999")
 
 

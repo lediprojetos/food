@@ -1,0 +1,29 @@
+<h1>Listing fd_entregas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fd pedido</th>
+      <th>Valr entrega</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_entregas.each do |fd_entrega| %>
+      <tr>
+        <td><%= fd_entrega.fd_pedido %></td>
+        <td><%= fd_entrega.valr_entrega %></td>
+        <td><%= link_to 'Show', fd_entrega %></td>
+        <td><%= link_to 'Edit', edit_fd_entrega_path(fd_entrega) %></td>
+        <td><%= link_to 'Destroy', fd_entrega, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd entrega', new_fd_entrega_path %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327155844) do
+ActiveRecord::Schema.define(version: 20150329120156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,15 @@ ActiveRecord::Schema.define(version: 20150327155844) do
   end
 
   add_index "fd_enderecos", ["fd_cidade_id"], name: "index_fd_enderecos_on_fd_cidade_id", using: :btree
+
+  create_table "fd_entregas", force: true do |t|
+    t.integer  "fd_pedido_id"
+    t.decimal  "valr_entrega"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_entregas", ["fd_pedido_id"], name: "index_fd_entregas_on_fd_pedido_id", using: :btree
 
   create_table "fd_estados", force: true do |t|
     t.string   "nome_estado"

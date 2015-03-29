@@ -64,8 +64,6 @@ class FdItempedidosController < ApplicationController
 
     fd_adicionais = FdAdicionaisincluso.joins('inner join fd_itempedidos ip on ip.id = fd_itempedido_id inner join fd_itensadicionals ia on fd_itensadicional_id = ia.id').where('ip.fd_pedido_id = ?', params[:fd_pedido_id])
 
-    #teste = fd_adicionais.sum(:valr_item)
-
     fd_adicionais_json = fd_adicionais.map {|item| {:fd_adicionaisinclusos_id => item.id,
                                                     :desc_produto => item.fd_itensadicional.fd_item.desc_item,
                                                     :numr_quantidade => item.numr_quantidade,
@@ -76,6 +74,10 @@ class FdItempedidosController < ApplicationController
 end
 
   def busca_itemcomanda
+
+    fd_entrega = FdEntrega.find_by_fd_pedido_id(params[:fd_pedido_id])
+
+    valr_entrega = (fd_entrega.valr_entrega rescue 0)
 
     @total_pedido = 0
 
@@ -98,7 +100,7 @@ end
 
     end
 
-    @total_pedido = (@total_pedido + FdItempedido.sum(:valr_item, :conditions => {:fd_pedido_id => params[:fd_pedido_id]}))
+    @total_pedido = (@total_pedido + FdItempedido.sum(:valr_item, :conditions => {:fd_pedido_id => params[:fd_pedido_id]}) + valr_entrega)
 
     @totalgeral_pedido = @total_pedido + (@total_pedido / 100) * porcentagem
 
@@ -112,7 +114,8 @@ end
                                                         :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao == 'Único' ? '' : item.fd_variacaoproduto.fd_variacao.desc_variacao, 
                                                         :valr_item_total =>number_to_currency(@total_pedido, unit: "", separator: ",", delimiter: "."), 
                                                         :valr_item_total_geral =>number_to_currency(@totalgeral_pedido, unit: "", separator: ",", delimiter: "."), 
-                                                        :fd_funcionario_id => item.fd_funcionario_id}}
+                                                        :fd_funcionario_id => item.fd_funcionario_id,
+                                                        :valr_entrega =>number_to_currency(valr_entrega, unit: "R$", separator: ",", delimiter: ".")}}
     render :json => fd_itenspedidos_json
 
 end

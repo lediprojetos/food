@@ -1,0 +1,25 @@
+<%= form_for(@fd_entrega) do |f| %>
+  <% if @fd_entrega.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fd_entrega.errors.count, "error") %> prohibited this fd_entrega from being saved:</h2>
+
+      <ul>
+      <% @fd_entrega.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fd_pedido_id %><br>
+    <%= f.text_field :fd_pedido_id %>
+  </div>
+  <div class="field">
+    <%= f.label :valr_entrega %><br>
+    <%= f.text_field :valr_entrega %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

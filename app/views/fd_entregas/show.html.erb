@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fd pedido:</strong>
+  <%= @fd_entrega.fd_pedido %>
+</p>
+
+<p>
+  <strong>Valr entrega:</strong>
+  <%= @fd_entrega.valr_entrega %>
+</p>
+
+<%= link_to 'Edit', edit_fd_entrega_path(@fd_entrega) %> |
+<%= link_to 'Back', fd_entregas_path %>
