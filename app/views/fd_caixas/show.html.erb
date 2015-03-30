@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Numr contador:</strong>
+  <%= @fd_caixa.numr_contador %>
+</p>
+
+<p>
+  <strong>Data abertura:</strong>
+  <%= @fd_caixa.data_abertura %>
+</p>
+
+<p>
+  <strong>Data fechamento:</strong>
+  <%= @fd_caixa.data_fechamento %>
+</p>
+
+<p>
+  <strong>Valor caixa:</strong>
+  <%= @fd_caixa.valor_caixa %>
+</p>
+
+<p>
+  <strong>Valor fechamento:</strong>
+  <%= @fd_caixa.valor_fechamento %>
+</p>
+
+<p>
+  <strong>Fd empresa:</strong>
+  <%= @fd_caixa.fd_empresa %>
+</p>
+
+<%= link_to 'Edit', edit_fd_caixa_path(@fd_caixa) %> |
+<%= link_to 'Back', fd_caixas_path %>

@@ -3,10 +3,13 @@ class StaticPedidosController < ApplicationController
 	def lista_pedidos
 
 		if params[:fd_mesa_id] != '0'
-			@fd_pedidos = FdPedido.where(:fd_mesa_id => params[:fd_mesa_id]).order(:created_at => :desc).limit(10)
+			#@fd_pedidos = FdPedido.where(:fd_mesa_id => params[:fd_mesa_id]).order(:created_at => :desc).limit(10)
+			@fd_pedidos = FdPedido.joins(:fd_caixa).where(:fd_mesa_id => params[:fd_mesa_id], fd_caixas: { data_fechamento: nil}) rescue nil 
+    
 			@fd_mesa_id = params[:fd_mesa_id]
 		else
-			@fd_pedidos = FdPedido.where(:tipo_atendimento => params[:tipo_atendimento]).order(:created_at => :desc).limit(10)
+			#@fd_pedidos = FdPedido.where(:tipo_atendimento => params[:tipo_atendimento]).order(:created_at => :desc).limit(10)
+			@fd_pedidos = FdPedido.joins(:fd_caixa).where(:tipo_atendimento => params[:tipo_atendimento], fd_caixas: { data_fechamento: nil}) rescue nil 
 			@fd_mesa_id = 0
 		end
 

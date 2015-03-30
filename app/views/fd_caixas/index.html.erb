@@ -1,0 +1,37 @@
+<h1>Listing fd_caixas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Numr contador</th>
+      <th>Data abertura</th>
+      <th>Data fechamento</th>
+      <th>Valor caixa</th>
+      <th>Valor fechamento</th>
+      <th>Fd empresa</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_caixas.each do |fd_caixa| %>
+      <tr>
+        <td><%= fd_caixa.numr_contador %></td>
+        <td><%= fd_caixa.data_abertura %></td>
+        <td><%= fd_caixa.data_fechamento %></td>
+        <td><%= fd_caixa.valor_caixa %></td>
+        <td><%= fd_caixa.valor_fechamento %></td>
+        <td><%= fd_caixa.fd_empresa %></td>
+        <td><%= link_to 'Show', fd_caixa %></td>
+        <td><%= link_to 'Edit', edit_fd_caixa_path(fd_caixa) %></td>
+        <td><%= link_to 'Destroy', fd_caixa, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fd caixa', new_fd_caixa_path %>

@@ -1,5 +1,7 @@
 Food::Application.routes.draw do
 
+  resources :fd_caixas
+
   resources :fd_entregas
   match '/insere_entrega', to: 'fd_entregas#insere_entrega', via: 'get'
   
