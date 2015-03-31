@@ -94,8 +94,10 @@ end
 
     fd_pedidos.each do |p|
 
-      if not p.fd_variacaoproduto.fd_produto.numr_porcentagem.blank?
-        porcentagem =  porcentagem + p.fd_variacaoproduto.fd_produto.numr_porcentagem
+      if not p.flag_pedidomisto == true
+        if not p.fd_variacaoproduto.fd_produto.numr_porcentagem.blank?
+          porcentagem =  porcentagem + p.fd_variacaoproduto.fd_produto.numr_porcentagem
+        end
       end
 
     end
@@ -110,8 +112,8 @@ end
                                                         :id => item.id, 
                                                         :flag_pedidomisto => item.flag_pedidomisto, 
                                                         :valr_item => (item.valr_item.blank? ? (item.fd_variacaoproduto.fd_produto.numr_porcentagem.to_s + '%') : (number_to_currency( item.valr_item, unit: "R$", separator: ",", delimiter: "."))),
-                                                        :desc_produto => (item.fd_variacaoproduto.fd_produto.nome_produto rescue nil), 
-                                                        :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao == 'Único' ? '' : item.fd_variacaoproduto.fd_variacao.desc_variacao, 
+                                                        :desc_produto => (item.fd_variacaoproduto.fd_produto.nome_produto rescue ''), 
+                                                        :desc_variacao => (item.fd_variacaoproduto.fd_variacao.desc_variacao == 'Único' ? '' : item.fd_variacaoproduto.fd_variacao.desc_variacao rescue ''), 
                                                         :valr_item_total =>number_to_currency(@total_pedido, unit: "", separator: ",", delimiter: "."), 
                                                         :valr_item_total_geral =>number_to_currency(@totalgeral_pedido, unit: "", separator: ",", delimiter: "."), 
                                                         :fd_funcionario_id => item.fd_funcionario_id,
@@ -133,9 +135,9 @@ end
                                                         :tipo_atendimento => item.tipo_atendimento, 
                                                         :fd_empresa_id => item.fd_empresa_id, 
                                                         :fd_variacaoproduto_id => item.fd_variacaoproduto_id,
-                                                        :fd_produto_id => item.fd_variacaoproduto.fd_produto_id, 
+                                                        :fd_produto_id => (item.fd_variacaoproduto.fd_produto_id rescue nil), 
                                                         :desc_produto => (item.fd_variacaoproduto.fd_produto.nome_produto rescue nil), 
-                                                        :desc_variacao => item.fd_variacaoproduto.fd_variacao.desc_variacao == 'Único' ? '' : item.fd_variacaoproduto.fd_variacao.desc_variacao, 
+                                                        :desc_variacao => (item.fd_variacaoproduto.fd_variacao.desc_variacao == 'Único' ? '' : item.fd_variacaoproduto.fd_variacao.desc_variacao rescue ''), 
                                                         :fd_pedido_id => item.fd_pedido_id, 
                                                         :fd_situacao_id => item.fd_situacao_id, 
                                                         :fd_funcionario_id => item.fd_funcionario_id}}
@@ -213,13 +215,16 @@ end
     fd_itenspedidos = FdItempedido.new
     fd_itenspedidos.fd_empresa_id = user.fd_empresa_id
     fd_itenspedidos.valr_item = fd_variacaoproduto_maior.valr_produto
-    fd_itenspedidos.fd_variacaoproduto_id = fd_variacaoproduto_maior.id
     fd_itenspedidos.fd_pedido_id = params[:fd_pedido_id]
     fd_itenspedidos.flag_pedidomisto = true
     fd_itenspedidos.fd_situacao_id = 1
     fd_itenspedidos.tipo_atendimento = fd_pedido.tipo_atendimento
     fd_itenspedidos.save
-    
+
+    fd_pedidomisto = FdPedidomisto.new
+    fd_pedidomisto.fd_itempedidos_id = fd_itenspedidos.id
+    fd_pedidomisto.fd_produto_id = fd_variacaoproduto_maior.fd_produto_id
+    fd_pedidomisto.save    
 
     fd_pedidomisto = FdPedidomisto.new
     fd_pedidomisto.fd_itempedidos_id = fd_itenspedidos.id

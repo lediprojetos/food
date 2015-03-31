@@ -331,6 +331,15 @@
   </div>
 </div>
 
+<div class="modal fade bs-example-modal-sm" id="mdItensAdicionais" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="list-group divItensAdicionais">
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 
 function inserirEntrega(){
@@ -815,7 +824,7 @@ function buscaDetalhesPedidosMistos(fd_itempedidos_id){
         for (var i in data) {
           var item = data[i];
 
-          nomeMisto = nomeMisto + " / " + item.nome_produto;
+          nomeMisto = nomeMisto + " ½ " + item.nome_produto;
 
         };
 
@@ -829,6 +838,36 @@ function buscaDetalhesPedidosMistos(fd_itempedidos_id){
 function exibemodalTipoAtendimento (fd_itempedido_id){
   $('#fd_itempedido_id').val(fd_itempedido_id); 
   $('#mdTipoAtendimento').modal('show');
+}
+
+
+function buscaItemsPedidoMisto(fd_itempedidos_id){
+
+  var nomeMisto = "";
+
+  $.ajax({
+    url: '<%= busca_DetalhesMistos_path %>',
+    data : 
+    {
+        fd_itempedidos_id : fd_itempedidos_id
+    },
+    success: function(data){
+
+
+      $('#mdItensAdicionais').modal('show');
+
+      $("div.divItensAdicionais").html("");
+      $("div.divItensAdicionais").append('<a href="#" class="list-group-item disabled"><strong>Item Misto</strong></a>');
+
+        for (var i in data) {
+          var item = data[i];
+
+        $("div.divItensAdicionais").append('<h3><a href="#" class="list-group-item"> ½ ' + item.nome_produto + '</a></h3>');
+        };
+
+    }
+  })  
+
 }
 
 function buscaItensPedidos(fd_pedido_id) {
@@ -879,11 +918,11 @@ function buscaItensPedidos(fd_pedido_id) {
 
               var nomeMisto = buscaDetalhesPedidosMistos(item.id);
 
-              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+" "+nomeMisto+'</td><td>'+item.desc_variacao+'</td><td align="right"></button><button onclick="" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default btn-lg"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default btn-lg"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');              
+              $('#tlbItensPedidos').append('<tr><td>'+nomeMisto+'</td><td>'+item.desc_variacao+'</td><td align="right"><button onclick="buscaItemsPedidoMisto('+item.id+')" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default btn-lg"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default btn-lg"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');              
 
             } else {
               
-              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"></button><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default btn-lg"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default btn-lg"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');
+              $('#tlbItensPedidos').append('<tr><td>'+item.desc_produto+'</td><td>'+item.desc_variacao+'</td><td align="right"><button onclick="buscaAdicionais('+item.id+','+item.fd_categoriaproduto_id+'); buscaIngredientes('+item.id+');" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></button><button type="button" onclick="excluiItensPedidos('+item.id+')"class="btn btn-default btn-lg"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button type="button" onclick="exibemodalTipoAtendimento('+item.id+');" class="btn btn-default btn-lg"><span class="'+tipo_atendimento+'" aria-hidden="true"></span></button></td></tr>');
 
             //Dobrar pedido
             //<button onclick="dobraItemPedido('+item.id+');" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
