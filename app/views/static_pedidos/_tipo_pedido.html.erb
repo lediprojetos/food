@@ -1,3 +1,6 @@
+
+<div id = "alert_placeholder_pedido"></div>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Home</h3>
@@ -7,16 +10,11 @@
     </br>
   
   <% if @caixa_aberto%> 
-    <button id="fechar" name="fechar" type="submit" value="abrir" class="btn btn-danger btn-lg" >Fechar Caixa</button>
- <%else%>
-    <%= form_tag nil, method: 'GET' do %>
-        <button id="q" name="q" type="submit" value="abrir" class="btn btn-success btn-lg" >Abrir Caixa</button>
-    <% end %>
- <%end%>  
-
-  </br>
+    <button id="fechar" name="fechar" type="submit" value="abrir" onclick ="caixa();" class="btn btn-danger btn-lg" >Fechar Caixa</button>
+ 
+ </br>
   
-    <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
+  <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-cutlery"></span> Mesa
     <% end %>       
     <%= link_to lista_pedidos_path(0,'viagem'), :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
@@ -29,10 +27,85 @@
       <span class="glyphicon glyphicon-menu-hamburger"></span> Fila de Pedidos
     <% end %>
 
-    </br>
+ <%else%>
+    <%= form_tag nil, method: 'GET' do %>
+        <button id="q" name="q" type="submit" value="abrir" class="btn btn-success btn-lg" >Abrir Caixa</button>
+    <% end %>
+
+
+    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','warning','#alert_placeholder_pedido');" data-original-title="Exibir">
+        <span class="glyphicon glyphicon-cutlery" rel="tooltip"></span>Mesa
+    </a>
+
+    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','warning','#alert_placeholder_pedido');" data-original-title="Exibir">
+        <span class="glyphicon glyphicon-user" rel="tooltip"></span>Balcão
+    </a>  
+
+    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','warning','#alert_placeholder_pedido');" data-original-title="Exibir">
+        <span class="glyphicon glyphicon-phone-alt" rel="tooltip"></span>Entrega
+    </a> 
+
+    <%= link_to lista_pedidos_geral_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
+      <span class="glyphicon glyphicon-menu-hamburger"></span> Fila de Pedidos
+    <% end %>
+
+ <%end%>  
+  
+  </br>
     </br>
   </div>
     
     
   </div>
 </div>
+
+
+<div class="modal fade" id="mdFechaCaixa">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 id="h4Ingredientes" class="modal-title">Fechar Caixa</h4>
+      </div>
+      <div class="modal-body">
+      <div class="row mar-bot40">
+       <%= form_for(@fd_caixa) do |f| %>      
+        <div class="col-lg-2">
+          <%= f.label :valor_caixa %><br>
+          <%= f.text_field :valor_caixa, :disabled => true, :class => 'form-control' %>
+        </div>
+        <br/>
+        <div class="col-lg-2">
+          <%= f.label :valor_fechamento %><br>
+          <%= f.text_field :valor_fechamento, :class => 'form-control' %>
+        </div>
+      </div>    
+    <%end%>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="IngredAdiciona('ingredientes')" class="btn btn-success btn-lg" >Fechar</button>
+        <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script>
+
+
+function caixa(){
+  
+  $('#mdFechaCaixa').modal('show')
+}
+
+
+
+function alert_boot(message,color,place) {
+
+  $(place).html('<div class="alert alert-'+color+'" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> </div>')
+}
+
+
+</script>

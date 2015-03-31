@@ -107,7 +107,9 @@ class StaticPedidosController < ApplicationController
 
    fd_pedido = FdItempedido.joins('INNER JOIN fd_variacaoprodutos vp on fd_variacaoproduto_id = vp.id 
    	                               INNER JOIN fd_produtos pr on vp.fd_produto_id = pr.id
-   	                               ').where('pr.fd_categoriaproduto_id = ? and fd_situacao_id = ?',params[:categoria_produto], params[:situacao]).order('created_at DESC') rescue nil
+   	                               INNER JOIN fd_pedidos pd on fd_pedido_id = pd.id
+   	                               INNER JOIN fd_caixas ca on pd.fd_caixa_id = ca.id 
+   	                               ').where('pr.fd_categoriaproduto_id = ? and fd_itempedidos.fd_situacao_id = ? and data_fechamento is null', params[:categoria_produto], params[:situacao]).order('created_at DESC') rescue nil
   
     fd_pedido.each do |fd_pedido|
       
@@ -150,7 +152,8 @@ class StaticPedidosController < ApplicationController
      										:tipo_atendimento => item.tipo_atendimento, 
      										:tamanho => item.desc_variaco, 
      										:itemmais => item.desc_itemadicional,
-     										:itemmenos => item.desc_ingredientemenos, 
+     										:itemmenos => item.desc_ingredientemenos,
+     										:numr_contador => item.fd_pedido.numr_contador, 
      										:mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}  	
      render :json => fd_pedido_json   
    
