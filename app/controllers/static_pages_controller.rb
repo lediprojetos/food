@@ -1,8 +1,8 @@
 class StaticPagesController < ApplicationController
 before_action :requer_logon
 
-	def config2
-	end
+def config2
+end
 
 def home		
  if params[:q] == "abrir"       

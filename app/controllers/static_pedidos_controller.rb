@@ -27,8 +27,13 @@ class StaticPedidosController < ApplicationController
 
 	def pedidos
 
-		if params[:fd_pedido_id] == '0'
 
+       @fd_caixa = FdCaixa.where(fd_empresa_id: user.fd_empresa_id, data_fechamento: nil).order(:data_abertura => :desc).limit(1)
+       
+      
+       @fd_caixa.first.numr_contador = @fd_caixa.first.numr_contador + 1
+      
+		if params[:fd_pedido_id] == '0'
 			@fd_pedido = FdPedido.new
 
 			if params[:fd_mesa_id] != '0'
@@ -40,12 +45,15 @@ class StaticPedidosController < ApplicationController
 
 			@fd_pedido.tipo_atendimento = params[:tipo_atendimento]
 			@fd_pedido.fd_empresa_id = user.fd_empresa_id
+			@fd_pedido.numr_contador = @fd_caixa.first.numr_contador
+			@fd_pedido.fd_caixa_id =  @fd_caixa.first.id
 			@fd_pedido.fd_situacao_id = 1 #Aberto
 			@fd_pedido.save
 
+			@fd_caixa.first.save
+
 			@fd_pedido_id = @fd_pedido.id
 		else
-
 			@fd_pedido = FdPedido.find(params[:fd_pedido_id])
 			@fd_pedido.fd_situacao_id = 1
 			@fd_pedido.save
@@ -56,6 +64,7 @@ class StaticPedidosController < ApplicationController
 
 			@fd_cliente_id = @fd_pedido.fd_cliente_id
 		end
+         
 
 	end
 
