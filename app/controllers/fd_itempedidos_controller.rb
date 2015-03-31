@@ -114,6 +114,7 @@ end
                                                         :valr_item => (item.valr_item.blank? ? (item.fd_variacaoproduto.fd_produto.numr_porcentagem.to_s + '%') : (number_to_currency( item.valr_item, unit: "R$", separator: ",", delimiter: "."))),
                                                         :desc_produto => (item.fd_variacaoproduto.fd_produto.nome_produto rescue ''), 
                                                         :desc_variacao => (item.fd_variacaoproduto.fd_variacao.desc_variacao == 'Único' ? '' : item.fd_variacaoproduto.fd_variacao.desc_variacao rescue ''), 
+                                                        :desc_variacaoMisto => (item.desc_variacaoMisto == 'Único' ? '' : item.desc_variacaoMisto rescue ''), 
                                                         :valr_item_total =>number_to_currency(@total_pedido, unit: "", separator: ",", delimiter: "."), 
                                                         :valr_item_total_geral =>number_to_currency(@totalgeral_pedido, unit: "", separator: ",", delimiter: "."), 
                                                         :fd_funcionario_id => item.fd_funcionario_id,
@@ -138,6 +139,7 @@ end
                                                         :fd_produto_id => (item.fd_variacaoproduto.fd_produto_id rescue nil), 
                                                         :desc_produto => (item.fd_variacaoproduto.fd_produto.nome_produto rescue nil), 
                                                         :desc_variacao => (item.fd_variacaoproduto.fd_variacao.desc_variacao == 'Único' ? '' : item.fd_variacaoproduto.fd_variacao.desc_variacao rescue ''), 
+                                                        :desc_variacaoMisto => (item.desc_variacaoMisto == 'Único' ? '' : item.desc_variacaoMisto rescue ''), 
                                                         :fd_pedido_id => item.fd_pedido_id, 
                                                         :fd_situacao_id => item.fd_situacao_id, 
                                                         :fd_funcionario_id => item.fd_funcionario_id}}
@@ -164,31 +166,7 @@ end
     fd_itenspedidos.destroy
 
     render json: {}, status: :no_content
-  end   
-
-  def dobra_itempedido
-
-    fd_itenspedidos = FdItempedido.find(params[:fd_itempedido_id])
-    fd_itemdobrado = FdItempedido.new
-
-    fd_itemdobrado.desc_observacao = fd_itenspedidos.desc_observacao
-    fd_itemdobrado.valr_item = fd_itenspedidos.valr_item 
-    fd_itemdobrado.tipo_atendimento = fd_itenspedidos.tipo_atendimento
-    fd_itemdobrado.fd_empresa_id = fd_itenspedidos.fd_empresa_id
-    fd_itemdobrado.fd_variacaoproduto_id = fd_itenspedidos.fd_variacaoproduto_id
-    fd_itemdobrado.fd_pedido_id = fd_itenspedidos.fd_pedido_id
-    fd_itemdobrado.fd_situacao_id = fd_itenspedidos.fd_situacao_id
-    fd_itemdobrado.fd_funcionario_id = fd_itenspedidos.fd_funcionario_id
-    fd_itemdobrado.save
-
-    fd_itenspedidos = FdItempedido.where(:id => fd_itemdobrado.id)
-
-    #debugger
-
-    fd_itenspedidos_json = fd_itenspedidos.map {|item| { :id => item.id, :desc_observacao => item.desc_observacao, :valr_item => item.valr_item, :tipo_atendimento => item.tipo_atendimento, :fd_empresa_id => item.fd_empresa_id, :fd_variacaoproduto_id => item.fd_variacaoproduto_id, :fd_pedido_id => item.fd_pedido_id, :fd_situacao_id => item.fd_situacao_id, :fd_funcionario_id => item.fd_funcionario_id}}
-    render :json => fd_itenspedidos_json
-
-  end  
+  end
 
   def insere_pedidomisto
 
@@ -224,11 +202,13 @@ end
     fd_pedidomisto = FdPedidomisto.new
     fd_pedidomisto.fd_itempedidos_id = fd_itenspedidos.id
     fd_pedidomisto.fd_produto_id = fd_variacaoproduto_maior.fd_produto_id
+    fd_pedidomisto.fd_variacaoproduto_id = fd_variacaoproduto_maior.id
     fd_pedidomisto.save    
 
     fd_pedidomisto = FdPedidomisto.new
     fd_pedidomisto.fd_itempedidos_id = fd_itenspedidos.id
     fd_pedidomisto.fd_produto_id = fd_variacaoproduto_menor.fd_produto_id
+    fd_pedidomisto.fd_variacaoproduto_id = fd_variacaoproduto_menor.id
     fd_pedidomisto.save
 
     render json: {}

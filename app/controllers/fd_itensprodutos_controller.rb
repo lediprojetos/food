@@ -3,16 +3,8 @@ class FdItensprodutosController < ApplicationController
 
   def busca_item
 
-    
-    #fd_itensprodutos = FdItensproduto.where(:fd_produto_id => params[:fd_produto_id])
-    #qtd = fd_itenspedidos.group(:fd_variacaoproduto_id).count
-
     fd_itenspedidos = FdItempedido.find(params[:fd_itempedido_id])
     fd_variacaoproduto = FdVariacaoproduto.find(fd_itenspedidos.fd_variacaoproduto_id)
-
-    #query = "select " 
-    #query = query + " i.id, ipr.fd_produto_id, i.desc_item, ia.numr_quntidade " 
-    #query = query + " from fd_items i inner join fd_itensprodutos ipr on i.id = ipr.fd_item_id left join fd_itemalterados ia on ia.fd_items_id = i.id where (ia.fd_itempedido_id = " +params[:fd_itempedido_id].to_s + " and ipr.fd_produto_id = " + fd_variacaoproduto.fd_produto_id.to_s + " ) "
     
     query = " select "
     query = query +  " * "
