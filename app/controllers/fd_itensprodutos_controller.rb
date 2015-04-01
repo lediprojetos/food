@@ -1,6 +1,29 @@
 class FdItensprodutosController < ApplicationController
   before_action :set_fd_itensproduto, only: [:show, :edit, :update, :destroy]
 
+  def busca_itemMisto
+
+    fd_itenspedidos = FdPedidomisto.find(params[:fd_pedidomisto_id])
+    fd_variacaoproduto = FdVariacaoproduto.find(fd_itenspedidos.fd_variacaoproduto_id)
+    
+    query = " select "
+    query = query +  " * "
+    query = query +  " from "
+    query = query +  " fd_itensprodutos ipr "
+    query = query +  " left join fd_itemalterados ial on ial.fd_items_id = ipr.fd_item_id and fd_pedidomisto_id = " + params[:fd_pedidomisto_id].to_s
+    query = query +  " inner join fd_items i on i.id = ipr.fd_item_id "
+    query = query +  " where "
+    query = query +  " (ipr.fd_produto_id = "+fd_variacaoproduto.fd_produto_id.to_s+" ) "
+
+    results = ActiveRecord::Base.connection.execute(query);
+
+    #debugger
+
+    results_json = results.map {|item| {:id => item["id"], :fd_pedidomisto_id => params[:fd_pedidomisto_id], :fd_produto_id => item["fd_produto_id"], :desc_item => item["desc_item"], :numr_qtd => (item["numr_quntidade"] rescue nil), :fd_itempedido_id => params[:fd_itempedido_id]}}
+    render :json => results_json
+
+  end
+
   def busca_item
 
     fd_itenspedidos = FdItempedido.find(params[:fd_itempedido_id])
