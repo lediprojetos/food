@@ -117,6 +117,8 @@ Food::Application.routes.draw do
   match '/busca_pedidos_geral', to: 'static_pedidos#busca_pedidos_geral', via: 'get'
   match '/muda_sitaucao_pedido', to: 'static_pedidos#muda_sitaucao_pedido', via: 'get'
   match '/efetua_pagamento', to: 'fd_pedidos#efetua_pagamento', via: 'get'
+  match '/busca_caixa_aberto', to: 'fd_caixas#busca_caixa_aberto', via: 'get'
+  match '/fechar_caixa', to: 'fd_caixas#fechar_caixa', via: 'get'
   
 
   

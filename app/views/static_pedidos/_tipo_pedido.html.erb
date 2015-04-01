@@ -10,7 +10,7 @@
     </br>
   
   <% if @caixa_aberto%> 
-    <button id="fechar" name="fechar" type="submit" value="abrir" onclick ="caixa();" class="btn btn-danger btn-lg" >Fechar Caixa</button>
+    <button id="fechar" name="fechar" type="submit" value="abrir" onclick ="busca_caixa_aberto();" class="btn btn-danger btn-lg" >Fechar Caixa</button>
  
  </br>
   
@@ -60,8 +60,8 @@
 </div>
 
 
-<div class="modal fade" id="mdFechaCaixa">
-  <div class="modal-dialog">
+<div class="modal fade bs-example-modal-sm" id="mdFechaCaixa">
+  <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -70,34 +70,78 @@
       <div class="modal-body">
       <div class="row mar-bot40">
        <%= form_for(@fd_caixa) do |f| %>      
-        <div class="col-lg-2">
+        <div class="col-lg-12">
           <%= f.label :valor_caixa %><br>
           <%= f.text_field :valor_caixa, :disabled => true, :class => 'form-control' %>
         </div>
-        <br/>
-        <div class="col-lg-2">
+      </div>
+      <br/>
+      <div class="row mar-bot40">
+        <div class="col-lg-12">
           <%= f.label :valor_fechamento %><br>
           <%= f.text_field :valor_fechamento, :class => 'form-control' %>
         </div>
-      </div>    
+      </div>
+
     <%end%>
 
       </div>
       <div class="modal-footer">
-        <button type="button" onclick="IngredAdiciona('ingredientes')" class="btn btn-success btn-lg" >Fechar</button>
+        <button type="button" onclick="fechar_caixa()" class="btn btn-success btn-lg" >Fechar</button>
         <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<input type="hidden" name="fd_caixa_id" id="fd_caixa_id">
+
 
 <script>
 
 
-function caixa(){
+function busca_caixa_aberto(){
   
   $('#mdFechaCaixa').modal('show')
+
+   $.ajax({
+        url : '<%=busca_caixa_aberto_path %>',
+        data :{},
+        success: function(data){
+
+         $('#fd_caixa_valor_caixa').val("");
+         $('#fd_caixa_valor_fechamento').val("");
+         
+         for (var i in data) {
+          var item = data[i];
+
+           $('#fd_caixa_valor_caixa').val(item.valor_caixa);
+           $('#fd_caixa_id').val(item.id);
+
+        };
+        }
+   })
+}
+
+
+function fechar_caixa(){
+  
+   $.ajax({
+        url : '<%=fechar_caixa_path %>',
+        data :{
+
+          fd_caixa_id : $('#fd_caixa_id').val()
+          ,valor_fechamento : $('#fd_caixa_valor_fechamento').val()
+          
+        },
+        success: function(data){
+          
+          $('#mdFechaCaixa').modal('hide');
+           location.reload();
+
+        }
+   })
+
 }
 
 
@@ -106,6 +150,13 @@ function alert_boot(message,color,place) {
 
   $(place).html('<div class="alert alert-'+color+'" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> </div>')
 }
+
+
+$(function() {
+     $("#fd_caixa_valor_caixa").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+     $("#fd_caixa_valor_fechamento").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+})
+
 
 
 </script>

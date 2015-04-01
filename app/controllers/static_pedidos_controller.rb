@@ -53,12 +53,15 @@ class StaticPedidosController < ApplicationController
 			@fd_caixa.first.save
 
 			@fd_pedido_id = @fd_pedido.id
+			@numr_contador = @fd_pedido.numr_contador
+			
 		else
 			@fd_pedido = FdPedido.find(params[:fd_pedido_id])
 			@fd_pedido.fd_situacao_id = 1
 			@fd_pedido.save
 			
 			@fd_pedido_id = @fd_pedido.id
+			@numr_contador = @fd_pedido.numr_contador
 
 			@fd_mesa = @fd_pedido.fd_mesa
 

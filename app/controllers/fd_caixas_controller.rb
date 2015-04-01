@@ -1,6 +1,40 @@
 class FdCaixasController < ApplicationController
   before_action :set_fd_caixa, only: [:show, :edit, :update, :destroy]
 
+include ActionView::Helpers::NumberHelper
+
+ 
+ def busca_caixa_aberto
+   
+   fd_caixa = FdCaixa.where(fd_empresa_id: user.fd_empresa_id, data_fechamento: nil)
+
+   @fd_pedidos = FdPedido.joins(:fd_caixa).where(fd_caixas: {fd_empresa_id: user.fd_empresa_id, data_fechamento: nil})
+
+   if @fd_pedidos
+      valor_caixa = @fd_pedidos.sum(:valr_pedido)
+   end 
+
+   fd_caixa_json = fd_caixa.map{|item|{:id => item.id, :valor_caixa => number_to_currency(valor_caixa, unit: "R$", separator: ",", delimiter: "")}}
+   render :json => fd_caixa_json
+
+ end
+
+ def fechar_caixa
+
+  params[:valor_fechamento] = params[:valor_fechamento].gsub('R$', '')
+  params[:valor_fechamento] = params[:valor_fechamento].gsub('.', '')
+  params[:valor_fechamento] = params[:valor_fechamento].gsub(',', '.').to_f 
+
+  @fd_caixa = FdCaixa.find(params[:fd_caixa_id])
+
+  @fd_caixa.valor_fechamento = params[:valor_fechamento]
+  @fd_caixa.data_fechamento = Time.now
+  @fd_caixa.save
+
+  render :json => {}
+
+ end
+
   # GET /fd_caixas
   def index
     @fd_caixas = FdCaixa.all
