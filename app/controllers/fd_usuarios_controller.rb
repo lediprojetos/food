@@ -2,6 +2,15 @@ class FdUsuariosController < ApplicationController
   before_action :set_fd_usuario, only: [:show, :edit, :update, :destroy]
 
 
+def troca_empresa
+    fd_usuario = FdUsuario.find(user.id)
+
+    fd_usuario.fd_empresa_id = params[:id]
+    fd_usuario.save
+
+    render :json => {}
+
+end
   # GET /fd_usuarios/1/edit
   def login
     @fd_usuario = FdUsuario.new

@@ -116,8 +116,9 @@ Food::Application.routes.draw do
   match '/muda_sitaucao_pedido', to: 'static_pedidos#muda_sitaucao_pedido', via: 'get'
 
   match '/efetua_pagamento', to: 'fd_pedidos#efetua_pagamento', via: 'get'
+
+  match '/trocarempresa', to: 'fd_usuarios#troca_empresa', via: 'get'
   
 
-  
 
 end
