@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329120156) do
+ActiveRecord::Schema.define(version: 20150330162112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,19 @@ ActiveRecord::Schema.define(version: 20150329120156) do
 
   add_index "fd_adicionaisinclusos", ["fd_itempedido_id"], name: "index_fd_adicionaisinclusos_on_fd_itempedido_id", using: :btree
   add_index "fd_adicionaisinclusos", ["fd_itensadicional_id"], name: "index_fd_adicionaisinclusos_on_fd_itensadicional_id", using: :btree
+
+  create_table "fd_caixas", force: true do |t|
+    t.integer  "numr_contador"
+    t.datetime "data_abertura"
+    t.datetime "data_fechamento"
+    t.decimal  "valor_caixa"
+    t.decimal  "valor_fechamento"
+    t.integer  "fd_empresa_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fd_caixas", ["fd_empresa_id"], name: "index_fd_caixas_on_fd_empresa_id", using: :btree
 
   create_table "fd_cargos", force: true do |t|
     t.string   "nome_cargo"
@@ -283,8 +296,11 @@ ActiveRecord::Schema.define(version: 20150329120156) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "tipo_atendimento"
+    t.integer  "numr_contador"
+    t.integer  "fd_caixa_id"
   end
 
+  add_index "fd_pedidos", ["fd_caixa_id"], name: "index_fd_pedidos_on_fd_caixa_id", using: :btree
   add_index "fd_pedidos", ["fd_cliente_id"], name: "index_fd_pedidos_on_fd_cliente_id", using: :btree
   add_index "fd_pedidos", ["fd_empresa_id"], name: "index_fd_pedidos_on_fd_empresa_id", using: :btree
   add_index "fd_pedidos", ["fd_formapagamento_id"], name: "index_fd_pedidos_on_fd_formapagamento_id", using: :btree
