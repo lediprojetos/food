@@ -1,11 +1,20 @@
+
+<div id = "alert_placeholder_pedido"></div>
+
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Tipo Pedido</h3>
+    <h3 class="panel-title">Home</h3>
   </div>
   <div class="panel-footer" style="background-color:white;">
     <div class="center">
     </br>
-    <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
+  
+  <% if @caixa_aberto%> 
+    <button id="fechar" name="fechar" type="submit" value="abrir" onclick ="busca_caixa_aberto();" class="btn btn-danger btn-lg" >Fechar Caixa</button>
+ 
+ </br>
+  
+  <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-cutlery"></span> Mesa
     <% end %>       
     <%= link_to lista_pedidos_path(0,'viagem'), :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
@@ -16,11 +25,138 @@
     <% end %>
     <%= link_to lista_pedidos_geral_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-menu-hamburger"></span> Fila de Pedidos
-    <% end %>         
-    </br>
+    <% end %>
+
+ <%else%>
+    <%= form_tag nil, method: 'GET' do %>
+        <button id="q" name="q" type="submit" value="abrir" class="btn btn-success btn-lg" >Abrir Caixa</button>
+    <% end %>
+
+
+    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','warning','#alert_placeholder_pedido');" data-original-title="Exibir">
+        <span class="glyphicon glyphicon-cutlery" rel="tooltip"></span>Mesa
+    </a>
+
+    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','warning','#alert_placeholder_pedido');" data-original-title="Exibir">
+        <span class="glyphicon glyphicon-user" rel="tooltip"></span>Balcão
+    </a>  
+
+    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','warning','#alert_placeholder_pedido');" data-original-title="Exibir">
+        <span class="glyphicon glyphicon-phone-alt" rel="tooltip"></span>Entrega
+    </a> 
+
+    <%= link_to lista_pedidos_geral_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
+      <span class="glyphicon glyphicon-menu-hamburger"></span> Fila de Pedidos
+    <% end %>
+
+ <%end%>  
+  
+  </br>
     </br>
   </div>
     
     
   </div>
 </div>
+
+
+<div class="modal fade bs-example-modal-sm" id="mdFechaCaixa">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 id="h4Ingredientes" class="modal-title">Fechar Caixa</h4>
+      </div>
+      <div class="modal-body">
+      <div class="row mar-bot40">
+       <%= form_for(@fd_caixa) do |f| %>      
+        <div class="col-lg-12">
+          <%= f.label :valor_caixa %><br>
+          <%= f.text_field :valor_caixa, :disabled => true, :class => 'form-control' %>
+        </div>
+      </div>
+      <br/>
+      <div class="row mar-bot40">
+        <div class="col-lg-12">
+          <%= f.label :valor_fechamento %><br>
+          <%= f.text_field :valor_fechamento, :class => 'form-control' %>
+        </div>
+      </div>
+
+    <%end%>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="fechar_caixa()" class="btn btn-success btn-lg" >Fechar</button>
+        <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<input type="hidden" name="fd_caixa_id" id="fd_caixa_id">
+
+
+<script>
+
+
+function busca_caixa_aberto(){
+  
+  $('#mdFechaCaixa').modal('show')
+
+   $.ajax({
+        url : '<%=busca_caixa_aberto_path %>',
+        data :{},
+        success: function(data){
+
+         $('#fd_caixa_valor_caixa').val("");
+         $('#fd_caixa_valor_fechamento').val("");
+         
+         for (var i in data) {
+          var item = data[i];
+
+           $('#fd_caixa_valor_caixa').val(item.valor_caixa);
+           $('#fd_caixa_id').val(item.id);
+
+        };
+        }
+   })
+}
+
+
+function fechar_caixa(){
+  
+   $.ajax({
+        url : '<%=fechar_caixa_path %>',
+        data :{
+
+          fd_caixa_id : $('#fd_caixa_id').val()
+          ,valor_fechamento : $('#fd_caixa_valor_fechamento').val()
+          
+        },
+        success: function(data){
+          
+          $('#mdFechaCaixa').modal('hide');
+           location.reload();
+
+        }
+   })
+
+}
+
+
+
+function alert_boot(message,color,place) {
+
+  $(place).html('<div class="alert alert-'+color+'" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> </div>')
+}
+
+
+$(function() {
+     $("#fd_caixa_valor_caixa").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+     $("#fd_caixa_valor_fechamento").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+})
+
+
+
+</script>

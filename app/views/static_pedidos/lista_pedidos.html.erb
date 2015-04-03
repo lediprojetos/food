@@ -11,7 +11,7 @@
     <% @fd_pedidos.each do |fd_pedido| %>
      <a href="<%=pedidos_path(0,fd_pedido.id,'mesa')%>" class="list-group-item list-group-item-<%= fd_pedido.fd_situacao_id == 1 ? 'danger' : 'success' %>">
       <span class="glyphicon glyphicon-folder-<%= fd_pedido.fd_situacao_id == 1 ? 'open' : 'close' %>" aria-hidden="true"></span>
-      <b>Nº</b> <%= fd_pedido.id %>
+      <b>Nº</b> <%= fd_pedido.numr_contador %>
      </a>
     <% end %>
     <a href="#" class="list-group-item disabled">
