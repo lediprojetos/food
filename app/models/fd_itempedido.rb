@@ -5,7 +5,7 @@ class FdItempedido < ActiveRecord::Base
   belongs_to :fd_status
   belongs_to :fd_funcionario
   belongs_to :fd_situacao
-
+  has_many :fd_pedidomisto
 
 def desc_pedido
     @desc_pedido

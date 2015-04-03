@@ -193,6 +193,7 @@ end
     fd_itenspedidos = FdItempedido.new
     fd_itenspedidos.fd_empresa_id = user.fd_empresa_id
     fd_itenspedidos.valr_item = fd_variacaoproduto_maior.valr_produto
+    fd_itenspedidos.fd_variacaoproduto_id = fd_variacaoproduto_maior.id
     fd_itenspedidos.fd_pedido_id = params[:fd_pedido_id]
     fd_itenspedidos.flag_pedidomisto = true
     fd_itenspedidos.fd_situacao_id = 1

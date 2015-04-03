@@ -7,7 +7,7 @@ class FdPedidomistosController < ApplicationController
 
     fd_itenspedidos = FdPedidomisto.where(:fd_itempedidos_id => params[:fd_itempedidos_id])
 
-    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:id => item.id, :fd_produto_id => item.fd_produto_id, :nome_produto => item.fd_variacaoproduto.fd_produto.nome_produto}}
+    fd_itenspedidos_json = fd_itenspedidos.map {|item| {:fd_categoriaproduto_id => item.fd_variacaoproduto.fd_produto.fd_categoriaproduto_id, :id => item.id, :fd_produto_id => item.fd_produto_id, :nome_produto => item.fd_variacaoproduto.fd_produto.nome_produto}}
     render :json => fd_itenspedidos_json
 
   end

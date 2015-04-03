@@ -336,12 +336,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 id="h4Ingredientes" class="modal-title">Ingredientes</h4>
-        <h4 id="h4Adicionais" class="modal-title" style="display:none;">Adicionais</h4>
+        <h4 id="h4IngredientesMistos" class="modal-title">Ingredientes</h4>
+        <h4 id="h4AdicionaisMistos" class="modal-title" style="display:none;">Adicionais</h4>
       </div>
       <div class="modal-body">
 
-        <div id="divItensAdicionaisMistos" name="divItensAdicionaisMistos" style="display:block">
+        <div id="divIngredientesMistos" name="divIngredientesMistos" style="display:block">
           <!-- Tabela -->
           <table class="table table-hover" name="tlbIngredientesMistos" id="tlbIngredientesMistos">
             <tbody id="bodyIngredientesMistos">
@@ -349,18 +349,18 @@
           </table>
         </div>
 
-        <div id="divAdicionais" name="divAdicionais" style="display:none">
+        <div id="divAdicionaisMistos" name="divAdicionaisMistos" style="display:none">
           <!-- Tabela -->
-          <table class="table table-hover" name="tlbAdicionais" id="tlbAdicionais">
-            <tbody id="bodyAdicionais">
+          <table class="table table-hover" name="tlbAdicionaisMistos" id="tlbAdicionaisMistos">
+            <tbody id="bodyAdicionaisMistos">
             </tbody>                                      
           </table>
         </div>        
 
       </div>
       <div class="modal-footer">
-        <button type="button" onclick="IngredAdiciona('ingredientes')" class="btn btn-success" >Ingredientes</button>
-        <button type="button" onclick="IngredAdiciona('adicionais')" class="btn btn-primary" >Adicionais</button>
+        <button type="button" onclick="IngredAdicionaMistos('ingredientes')" class="btn btn-success" >Ingredientes</button>
+        <button type="button" onclick="IngredAdicionaMistos('adicionais')" class="btn btn-primary" >Adicionais</button>
         <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
       </div>
     </div><!-- /.modal-content -->
@@ -368,6 +368,25 @@
 </div><!-- /.modal -->
 
 <script>
+
+
+function IngredAdicionaMistos(tipo) {
+
+  if (tipo == "ingredientes") {
+    $("#divIngredientesMistos").show();
+    $("#h4IngredientesMistos").show();
+
+    $("#divAdicionaisMistos").hide();
+    $("#h4AdicionaisMistos").hide();
+  } else {
+    $("#divIngredientesMistos").hide();
+    $("#h4IngredientesMistos").hide();
+
+    $("#divAdicionaisMistos").show();
+    $("#h4AdicionaisMistos").show();
+  };
+
+}
 
 function inserirEntrega(){
 
@@ -709,6 +728,7 @@ function alteraAdicionais(fd_itensadicional_id,numr_acao,fd_itempedido_id,fd_cat
       //alert(fd_itempedido_id);
       //alert(fd_categoriaproduto_id);
 
+      buscaAdicionaisMistos(fd_itempedido_id,fd_categoriaproduto_id);
       buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id);
       buscaItensPedidos($('#fd_pedido_id').val());
     }
@@ -741,7 +761,7 @@ function buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id) {
       };      
 
       if (data.length > 0){
-        $('#mdIngredientes').modal('show')
+        //$('#mdIngredientes').modal('show')
 
       };
     }
@@ -889,7 +909,38 @@ function buscaItemsPedidoMistoIntermedio(fd_itempedidos_id){
   buscaItemsPedidoMisto(fd_itempedidos_id);
 }
 
+function buscaAdicionaisMistos(fd_itempedido_id,fd_categoriaproduto_id) {
+
+  $.ajax({
+    url: '<%= busca_itemadicional_path %>',
+    data : 
+    {
+        fd_itempedido_id : fd_itempedido_id
+        ,fd_categoriaproduto_id : fd_categoriaproduto_id
+
+    },
+    success: function(data){
+
+      $("#bodyAdicionaisMistos").empty();
+
+      for (var i in data) {
+        var item = data[i];
+
+          if(item.numr_qtd == null){
+              item.numr_qtd = ""
+          };
+
+          $('#tlbAdicionaisMistos').append('<tr><td>'+item.desc_item+'</td><td><span class="badge">'+item.numr_quantidade+'</span></td><td align="right"></td><td align="right"><button type="button" onclick="alteraAdicionais('+item.fd_itensadicional_id+',0,'+item.fd_itempedido_id+','+fd_categoriaproduto_id+')"class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button><button onclick="alteraAdicionais('+item.fd_itensadicional_id+',1,'+item.fd_itempedido_id+','+fd_categoriaproduto_id+')" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td></tr>');    
+
+      };      
+
+    }
+  })  
+}
+
 function buscaItemsPedidoMisto(fd_itempedidos_id){
+
+
 
   var nomeMisto = "";
 
@@ -901,10 +952,13 @@ function buscaItemsPedidoMisto(fd_itempedidos_id){
     },
     success: function(data){
 
+
       $("#bodyIngredientesMistos").empty();
 
         for (var i in data) {
           var item = data[i];
+
+          fd_categoriaproduto_id = item.fd_categoriaproduto_id;
 
           $("#tlbIngredientesMistos").append('<tr class="success"><td colspan="2"><b>½ ' + item.nome_produto + '</b></td><td></td></tr>');
 
@@ -935,6 +989,7 @@ function buscaItemsPedidoMisto(fd_itempedidos_id){
           //
         };  
 
+        buscaAdicionaisMistos(fd_itempedidos_id,fd_categoriaproduto_id);
     },
     async:   false
   })  
@@ -1060,7 +1115,7 @@ $.ajax({
 
             var nomeMisto = buscaDetalhesPedidosMistos(item.id); 
 
-            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+' '+nomeMisto+' '+item.desc_variacaoMisto+'</td><td align="right">'+item.valr_item+'</td></tr>');
+            $('#tlbItensComanda').append('<tr class="dotted"><td>'+nomeMisto+' '+item.desc_variacaoMisto+'</td><td align="right">'+item.valr_item+'</td></tr>');
 
           } else {
 
