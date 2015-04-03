@@ -16,7 +16,7 @@ class FdCategoriaprodutosController < ApplicationController
 
   # GET /fd_categoriaprodutos
   def index
-    @fd_categoriaprodutos = FdCategoriaproduto.where('id <> ? and id <> ?', $Servicos, $Combos)
+    @fd_categoriaprodutos = FdCategoriaproduto.where('id <> ? and id <> ? and  fd_empresa_id = ?', $Servicos, $Combos, user.fd_empresa_id)
   end
 
   # GET /fd_categoriaprodutos/1

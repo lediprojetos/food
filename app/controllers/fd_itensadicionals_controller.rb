@@ -52,7 +52,8 @@ class FdItensadicionalsController < ApplicationController
 
   # GET /fd_itensadicionals
   def index
-    @fd_itensadicionals = FdItensadicional.all
+    @fd_itensadicionals = FdItensadicional.joins(:fd_item).where(fd_items: {fd_empresa_id: user.fd_empresa_id})
+
   end
 
   # GET /fd_itensadicionals/1
