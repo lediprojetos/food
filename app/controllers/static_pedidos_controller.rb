@@ -1,3 +1,4 @@
+#encoding: utf-8
 class StaticPedidosController < ApplicationController
 
 	def lista_pedidos
@@ -97,18 +98,17 @@ class StaticPedidosController < ApplicationController
 		#@fd_itempedido  = FdItempedido.new
   end
 
-  def busca_pedidos_geral
-   
+def busca_pedidos_geral
 
-  if params[:situacao] == "" 
-     params[:situacao] = 0
-  end
+	if params[:situacao] == "" 
+	 params[:situacao] = 0
+	end
 
-  if  params[:categoria_produto] == ""
-  	params[:categoria_produto] = 0
-  end
+	if  params[:categoria_produto] == ""
+		params[:categoria_produto] = 0
+	end
 
-   fd_pedido = FdItempedido.joins('INNER JOIN fd_variacaoprodutos vp on fd_variacaoproduto_id = vp.id 
+   	fd_pedido = FdItempedido.joins('INNER JOIN fd_variacaoprodutos vp on fd_variacaoproduto_id = vp.id 
    	                               INNER JOIN fd_produtos pr on vp.fd_produto_id = pr.id
    	                               INNER JOIN fd_pedidos pd on fd_pedido_id = pd.id
    	                               INNER JOIN fd_caixas ca on pd.fd_caixa_id = ca.id 
@@ -116,51 +116,64 @@ class StaticPedidosController < ApplicationController
   
     fd_pedido.each do |fd_pedido|
       
-    fd_pedido.desc_pedido = fd_pedido.fd_variacaoproduto.fd_produto.nome_produto
+    	fd_pedido.desc_pedido = fd_pedido.fd_variacaoproduto.fd_produto.nome_produto
 
-    if fd_pedido.flag_pedidomisto
-       misto = FdPedidomisto.where(fd_itempedidos_id: fd_pedido.id) 	    
-	    misto.each do |m|    	
-	    	 fd_pedido.desc_pedido = fd_pedido.desc_pedido + '/' + m.fd_produto.nome_produto
-	    end
-    end
+		if fd_pedido.flag_pedidomisto
+			misto = FdPedidomisto.where(fd_itempedidos_id: fd_pedido.id) 	    
+			fd_pedido.desc_pedido = ""
+			misto.each do |m|    	
+	 			fd_pedido.desc_pedido = fd_pedido.desc_pedido + ' ½ ' + m.fd_produto.nome_produto
+			end
+		end
     
-    fd_pedido.desc_ingredientemenos = ""
-    fd_pedido.desc_ingredientemais = ""
-    if fd_pedido.flag_itemalterado
-      item_alterado = FdItemalterado.where(fd_itempedido_id: fd_pedido.id) 	    
-	  item_alterado.each do |alterado| 
-	   if alterado.numr_quntidade < 1   	
-	    	 fd_pedido.desc_ingredientemenos = fd_pedido.desc_ingredientemenos + ' ' + alterado.fd_item.desc_item + ', '
- 	   end
- 	 end
-    end
-   
-   fd_pedido.desc_itemadicional = ""
-   if fd_pedido.flag_itemadicional
-      item_adicional = FdAdicionaisincluso.where(fd_itempedido_id: fd_pedido.id)
-    
-      item_adicional.each do |add|
-       if add.numr_quantidade > 0        
-       		fd_pedido.desc_itemadicional = fd_pedido.desc_itemadicional + ' ' + add.fd_itensadicional.fd_item.desc_item + ', '
-       end
-      end
-   end
+		fd_pedido.desc_ingredientemenos = ""
+		fd_pedido.desc_ingredientemais = ""
+		if fd_pedido.flag_itemalterado
+			if fd_pedido.flag_pedidomisto
+				misto.each do |m|
+					item_alterado = FdItemalterado.where(fd_pedidomisto_id: m.id)
+					item_alterado.each do |alterado| 
+						if alterado.numr_quntidade < 1   	
+			 				fd_pedido.desc_ingredientemenos = fd_pedido.desc_ingredientemenos + ' ' + alterado.fd_item.desc_item + ', '
+		   				end
+		 			end					
 
-    end
-
-     fd_pedido_json = fd_pedido.map{|item|{:id => item.id, 
-     										:nome_produto => item.desc_pedido, 
-     										:situacao => item.fd_situacao.nome_situacao, 
-     										:tipo_atendimento => item.tipo_atendimento, 
-     										:tamanho => item.desc_variaco, 
-     										:itemmais => item.desc_itemadicional,
-     										:itemmenos => item.desc_ingredientemenos,
-     										:numr_contador => item.fd_pedido.numr_contador, 
-     										:mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}  	
-     render :json => fd_pedido_json   
+				end
+			else
+				item_alterado = FdItemalterado.where(fd_itempedido_id: fd_pedido.id) 	    
+				item_alterado.each do |alterado| 
+					if alterado.numr_quntidade < 1   	
+		 				fd_pedido.desc_ingredientemenos = fd_pedido.desc_ingredientemenos + ' ' + alterado.fd_item.desc_item + ', '
+	   				end
+	 			end
+			end
+		end
    
-   end
+   		fd_pedido.desc_itemadicional = ""
+	   if fd_pedido.flag_itemadicional
+	      item_adicional = FdAdicionaisincluso.where(fd_itempedido_id: fd_pedido.id)
+	    
+	      item_adicional.each do |add|
+	       if add.numr_quantidade > 0        
+	       		fd_pedido.desc_itemadicional = fd_pedido.desc_itemadicional + ' ' + add.fd_itensadicional.fd_item.desc_item + ', '
+	       end
+	      end
+	   end
+	end
+
+
+	fd_pedido_json = fd_pedido.map{|item|{:id => item.id, 
+											:nome_produto => item.desc_pedido, 
+											:situacao => item.fd_situacao.nome_situacao, 
+											:tipo_atendimento => item.tipo_atendimento, 
+											:tamanho => item.desc_variaco, 
+											:itemmais => item.desc_itemadicional,
+											:itemmenos => item.desc_ingredientemenos,
+											:numr_contador => item.fd_pedido.numr_contador, 
+											:mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}  	
+	render :json => fd_pedido_json   
+   
+end
 
 
  def muda_sitaucao_pedido

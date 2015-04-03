@@ -10,11 +10,14 @@
     </br>
   
   <% if @caixa_aberto%> 
-    <button id="fechar" name="fechar" type="submit" value="abrir" onclick ="busca_caixa_aberto();" class="btn btn-danger btn-lg" >Fechar Caixa</button>
  
- </br>
-  
-  <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
+    <a class="btn btn-danger btn-lg" title="Abrir" rel="tooltip" href="javascript:busca_caixa_aberto();">
+         Fechar Caixa
+    </a>    
+
+    <hr>
+
+    <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-cutlery"></span> Mesa
     <% end %>       
     <%= link_to lista_pedidos_path(0,'viagem'), :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
@@ -27,27 +30,41 @@
       <span class="glyphicon glyphicon-menu-hamburger"></span> Fila de Pedidos
     <% end %>
 
+
  <%else%>
-    <%= form_tag nil, method: 'GET' do %>
-        <button id="q" name="q" type="submit" value="abrir" class="btn btn-success btn-lg" >Abrir Caixa</button>
-    <% end %>
+
+  <div class="row mar-bot40">
+    <div class="col-lg-2">
+      <%= form_tag nil, method: 'GET' do %>
+          <button id="q" name="q" type="submit" value="abrir" class="btn btn-success btn-lg" >Abrir Caixa</button>
+      <% end %>
+    </div>
+    <div class="col-lg-10">
+      <div class="alert alert-warning" role="alert">
+          O caixa deve ser aberto todos os dias no inicio do expediente, e fechado apenas no final.
+          <button class="close" data-dismiss="alert" type="button"></button>
+      </div>    
+    </div>
 
 
-    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','warning','#alert_placeholder_pedido');" data-original-title="Exibir">
+    <hr>
+
+    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','danger','#alert_placeholder_pedido');" data-original-title="Exibir">
         <span class="glyphicon glyphicon-cutlery" rel="tooltip"></span>Mesa
     </a>
 
-    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','warning','#alert_placeholder_pedido');" data-original-title="Exibir">
+    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','danger','#alert_placeholder_pedido');" data-original-title="Exibir">
         <span class="glyphicon glyphicon-user" rel="tooltip"></span>Balcão
     </a>  
 
-    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','warning','#alert_placeholder_pedido');" data-original-title="Exibir">
+    <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','danger','#alert_placeholder_pedido');" data-original-title="Exibir">
         <span class="glyphicon glyphicon-phone-alt" rel="tooltip"></span>Entrega
     </a> 
 
     <%= link_to lista_pedidos_geral_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-menu-hamburger"></span> Fila de Pedidos
     <% end %>
+
 
  <%end%>  
   
@@ -87,8 +104,8 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" onclick="fechar_caixa()" class="btn btn-success btn-lg" >Fechar</button>
-        <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
+        <button type="button" onclick="fechar_caixa()" class="btn btn-success" >Fechar Caixa</button>
+        <button type="button"  class="btn btn-danger" data-dismiss="modal">Sair</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -137,7 +154,7 @@ function fechar_caixa(){
         success: function(data){
           
           $('#mdFechaCaixa').modal('hide');
-           location.reload();
+           window.location.replace("<%=root_path%>");
 
         }
    })

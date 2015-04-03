@@ -4,16 +4,16 @@ class FdUsuario < ActiveRecord::Base
 
 #Presence
 	
-	validates :desc_nome, :presence => { :message => 'Digite um nome para a pessoa.' }
-	validates :desc_login, :presence => { :message => 'Digite o nome de usuário.' }
-	validates :desc_confirmalogin, :presence => { :message => 'Digite a confirmação do usuário.' }
-	validates :desc_senha, :presence => { :message => 'Digite a senha.' }
-	validates :desc_confirmasenha, :presence => { :message => 'Digite a confirmação da senha.' }
+	#validates :desc_nome, :presence => { :message => 'Digite um nome para a pessoa.' }
+	#validates :desc_login, :presence => { :message => 'Digite o nome de usuário.' }
+	#validates :desc_confirmalogin, :presence => { :message => 'Digite a confirmação do usuário.' }
+	#validates :desc_senha, :presence => { :message => 'Digite a senha.' }
+	#validates :desc_confirmasenha, :presence => { :message => 'Digite a confirmação da senha.' }
 
 #iguality
-	validate :check_email_and_confirmation
-	validate :check_senha_and_confirmation
-	validate :busca_email_existente
+	#validate :check_email_and_confirmation
+	#validate :check_senha_and_confirmation
+	#validate :busca_email_existente
 
 
 def busca_email_existente

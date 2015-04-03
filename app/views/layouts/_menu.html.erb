@@ -53,7 +53,7 @@
         </li>
       -->
        <% if usuario_logado  %>
-              <% if user.id == 1 || user.id == 2 %>          
+              <% if user.id == 3 || user.id == 2 %>          
                 <li><a onclick="$('#myModalTransfer').modal('show');" href="javascript:return false;"><spam class='glyphicon glyphicon-transfer'></spam></a></li>          
               <% end %>
       <% end %>
@@ -78,7 +78,7 @@
           <div class="col-xs-12">
               <label>Empresa</label>
               <%=  fields_for :trocaempresa do |f| %>
-                <%= f.select :fd_empresa_id, options_from_collection_for_select(FdEmpresa.all, 'id', 'desc_nomefantasia'),{:include_blank => true},{ :class =>  'form-control'}%>
+                <%= f.select :fd_empresa_id, options_from_collection_for_select(FdEmpresa.all, 'id', 'desc_nomefantasia',user.fd_empresa_id),{},{ :class =>  'form-control'}%>
               <% end %>          
           </div>           
 
@@ -110,7 +110,7 @@
         },
         success: function(data){
 
-          location.reload();
+          //window.location.replace("<%=root_path%>");
           
         }
       })

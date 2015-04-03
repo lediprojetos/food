@@ -5,7 +5,7 @@ class FdItempedido < ActiveRecord::Base
   belongs_to :fd_status
   belongs_to :fd_funcionario
   belongs_to :fd_situacao
-
+  has_many :fd_pedidomisto
 
 def desc_pedido
     @desc_pedido
@@ -46,6 +46,11 @@ end
 
 def desc_variaco
 	return self.fd_variacaoproduto.fd_variacao.desc_variacao
+end
+
+def desc_variacaoMisto
+  fd_pedidomisto = FdPedidomisto.where(:fd_itempedidos_id => self.id)
+  return fd_pedidomisto.first.fd_variacaoproduto.fd_variacao.desc_variacao
 end
 
 end

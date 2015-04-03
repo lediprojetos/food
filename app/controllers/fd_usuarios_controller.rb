@@ -5,6 +5,8 @@ class FdUsuariosController < ApplicationController
 def troca_empresa
     fd_usuario = FdUsuario.find(user.id)
 
+    #debugger
+
     fd_usuario.fd_empresa_id = params[:id]
     fd_usuario.save
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330162112) do
+ActiveRecord::Schema.define(version: 20150331014432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 20150330162112) do
     t.integer  "fd_items_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "fd_pedidomisto_id"
   end
 
   add_index "fd_itemalterados", ["fd_itempedido_id"], name: "index_fd_itemalterados_on_fd_itempedido_id", using: :btree
@@ -279,6 +280,7 @@ ActiveRecord::Schema.define(version: 20150330162112) do
     t.integer  "fd_itempedidos_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "fd_variacaoproduto_id"
   end
 
   add_index "fd_pedidomistos", ["fd_itempedidos_id"], name: "index_fd_pedidomistos_on_fd_itempedidos_id", using: :btree
