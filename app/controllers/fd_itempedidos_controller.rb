@@ -108,6 +108,12 @@ end
 
     fd_itenspedidos = FdItempedido.where(:fd_pedido_id => params[:fd_pedido_id]).order(:id)
 
+    fd_pedido = FdPedido.find(params[:fd_pedido_id])
+
+    if fd_pedido.valr_pedido.blank? 
+      fd_pedido.valr_pedido = 0
+    end
+
     fd_itenspedidos_json = fd_itenspedidos.map {|item| {:tipo_atendimento => item.tipo_atendimento,
                                                         :id => item.id, 
                                                         :flag_pedidomisto => item.flag_pedidomisto, 
@@ -117,6 +123,7 @@ end
                                                         :desc_variacaoMisto => (item.desc_variacaoMisto == 'Único' ? '' : item.desc_variacaoMisto rescue ''), 
                                                         :valr_item_total =>number_to_currency(@total_pedido, unit: "", separator: ",", delimiter: "."), 
                                                         :valr_item_total_geral =>number_to_currency(@totalgeral_pedido, unit: "", separator: ",", delimiter: "."), 
+                                                        :valr_pedido => number_to_currency(fd_pedido.valr_pedido, unit: "", separator: ",", delimiter: "."), 
                                                         :fd_funcionario_id => item.fd_funcionario_id,
                                                         :valr_entrega =>number_to_currency(valr_entrega, unit: "R$", separator: ",", delimiter: ".")}}
     render :json => fd_itenspedidos_json

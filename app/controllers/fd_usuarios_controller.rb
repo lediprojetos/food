@@ -8,9 +8,16 @@ def troca_empresa
     #debugger
 
     fd_usuario.fd_empresa_id = params[:id]
+    fd_usuario.desc_nome = user.desc_nome
+    fd_usuario.desc_login = user.desc_login
+    fd_usuario.desc_confirmalogin = user.desc_login
+    fd_usuario.desc_senha = user.desc_senha
+    fd_usuario.desc_confirmasenha = user.desc_senha
     fd_usuario.save
 
-    render :json => {}
+    encerra_sessao
+
+    #redirect_to root_path
 
 end
   # GET /fd_usuarios/1/edit

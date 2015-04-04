@@ -1109,7 +1109,16 @@ $.ajax({
           total_geral = item.valr_item_total_geral;
           valr_item_total = item.valr_item_total
 
-          $("#total").val(total_geral);
+          if (item.valr_pedido == " 0,00") {
+
+            $("#total").val(total_geral);
+            
+          } else {
+
+            $("#total").val(item.valr_pedido);
+
+          }
+
 
           if (item.flag_pedidomisto == true){
 
