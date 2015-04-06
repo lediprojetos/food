@@ -3,8 +3,11 @@
   <div class="panel-heading">
   <div class="row mar-bot40">
       <div class="col-lg-6"> 
-           <b>Categoria</b>      
-            <%= select_tag "categoria_produto", options_from_collection_for_select(FdCategoriaproduto.where(fd_empresa_id: user.fd_empresa_id), 'id', 'desc_categoria'), include_blank: true, :onchange => 'busca_pedidos()', :class => 'form-control'%>
+           <b>Categoria</b>
+
+            <a class="btn btn-default" style="width:100%"  title="Abrir" rel="tooltip" href="javascript:abre_categoria();">
+         Selecione as Categorias
+        </a>
       </div>
      <div class="col-lg-6"> 
       <b>Situação</b>      
@@ -13,6 +16,36 @@
     </div>
     </div>
 
+
+
+
+
+<input type="hidden" name="cat_produto" id="cat_produto">
+
+
+<div class="modal fade bs-example-modal-sm" id="mdCategoria" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden= "true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="list-group divCategoria">
+          <a href="#" class="list-group-item disabled"><strong>Categoria</strong></a>        
+        <div data-toggle="buttons-checkbox" id="checategoria">
+          <% @fd_categoriaproduto.each do |categoria| %>
+          <tbody id="lbcategoria">
+            <tr>
+              <td>
+                <button type="button" style="width:100%"  value="<%=categoria.id%>" class="btn btn-default"><%=categoria.desc_categoria%></button>
+              <td>
+            </tr>
+          </tbody>
+          <%end%> 
+        </div>
+      </div>
+    <a class="btn btn-primary"  style="width:100%"  title="Abrir" rel="tooltip" href="javascript:selecionar_categoria();">
+         Ok
+    </a>      
+    </div> 
+  </div>
+</div>
 
 <table class="table table-hover"  id="tlbpedido">
   <thead>
@@ -38,7 +71,7 @@
           url: '<%= busca_pedidos_geral_path %>',
           data :
           {
-            categoria_produto: $('#categoria_produto').val()
+            categoria_produto: $('#cat_produto').val()
             ,situacao: $('#situacao').val()
           },
 
@@ -146,8 +179,30 @@
   }
 
 
- busca_pedidos();
 
+
+function abre_categoria(){
+  $('#mdCategoria').modal('show');
+}
+
+
+function selecionar_categoria(){
+  var values = [];
+  $('#cat_produto').val("");
+    $('#checategoria').find('.active').each( function() {
+        values.push( $(this).val());
+
+     $('#cat_produto').val(values);
+
+    } 
+    );
+
+    $('#mdCategoria').modal('hide');
+    busca_pedidos()
+
+}
+
+ busca_pedidos();
 
   var segundos = 10
   window.setInterval('busca_pedidos()', segundos* 1000);

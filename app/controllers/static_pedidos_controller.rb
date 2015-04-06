@@ -94,8 +94,7 @@ class StaticPedidosController < ApplicationController
 
 
   def lista_pedidos_geral
-	#@fd_itempedido = FdItempedido.where(fd_empresa_id: user.fd_empresa_id)
-		#@fd_itempedido  = FdItempedido.new
+  		@fd_categoriaproduto = FdCategoriaproduto.where(fd_empresa_id: user.fd_empresa_id)
   end
 
 def busca_pedidos_geral
@@ -105,14 +104,20 @@ def busca_pedidos_geral
 	end
 
 	if  params[:categoria_produto] == ""
-		params[:categoria_produto] = 0
+		params[:categoria_produto] = "0"
+		  params[:categoria_produto] = params[:categoria_produto].split(",").map(&:to_i) 
+
+	else
+      params[:categoria_produto] = params[:categoria_produto].split(",").map(&:to_i) 
+
+ 
 	end
 
    	fd_pedido = FdItempedido.joins('INNER JOIN fd_variacaoprodutos vp on fd_variacaoproduto_id = vp.id 
-   	                               INNER JOIN fd_produtos pr on vp.fd_produto_id = pr.id
-   	                               INNER JOIN fd_pedidos pd on fd_pedido_id = pd.id
-   	                               INNER JOIN fd_caixas ca on pd.fd_caixa_id = ca.id 
-   	                               ').where('pr.fd_categoriaproduto_id = ? and fd_itempedidos.fd_situacao_id = ? and data_fechamento is null', params[:categoria_produto], params[:situacao]).order('created_at DESC') rescue nil
+   	                               	INNER JOIN fd_produtos pr on vp.fd_produto_id = pr.id
+   	                               	INNER JOIN fd_pedidos pd on fd_pedido_id = pd.id
+   	                               	INNER JOIN fd_caixas ca on pd.fd_caixa_id = ca.id 
+   	                               ').where('pr.fd_categoriaproduto_id in (?) and fd_itempedidos.fd_situacao_id = ? and data_fechamento is null', params[:categoria_produto], params[:situacao]).order('created_at DESC') rescue nil
   
     fd_pedido.each do |fd_pedido|
       
