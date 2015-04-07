@@ -6,7 +6,7 @@ class FdClientesController < ApplicationController
 
     #query = query.downcase
 
-    fd_cliente = FdCliente.where('lower(nome_cliente) like ?', "%#{params[:nome_cliente].downcase}%").limit(3)
+    fd_cliente = FdCliente.where('lower(nome_cliente) like ? and fd_empresa_id = ? ', "%#{params[:nome_cliente].downcase}%", user.fd_empresa_id).limit(3)
 
     fd_cliente_json = fd_cliente.map {|item| { :fd_cliente_id => item.id, 
                                                :nome_cliente => item.nome_cliente, 
