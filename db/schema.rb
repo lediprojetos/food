@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331014432) do
+ActiveRecord::Schema.define(version: 20150413230502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -202,6 +202,7 @@ ActiveRecord::Schema.define(version: 20150331014432) do
     t.boolean  "flag_pedidomisto"
     t.boolean  "flag_itemalterado"
     t.boolean  "flag_itemadicional"
+    t.boolean  "flag_exibido"
   end
 
   add_index "fd_itempedidos", ["fd_empresa_id"], name: "index_fd_itempedidos_on_fd_empresa_id", using: :btree

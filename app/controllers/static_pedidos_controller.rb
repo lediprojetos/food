@@ -99,6 +99,8 @@ class StaticPedidosController < ApplicationController
 
 def busca_pedidos_geral
 
+	play_sound = false
+
 	if params[:situacao] == "" 
 	 params[:situacao] = 0
 	end
@@ -120,6 +122,17 @@ def busca_pedidos_geral
    	                               ').where('pr.fd_categoriaproduto_id in (?) and fd_itempedidos.fd_situacao_id = ? and data_fechamento is null', params[:categoria_produto], params[:situacao]).order('created_at DESC') rescue nil
   
     fd_pedido.each do |fd_pedido|
+
+
+    	if fd_pedido.flag_exibido != true
+
+    		fditempedido = FdItempedido.find(fd_pedido.id)
+    		fditempedido.flag_exibido = true 
+    		fditempedido.save
+
+    		play_sound = true
+		end
+
       
     	fd_pedido.desc_pedido = fd_pedido.fd_variacaoproduto.fd_produto.nome_produto
 
@@ -175,6 +188,7 @@ def busca_pedidos_geral
 											:itemmais => item.desc_itemadicional,
 											:itemmenos => item.desc_ingredientemenos,
 											:numr_contador => item.fd_pedido.numr_contador, 
+											:play_sound => play_sound,
 											:mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}  	
 	render :json => fd_pedido_json   
    

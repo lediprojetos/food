@@ -74,9 +74,18 @@
       success: function(data){
         $("#lbpedidos").empty();
          for (var i in data){
+
           var item = data[i];
           var para = "", tamanho = "", itemmais = "", itemmenos = "";
       
+          if (item.play_sound == true){
+
+            var audioElement = document.createElement('audio');
+            audioElement.setAttribute('src', 'assets/alert.mp3');
+            audioElement.setAttribute('autoplay', 'autoplay');
+            audioElement.load()
+
+          }
 
               if (item.tipo_atendimento == "mesa"){
                   para = "Servir Mesa " + item.mesa
