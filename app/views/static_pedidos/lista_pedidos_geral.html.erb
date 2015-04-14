@@ -78,12 +78,11 @@
           var item = data[i];
           var para = "", tamanho = "", itemmais = "", itemmenos = "";
       
+          alert(item.play_sound);
+
           if (item.play_sound == true){
 
-            var audioElement = document.createElement('audio');
-            audioElement.setAttribute('src', 'assets/alert.mp3');
-            audioElement.setAttribute('autoplay', 'autoplay');
-            audioElement.load()
+            play_sound = true;
 
           }
 
@@ -122,6 +121,14 @@
                $('#tlbpedido').append('<tr class="warning"><td><h4>'+item.nome_produto+'</h4><h7 style="color:green;font-style: italic"><br/>'+item.itemmais+'</h7><h7 style="color:red;font-style: italic"><br/>'+item.itemmenos+'</h7></td><td><h4>'+tamanho+'</h4></td><td><h4>'+para+'</h4></td><td align="right"></td></tr>')
              }
             };
+
+            if (play_sound == true){
+              var audioElement = document.createElement('audio');
+              audioElement.setAttribute('src', 'assets/alert.mp3');
+              audioElement.setAttribute('autoplay', 'autoplay');
+              audioElement.load()
+            }
+
            } 
          })      
   }
