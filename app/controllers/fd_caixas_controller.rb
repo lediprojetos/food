@@ -9,6 +9,7 @@ include ActionView::Helpers::NumberHelper
    fd_caixa = FdCaixa.where(fd_empresa_id: user.fd_empresa_id, data_fechamento: nil)
 
    @fd_pedidos = FdPedido.joins(:fd_caixa).where(fd_caixas: {fd_empresa_id: user.fd_empresa_id, data_fechamento: nil})
+   # debugger
 
    if @fd_pedidos
       valor_caixa = @fd_pedidos.sum(:valr_pedido)

@@ -119,7 +119,7 @@
 
 function busca_caixa_aberto(){
   
-  $('#mdFechaCaixa').modal('show')
+   $('#mdFechaCaixa').modal('show')
 
    $.ajax({
         url : '<%=busca_caixa_aberto_path %>',
@@ -135,9 +135,13 @@ function busca_caixa_aberto(){
            $('#fd_caixa_valor_caixa').val(item.valor_caixa);
            $('#fd_caixa_id').val(item.id);
 
+         
+
         };
         }
    })
+
+
 }
 
 

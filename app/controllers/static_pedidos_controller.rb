@@ -110,8 +110,7 @@ def busca_pedidos_geral
 		  params[:categoria_produto] = params[:categoria_produto].split(",").map(&:to_i) 
 
 	else
-      params[:categoria_produto] = params[:categoria_produto].split(",").map(&:to_i) 
-
+      	params[:categoria_produto] = params[:categoria_produto].split(",").map(&:to_i) 
  
 	end
 
