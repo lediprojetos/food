@@ -32,13 +32,37 @@ include ActionView::Helpers::NumberHelper
   @fd_caixa.data_fechamento = Time.now
   @fd_caixa.save
 
+
+  @fd_mesas = FdMesa.where(fd_empresa_id: user.fd_empresa_id, flag_mesaaberta: false)
+
+  @fd_mesas.update_all(:flag_mesaaberta => true)
+
+
   render :json => {}
+
+ end
+
+ def troca_caixa
+
+@fd_caixa = FdCaixa.where(data_fechamento: nil)
+
+if @fd_caixa.first
+    @fd_caixa.first.data_fechamento = Time.now
+    @fd_caixa.first.save
+end
+
+  fd_caixa = FdCaixa.find(params[:id])
+  fd_caixa.data_fechamento = nil 
+  fd_caixa.save
+
+
+   redirect_to fd_caixas_path
 
  end
 
   # GET /fd_caixas
   def index
-    @fd_caixas = FdCaixa.all
+    @fd_caixas = FdCaixa.where(fd_empresa_id: user.fd_empresa_id).order('id DESC').all
   end
 
   # GET /fd_caixas/1

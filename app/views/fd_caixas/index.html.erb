@@ -1,16 +1,14 @@
-<h1>Listing fd_caixas</h1>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+<div class="panel-heading"><h3 class="panel-title">Listar de Caixas</h3></div>
 
-<table>
+ <table class="table table-hover">
   <thead>
     <tr>
-      <th>Numr contador</th>
       <th>Data abertura</th>
       <th>Data fechamento</th>
-      <th>Valor caixa</th>
       <th>Valor fechamento</th>
-      <th>Fd empresa</th>
-      <th></th>
-      <th></th>
+      <th>Situação</th>
       <th></th>
     </tr>
   </thead>
@@ -18,20 +16,28 @@
   <tbody>
     <% @fd_caixas.each do |fd_caixa| %>
       <tr>
-        <td><%= fd_caixa.numr_contador %></td>
         <td><%= fd_caixa.data_abertura %></td>
         <td><%= fd_caixa.data_fechamento %></td>
-        <td><%= fd_caixa.valor_caixa %></td>
         <td><%= fd_caixa.valor_fechamento %></td>
-        <td><%= fd_caixa.fd_empresa %></td>
-        <td><%= link_to 'Show', fd_caixa %></td>
-        <td><%= link_to 'Edit', edit_fd_caixa_path(fd_caixa) %></td>
-        <td><%= link_to 'Destroy', fd_caixa, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        
+        <% if fd_caixa.data_fechamento%>
+           <td style="color:Red" > Fechado</td>
+        <%else%>
+            <td style="color:Green">Aberto</td>
+        <%end%>
+        
+        
+        <td align='right'>
+            <div class="btn-group">         
+              <%= link_to troca_caixa_fd_caixa_path(fd_caixa), :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-sort"></span> Trocar 
+              <% end %>             
+             </div>
+          </td>
+
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Fd caixa', new_fd_caixa_path %>
+</div>

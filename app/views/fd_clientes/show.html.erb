@@ -73,12 +73,12 @@
 
     <p>
       <strong>Estado:</strong>
-      <%= @fd_cliente.fd_endereco.fd_cidade.fd_estado.nome_estado %>
+      <%= @fd_cliente.fd_endereco.fd_cidade.fd_estado.nome_estado rescue nil%>
     </p>
 
     <p>
       <strong>Estado:</strong>
-      <%= @fd_cliente.fd_endereco.fd_cidade.nome_cidade %>
+      <%= @fd_cliente.fd_endereco.fd_cidade.nome_cidade rescue nil %>
     </p>
   </div>
 </div>

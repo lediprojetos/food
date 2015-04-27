@@ -89,8 +89,11 @@ class FdClientesController < ApplicationController
   # GET /fd_clientes/1/edit
   def edit
     @fd_estado = FdCliente.find(params[:id])
-    @fd_estado = @fd_estado.fd_endereco.fd_cidade.fd_estado.id
 
+    if @fd_estado.fd_endereco.fd_cidade
+        @fd_estado = @fd_estado.fd_endereco.fd_cidade.fd_estado.id
+    end
+    
     @fd_cidade = FdCidade.find :all, :conditions => {:fd_estado_id => @fd_estado}
 
   end
