@@ -200,11 +200,8 @@ end
 
     if @fd_pedido.fd_situacao_id == 1
        @fd_pedido.fd_situacao_id = 2
-    
     elsif @fd_pedido.fd_situacao_id == 2		
-    
       @fd_pedido.fd_situacao_id = 3
-
     end
 
    @fd_pedido.save
