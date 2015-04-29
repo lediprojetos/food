@@ -58,6 +58,7 @@ Food::Application.routes.draw do
   match '/inclui_cliente', to: 'fd_clientes#inclui_cliente', via: 'get'
   match '/atualiza_cliente', to: 'fd_clientes#atualiza_cliente', via: 'get'
   match '/buscaCliente', to: 'fd_clientes#buscaCliente', via: 'get'
+  match '/buscaClientetelefone', to: 'fd_clientes#buscaClientetelefone', via: 'get'
 
   resources :fd_usuarios
   resources :fd_empresas

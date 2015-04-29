@@ -2,6 +2,30 @@
 class FdClientesController < ApplicationController
   before_action :set_fd_cliente, only: [:show, :edit, :update, :destroy]
 
+  def buscaClientetelefone
+
+    #params[:desc_telefone] = params[:desc_telefone].gsub('(', '')
+    #params[:desc_telefone] = params[:desc_telefone].gsub(')', '')
+    ##params[:desc_telefone] = params[:desc_telefone].gsub('-', '')
+    #params[:desc_telefone] = params[:desc_telefone].gsub('_', '')
+
+
+    fd_cliente = FdCliente.where('lower(desc_telefone) like ? and fd_empresa_id = ? ', "%#{params[:desc_telefone].downcase}%", user.fd_empresa_id).limit(3)
+
+    fd_cliente_json = fd_cliente.map {|item| { :fd_cliente_id => item.id, 
+                                               :nome_cliente => item.nome_cliente, 
+                                               :desc_telefone => item.desc_telefone, 
+                                               :nome_rua => item.fd_endereco.nome_rua, 
+                                               :numr_quadra => item.fd_endereco.numr_quadra, 
+                                               :numr_lote => item.fd_endereco.numr_lote, 
+                                               :nome_bairro => item.fd_endereco.nome_bairro, 
+                                               :desc_pontoreferencia => item.fd_endereco.desc_pontoreferencia, 
+                                               :fd_endereco_id => item.fd_endereco.id}}
+    render :json => fd_cliente_json  
+
+
+  end
+
   def buscaCliente
 
     #query = query.downcase
