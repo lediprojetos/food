@@ -4,6 +4,16 @@ class FdItempedidosController < ApplicationController
 
   include ActionView::Helpers::NumberHelper
 
+  def salva_observacao
+
+    fd_itenspedidos = FdItempedido.find(params[:fd_itempedido_id])
+
+    fd_itenspedidos.desc_observacao = params[:desc_observacao]
+    fd_itenspedidos.save
+
+    render json: {}, status: :no_content    
+
+  end
 
   def exclui_servicopedido
 

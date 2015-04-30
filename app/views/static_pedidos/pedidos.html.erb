@@ -247,7 +247,14 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 id="h4Ingredientes" class="modal-title">Ingredientes</h4>
         <h4 id="h4Adicionais" class="modal-title" style="display:none;">Adicionais</h4>
+        <h4 id="h4Obs" class="modal-title" style="display:none;">Adicionais</h4>
       </div>
+      <div class="modal-footer">
+        <button type="button" onclick="IngredAdiciona('divObs')" class="btn btn-info" >Observações</button>
+        <button type="button" onclick="IngredAdiciona('ingredientes')" class="btn btn-success" >Ingredientes</button>
+        <button type="button" onclick="IngredAdiciona('adicionais')" class="btn btn-primary" >Adicionais</button>
+        <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
+      </div>      
       <div class="modal-body">
 
         <div id="divIngredientes" name="divIngredientes" style="display:block">
@@ -264,13 +271,25 @@
             <tbody id="bodyAdicionais">
             </tbody>                                      
           </table>
-        </div>        
+        </div>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" onclick="IngredAdiciona('ingredientes')" class="btn btn-success" >Ingredientes</button>
-        <button type="button" onclick="IngredAdiciona('adicionais')" class="btn btn-primary" >Adicionais</button>
-        <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
+        <div id="divObs" name="divObs" style="display:none">
+          <!-- Tabela -->
+            <div class="row mar-bot40">
+              <div class="col-lg-12">
+                <input type="text" id="txtObs" name="txtObs" class="form-control">
+              </div>
+            </div>
+            <br/>  
+            <div class="row mar-bot40">
+              <div class="col-lg-10">
+              </div>
+              <div class="col-lg-2">
+                <button type="button" onclick="salvaObservacao($('#txtObs').val())" class="btn btn-success" >Salvar</button>
+              </div>
+          </div>
+        </div>              
+
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -338,7 +357,14 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 id="h4IngredientesMistos" class="modal-title">Ingredientes</h4>
         <h4 id="h4AdicionaisMistos" class="modal-title" style="display:none;">Adicionais</h4>
+        <h4 id="h4ObsMistos" class="modal-title" style="display:none;">Observações</h4>
       </div>
+      <div class="modal-footer">
+        <button type="button" onclick="IngredAdicionaMistos('Obs')" class="btn btn-info" >Observações</button>
+        <button type="button" onclick="IngredAdicionaMistos('ingredientes')" class="btn btn-success" >Ingredientes</button>
+        <button type="button" onclick="IngredAdicionaMistos('adicionais')" class="btn btn-primary" >Adicionais</button>
+        <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
+      </div>      
       <div class="modal-body">
 
         <div id="divIngredientesMistos" name="divIngredientesMistos" style="display:block">
@@ -355,13 +381,25 @@
             <tbody id="bodyAdicionaisMistos">
             </tbody>                                      
           </table>
+        </div>
+
+        <div id="divObsMistos" name="divObsMistos" style="display:none">
+          <!-- Tabela -->
+            <div class="row mar-bot40">
+              <div class="col-lg-12">
+                <input type="text" id="txtObsMistos" name="txtObsMistos" class="form-control">
+              </div>
+            </div>
+            <br/>  
+            <div class="row mar-bot40">
+              <div class="col-lg-10">
+              </div>
+              <div class="col-lg-2">
+                <button type="button" onclick="salvaObservacao($('#txtObsMistos').val())" class="btn btn-success" >Salvar</button>
+              </div>
+          </div>
         </div>        
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" onclick="IngredAdicionaMistos('ingredientes')" class="btn btn-success" >Ingredientes</button>
-        <button type="button" onclick="IngredAdicionaMistos('adicionais')" class="btn btn-primary" >Adicionais</button>
-        <button type="button"  class="btn btn-danger" data-dismiss="modal">Fechar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -372,30 +410,35 @@
 
 function IngredAdicionaMistos(tipo) {
 
+    $("#divAdicionaisMistos").hide();
+    $("#h4AdicionaisMistos").hide();  
+    $("#divIngredientesMistos").hide();
+    $("#h4IngredientesMistos").hide();
+    $("#divObsMistos").hide();
+    $("#h4ObsMistos").hide();
+
+
   if (tipo == "ingredientes") {
     $("#divIngredientesMistos").show();
     $("#h4IngredientesMistos").show();
-
-    $("#divAdicionaisMistos").hide();
-    $("#h4AdicionaisMistos").hide();
-  } else {
-    $("#divIngredientesMistos").hide();
-    $("#h4IngredientesMistos").hide();
-
+  } else if (tipo == "adicionais") {
     $("#divAdicionaisMistos").show();
     $("#h4AdicionaisMistos").show();
+  } else if ( tipo == "Obs"){
+    $("#divObsMistos").show();
+    $("#h4ObsMistos").show();
   };
 
 }
 
-function observacoesPedidos(){
+function salvaObservacao(desc_observacao){
 
   $.ajax({
-    url: '<%#= insere_observacoespedido_path %>',
+    url: '<%=salva_observacao_path %>',
     data : 
     {
-        valr_entrega : $("#valr_entrega").val()
-        ,fd_pedido_id : $("#fd_pedido_id").val()
+        desc_observacao : desc_observacao
+        ,fd_itempedido_id : $("#fd_itempedido_id").val()
     },
     success: function(data){
 
@@ -404,6 +447,7 @@ function observacoesPedidos(){
   }) 
 
 }
+
 
 function inserirEntrega(){
 
@@ -780,6 +824,8 @@ function alteraAdicionais(fd_itensadicional_id,numr_acao,fd_itempedido_id,fd_cat
 
 function buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id) {
 
+  $('#fd_itempedido_id').val(fd_itempedido_id);
+
   $.ajax({
     url: '<%= busca_itemadicional_path %>',
     data : 
@@ -813,6 +859,13 @@ function buscaAdicionais(fd_itempedido_id,fd_categoriaproduto_id) {
 
 function IngredAdiciona(tipo) {
 
+  $("#divObs").hide();
+
+  $("#divAdicionais").hide();
+  $("#h4Adicionais").hide();
+  $("#divIngredientes").hide();
+  $("#h4Ingredientes").hide();  
+  $("#h4Adicionais").hide();  
 
   if (tipo == "ingredientes") {
     $("#divIngredientes").show();
@@ -820,12 +873,20 @@ function IngredAdiciona(tipo) {
 
     $("#divAdicionais").hide();
     $("#h4Adicionais").hide();
-  } else {
+
+  } else if (tipo == "adicionais") {
+
     $("#divIngredientes").hide();
     $("#h4Ingredientes").hide();
 
     $("#divAdicionais").show();
     $("#h4Adicionais").show();
+    
+  } else if (tipo == "divObs") {
+
+    $("#divObs").show();
+    $("#h4Adicionais").show();  
+
   };
 
 }
@@ -917,6 +978,8 @@ function excluiItensPedidos(id) {
 
 function buscaDetalhesPedidosMistos(fd_itempedidos_id){
 
+  $('#fd_itempedido_id').val(fd_itempedido_id);
+
   var nomeMisto = "";
 
   $.ajax({
@@ -954,6 +1017,8 @@ function buscaItemsPedidoMistoIntermedio(fd_itempedidos_id){
 
 function buscaAdicionaisMistos(fd_itempedido_id,fd_categoriaproduto_id) {
 
+  $('#fd_itempedido_id').val(fd_itempedido_id);
+
   $.ajax({
     url: '<%= busca_itemadicional_path %>',
     data : 
@@ -983,7 +1048,7 @@ function buscaAdicionaisMistos(fd_itempedido_id,fd_categoriaproduto_id) {
 
 function buscaItemsPedidoMisto(fd_itempedidos_id){
 
-
+$('#fd_itempedido_id').val(fd_itempedido_id);
 
   var nomeMisto = "";
 
@@ -1202,9 +1267,7 @@ function incluiItemPedido(fd_variacaoproduto_id,valr_produto) {
     url: '<%= insere_itempedido_path %>',
     data : 
     {
-        desc_observacao : "desc_observacao"
-        ,valr_item : valr_produto
-        ,tipo_atendimento : 'tipo_atendimento'
+        valr_item : valr_produto
         ,fd_variacaoproduto_id : fd_variacaoproduto_id
         ,fd_pedido_id : $('#fd_pedido_id').val()
         ,fd_situacao_id : 1 //Solicitado

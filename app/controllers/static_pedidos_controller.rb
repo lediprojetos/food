@@ -186,6 +186,7 @@ def busca_pedidos_geral
 											:tamanho => item.desc_variaco, 
 											:itemmais => item.desc_itemadicional,
 											:itemmenos => item.desc_ingredientemenos,
+											:obs => (item.desc_observacao.nil? ? "" : "♣ " + item.desc_observacao),
 											:numr_contador => item.fd_pedido.numr_contador, 
 											:play_sound => play_sound,
 											:mesa => (item.fd_pedido.fd_mesa.numr_mesa rescue nil) }}  	
