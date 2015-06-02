@@ -7,7 +7,9 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
-  <%if usuario_logado%>
+  <%if not usuario_logado %>
+
+  <%else%> 
 
 	  <%= render 'layouts/menu' %>
 

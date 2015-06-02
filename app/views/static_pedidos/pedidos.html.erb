@@ -176,17 +176,22 @@
   </div>
   <div class="col-lg-4">
 
+  
+    
     <div class="panel panel-danger">
       <!-- Default panel contents -->
       <div class="panel-heading">Pedido <strong>Mesa: <%=@fd_mesa.numr_mesa rescue nil%> / Pedido: <%=@numr_contador%></strong></div>
       <div class="panel-body">
         <br/>
-        <table width="100%" name="tlbItensComanda" id="tlbItensComanda">
-          <tbody id="bodyTlbComanda">
-            <tr class="dotted">
-            </tr>
-          </tbody>                                      
-        </table>
+        <div id="myDivToPrint" name="myDivToPrint">
+
+          <table width="100%" name="tlbItensComanda" id="tlbItensComanda">
+            <tbody id="bodyTlbComanda">
+              <tr class="dotted">
+              </tr>
+            </tbody>                                      
+          </table>
+        </div>
       </div>
       <br/>
       <!-- List group -->
@@ -234,9 +239,14 @@
                 <% end %>
               </div>
             </div>
+            <br/>
+            <div class="row mar-bot40">
+              <div class="col-lg-12">
+                <button type="button" class="btn btn-primary btn-md form-control" onclick="PrintElem();"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir </button> 
+              </div>
+            </div>            
       </div>      
     </div>
-
   </div>
 </div>
 
@@ -404,8 +414,66 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <script>
+
+function PrintElem() {
+
+
+
+    var divToPrint = document.getElementById('myDivToPrint');
+
+    var htmlToPrint = '' +
+        '<hr>' +
+        '<hr>' +
+        '<style type="text/css">' +
+        'hr, table th, table td {' +
+        'border-bottom-style: ' +
+        'dotted;'  +
+        'border-color:gray;'  +
+        'border-width: 1px;' +
+        'font-family: "Courier New", Courier, monospace;' +
+        'font-size: 70%;' +
+        '}' +
+        'p.serif {' + 
+        'font-family: "Courier New", Courier, monospace;' +
+        'font-size: 70%;' +
+        '}' + 
+        'hr {' +
+        'borderstyle: ' +
+        'dotted;'  +
+        'border-color:gray;'  +
+        'border-width: 1px;' +
+        '}' +
+        '</style>';
+
+
+        var cliente = '' +
+        '<p class="serif">' + 'Cliente: ' + $("#txtNomeCliente").val() + '</p>' +
+        '<p class="serif">' + 'Telefone: ' + $("#txtTelefoneCliente").val() + '</p>' +
+        '<p class="serif">' + 'Endereço: ' + $("#txtRua").val() + ' Qd. ' + $("#txtQuadra").val() + ' Lt. ' + $("#txtLote").val() + 'Set. ' +  $("#txtBairro").val() + '</p>' +
+        '<hr>' +
+        '<hr>';
+
+        if ($("#txtNomeCliente").val() != ""){
+          htmlToPrint += cliente;
+        }
+
+        
+    htmlToPrint +=  divToPrint.outerHTML;
+
+    newWin = window.open("");
+    
+    //$("#txtTelefoneCliente").val("");
+    //$("#txtRua").val("");
+    //$("#txtQuadra").val("");
+    //$("#txtLote").val("");
+    //$("#txtBairro").val("");
+    //$("#txtReferencia").val("");
+
+    newWin.document.write(htmlToPrint);
+    newWin.print();
+    newWin.close();
+}
 
 
 function IngredAdicionaMistos(tipo) {

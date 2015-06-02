@@ -28,3 +28,12 @@ a.btn-primary:visited { color: #fff; }
 .fade.in {
   opacity: 1;
 }
+
+.dotted{
+
+	border-bottom-style: 
+	dotted; 
+	border-color:gray; 
+	border-width: 1px;
+	
+}
