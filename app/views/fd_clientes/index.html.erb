@@ -32,8 +32,34 @@
         <% end %>
       </tbody>
     </table>
-
 </div>
+
+<nav>
+  <ul class="pagination">
+    <%= will_paginate @fd_clientes , :inner_window => 2%>
+  </ul>
+</nav>
+
+
+<nav>
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 
   <%= link_to new_fd_cliente_path, :class => "btn btn-default btn-sm" do %>
      <span class="glyphicon glyphicon-file"></span>Novo

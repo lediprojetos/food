@@ -1,4 +1,9 @@
 pt-BR:
+  will_paginate:
+    next_label: Próximo
+    previous_label: Anterior
+    page_gap: ...
+    
   hello: "Ola mundo"
   date:
     abbr_day_names:

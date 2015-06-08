@@ -96,7 +96,7 @@ class FdClientesController < ApplicationController
 
   # GET /fd_clientes
   def index
-    @fd_clientes = FdCliente.where(fd_empresa_id: user.fd_empresa_id)
+    @fd_clientes = FdCliente.where(fd_empresa_id: user.fd_empresa_id).paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /fd_clientes/1
