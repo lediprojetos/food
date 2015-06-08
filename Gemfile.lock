@@ -152,6 +152,8 @@ GEM
     validates_cpf_cnpj (0.2.0)
       activemodel (>= 3.0.0)
     will_paginate (3.0.7)
+    will_paginate-bootstrap (1.0.1)
+      will_paginate (>= 3.0.3)
 
 PLATFORMS
   ruby
@@ -175,3 +177,4 @@ DEPENDENCIES
   uglifier (= 2.1.1)
   validates_cpf_cnpj
   will_paginate (~> 3.0.5)
+  will_paginate-bootstrap (~> 1.0.1)
