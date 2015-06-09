@@ -22,6 +22,8 @@ def home
 	   	@caixa_aberto = false
 	end
 
+	@fd_pedidos = FdPedido.joins(:fd_caixa).where(:fd_empresa_id => user.fd_empresa_id, :fd_situacao_id => 1, fd_caixas: { data_fechamento: nil}) rescue nil    	
+
 
  @fd_caixa = FdCaixa.new
 

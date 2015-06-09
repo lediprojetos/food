@@ -17,8 +17,8 @@ class StaticPedidosController < ApplicationController
 		@tipo_atendimento = params[:tipo_atendimento]
 	end		
 
-	def tipo_pedido
-			
+	def tipo_pedido		
+		
 	end	
 
 	def lista_mesas
@@ -67,8 +67,7 @@ class StaticPedidosController < ApplicationController
 			@fd_mesa = @fd_pedido.fd_mesa
 
 			@fd_cliente_id = @fd_pedido.fd_cliente_id
-		end
-         
+		end        
 
 	end
 

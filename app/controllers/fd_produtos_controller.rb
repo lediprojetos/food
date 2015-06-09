@@ -49,7 +49,7 @@ class FdProdutosController < ApplicationController
 
   # GET /fd_produtos
   def index
-    @fd_produtos = FdProduto.where('fd_categoriaproduto_id <> ? and fd_empresa_id = ?', $Servicos, user.fd_empresa_id)
+    @fd_produtos = FdProduto.where('fd_categoriaproduto_id <> ? and fd_empresa_id = ?', $Servicos, user.fd_empresa_id).paginate(:page => params[:page], :per_page => 10)
   end
 
   def index_service

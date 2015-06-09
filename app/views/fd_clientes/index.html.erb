@@ -35,10 +35,8 @@
 </div>
 
 <div>
-   <%= will_paginate @collection, renderer: BootstrapPagination::Rails, :inner_window => 2 %>
+   <%= will_paginate @fd_clientes, renderer: BootstrapPagination::Rails, :inner_window => 2 %>
 </div>
-
-
 
 
 <%= link_to new_fd_cliente_path, :class => "btn btn-default btn-sm" do %>

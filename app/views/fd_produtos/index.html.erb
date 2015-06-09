@@ -37,6 +37,12 @@
 
 </div>
 
+
+<div>
+   <%= will_paginate @fd_produtos, renderer: BootstrapPagination::Rails, :inner_window => 2 %>
+</div>
+
+
   <%= link_to new_fd_produto_path, :class => "btn btn-default btn-sm" do %>
      <span class="glyphicon glyphicon-file"></span>Novo
   <% end %>
