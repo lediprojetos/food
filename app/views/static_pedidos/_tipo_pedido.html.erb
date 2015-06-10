@@ -9,17 +9,17 @@
     <div class="center">
     </br>
   
-  <% if @caixa_aberto%> 
- 
-    <a class="btn btn-danger btn-lg" title="Abrir" rel="tooltip" href="javascript:busca_caixa_aberto();">
-         Fechar Caixa
-    </a>    
+<div class="row mar-bot40">
 
-    <hr>
+ <div class="col-lg-3">
+  <% if @caixa_aberto%> 
+
+   <div class="btn-group-vertical" style="width:100%;" role="group" aria-label="...">
 
     <%= link_to lista_mesas_path, :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-cutlery"></span> Mesa
-    <% end %>       
+    <% end %>
+
     <%= link_to lista_pedidos_path(0,'viagem'), :class => "btn btn-default btn-lg", :rel=>"tooltip", :title=>"Exibir" do %>
       <span class="glyphicon glyphicon-user"></span> Balcão
     <% end %>
@@ -30,25 +30,16 @@
       <span class="glyphicon glyphicon-menu-hamburger"></span> Fila de Pedidos
     <% end %>
 
+    <a class="btn btn-danger btn-lg" title="Abrir" rel="tooltip" href="javascript:busca_caixa_aberto();">
+         Fechar Caixa
+    </a>  
+    </div>
+  </div>
 
  <%else%>
-
-  <div class="row mar-bot40">
-    <div class="col-lg-2">
-      <%= form_tag nil, method: 'GET' do %>
-          <button id="q" name="q" type="submit" value="abrir" class="btn btn-success btn-lg" >Abrir Caixa</button>
-      <% end %>
-    </div>
-    <div class="col-lg-10">
-      <div class="alert alert-warning" role="alert">
-          O caixa deve ser aberto todos os dias no inicio do expediente, e fechado apenas no final.
-          <button class="close" data-dismiss="alert" type="button"></button>
-      </div>    
-    </div>
-
-
-    <hr>
-
+ 
+   <div class="btn-group-vertical" style="width:100%;" role="group" aria-label="...">
+      
     <a class="btn btn-default btn-lg" title="" rel="tooltip" onclick="alert_boot('É necessário abrir o caixa para da continuidade ao pedido.','danger','#alert_placeholder_pedido');" data-original-title="Exibir">
         <span class="glyphicon glyphicon-cutlery" rel="tooltip"></span> Mesa
     </a>
@@ -65,35 +56,55 @@
       <span class="glyphicon glyphicon-menu-hamburger"></span> Fila de Pedidos
     <% end %>
 
+    <a class="btn btn-success btn-lg" title="Abrir" rel="tooltip" href="javascript:abrir_caixa();">
+         Abrir Caixa
+    </a> 
 
- <%end%>  
-  
-  </br>
+   </div>
+  </div>
+ <%end%>   
+  <div class="col-lg-1">
+   </div>
+    <div class="col-lg-8">
+      <div class="panel panel-default">
+        <div class="list-group">
+          <a href="#" class="list-group-item disabled">
+             <h3 class="panel-title">Pedidos abertos</h3>
+          </a>
+          <% @fd_pedidos.each do |fd_pedido| %>
+           <a href="<%=pedidos_path(0,fd_pedido.id,'mesa')%>" class="list-group-item list-group-item-<%= fd_pedido.fd_situacao_id == 1 ? 'danger' : 'success' %>">
+            <span class="glyphicon glyphicon-folder-<%= fd_pedido.fd_situacao_id == 1 ? 'open' : 'close' %>" aria-hidden="true"></span>
+            <b>Nº</b> <%= fd_pedido.numr_contador %> <b> Mesa</b> <%= fd_pedido.fd_mesa.numr_mesa rescue nil %>
+           </a>
+          <% end %>
+          <a href="#" class="list-group-item disabled">
+          </a>    
+        </div>
+      </div>
+
+      <hr/>
+      <div class="col-lg-12">
+      <div class="alert alert-warning" role="alert">
+          O caixa deve ser aberto todos os dias no inicio do expediente, e fechado apenas no final.
+          <button class="close" data-dismiss="alert" type="button"></button>
+      </div>    
+    </div>
+
+
+    </div>
+
     </br>
   </div>
-    
-  <hr>
 
+ </div>
   </div>
+     </br>
 </div>
 
-<div class="panel panel-default">
-  <div class="list-group">
-    <a href="#" class="list-group-item disabled">
-       <h3 class="panel-title">Pedidos abertos</h3>
-    </a>
-    <% @fd_pedidos.each do |fd_pedido| %>
-     <a href="<%=pedidos_path(0,fd_pedido.id,'mesa')%>" class="list-group-item list-group-item-<%= fd_pedido.fd_situacao_id == 1 ? 'danger' : 'success' %>">
-      <span class="glyphicon glyphicon-folder-<%= fd_pedido.fd_situacao_id == 1 ? 'open' : 'close' %>" aria-hidden="true"></span>
-      <b>Nº</b> <%= fd_pedido.numr_contador %> <b> Mesa</b> <%= fd_pedido.fd_mesa.numr_mesa rescue nil %>
-     </a>
-    <% end %>
-    <a href="#" class="list-group-item disabled">
-      ...
-    </a>    
-  </div>
-</div>
 
+<form name="formCaixa" id="formCaixa">
+  <input type="hidden" id="q" name="q" value="abrir">
+</form>
 
 
 <div class="modal fade bs-example-modal-sm" id="mdFechaCaixa">
@@ -185,6 +196,12 @@ function fechar_caixa(){
 
 }
 
+
+function abrir_caixa(){
+
+
+  $("#formCaixa").submit();
+}
 
 
 function alert_boot(message,color,place) {
