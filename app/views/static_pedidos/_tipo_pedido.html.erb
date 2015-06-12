@@ -73,14 +73,12 @@
           </a>
           <% @fd_pedidos.each do |fd_pedido| %>
            <a href="<%=pedidos_path(0,fd_pedido.id,'mesa')%>" class="list-group-item list-group-item-<%= fd_pedido.fd_situacao_id == 1 ? 'danger' : 'success' %>">
-             <div class="row">
-               <div class="col-md-2">
-                  <span class="glyphicon glyphicon-folder-<%= fd_pedido.fd_situacao_id == 1 ? 'open' : 'close' %>" aria-hidden="true"></span>
-                  <b>Nº</b> <%= fd_pedido.numr_contador %>
-                </div>
-                 <div class="col-md-2">
-                   <b>Valor</b> <label id="valor<%=fd_pedido.id%>"><%= fd_pedido.fd_mesa.numr_mesa rescue nil %></label>
-                 </div>              
+
+              <span class="glyphicon glyphicon-folder-<%= fd_pedido.fd_situacao_id == 1 ? 'open' : 'close' %>" aria-hidden="true"></span>
+              <b>Nº</b> <%= fd_pedido.numr_contador %>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+              <b>Valor</b> <label id="valor<%=fd_pedido.id%>"><%= fd_pedido.fd_mesa.numr_mesa rescue nil %></label>
+             
             </div>
            </a>
           <% end %>
