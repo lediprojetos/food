@@ -1,3 +1,24 @@
+<script>
+
+function montaComanda(fd_pedido_id){
+  $.ajax({
+      url: '<%= busca_itemcomanda_path %>',
+      data : 
+      {
+          fd_pedido_id : fd_pedido_id
+      },
+      success: function(data){
+
+        for (var i in data) {
+          var item = data[i];
+             $("#valor"+fd_pedido_id).html(item.valr_item_total_geral);
+            };
+         }
+      }
+    )}  
+             
+</script>
+
 
 <div id = "alert_placeholder_pedido"></div>
 
@@ -67,25 +88,40 @@
    </div>
     <div class="col-lg-8">
       <div class="panel panel-default">
-        <div class="list-group">
+        <div class="list-group" id="listpedidos">
           <a href="#" class="list-group-item disabled">
              <h3 class="panel-title">Pedidos abertos</h3>
           </a>
           <% @fd_pedidos.each do |fd_pedido| %>
-           <a href="<%=pedidos_path(0,fd_pedido.id,'mesa')%>" class="list-group-item list-group-item-<%= fd_pedido.fd_situacao_id == 1 ? 'danger' : 'success' %>">
-
+           <a  href="<%=pedidos_path(0,fd_pedido.id,'mesa')%>" class="list-group-item list-group-item-<%= fd_pedido.fd_situacao_id == 1 ? 'danger' : 'success' %>">
+              
               <span class="glyphicon glyphicon-folder-<%= fd_pedido.fd_situacao_id == 1 ? 'open' : 'close' %>" aria-hidden="true"></span>
-              <b>Nº</b> <%= fd_pedido.numr_contador %>
-               &nbsp;&nbsp;&nbsp;&nbsp;
-              <b>Valor</b> <label id="valor<%=fd_pedido.id%>"><%= fd_pedido.fd_mesa.numr_mesa rescue nil %></label>
+              <% if fd_pedido.numr_contador < 10%>
+                 <b>Nº</b> 0<%= fd_pedido.numr_contador %>
+                <%else%>
+                 <b>Nº</b> 0<%= fd_pedido.numr_contador %>
+              <%end%>
              
-            </div>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               <%if fd_pedido.fd_mesa.numr_mesa %>
+                 <% if fd_pedido.fd_mesa.numr_mesa < 10%>
+                   <b>Mesa</b> 0<label><%= fd_pedido.fd_mesa.numr_mesa rescue nil %></label>
+                  <%else%>
+                   <b>Mesa</b> <label><%= fd_pedido.fd_mesa.numr_mesa rescue nil %></label>
+                <%end%>
+              <%end%>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <b>Valor R$</b> <label id="valor<%=fd_pedido.id%>"></label>
+                <script>
+                  montaComanda("<%=fd_pedido.id%>");
+                </script>
            </a>
           <% end %>
           <a href="#" class="list-group-item disabled">
           </a>    
         </div>
       </div>
+    </div>
 
      <% if !@caixa_aberto%> 
       <hr/>
@@ -205,7 +241,6 @@ function fechar_caixa(){
 
 function abrir_caixa(){
 
-
   $("#formCaixa").submit();
 }
 
@@ -221,48 +256,5 @@ $(function() {
      $("#fd_caixa_valor_fechamento").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
 })
 
-
-
-function montaComanda(fd_pedido_id){
-
-$.ajax({
-    url: '<%= busca_itemcomanda_path %>',
-    data : 
-    {
-        fd_pedido_id : fd_pedido_id
-    },
-    success: function(data){
-
-      var total_geral = 0
-      var valr_item_total = 0
-      var valr_entrega = 'R$ 0,00'
-
-      $("#bodyTlbComanda").empty();
-      $("#total").val('');
-
-      for (var i in data) {
-        var item = data[i];
-        var tipo_atendimento = ""; 
-        valr_entrega = item.valr_entrega;
-
-          total_geral = item.valr_item_total_geral;
-          valr_item_total = item.valr_item_total
-
-          if (item.valr_pedido == " 0,00") {
-
-            $("#total").val(total_geral);
-            
-          } else {
-
-            $("#total").val(item.valr_pedido);
-
-          }
-
-      };
-
-    }
-  })  
-
-}
 
 </script>
