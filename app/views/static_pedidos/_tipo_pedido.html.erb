@@ -103,12 +103,19 @@ function montaComanda(fd_pedido_id){
               <%end%>
              
                &nbsp;&nbsp;&nbsp;&nbsp;
-               <%if fd_pedido.fd_mesa.numr_mesa %>
+               <%if fd_pedido.fd_mesa %>
                  <% if fd_pedido.fd_mesa.numr_mesa < 10%>
                    <b>Mesa</b> 0<label><%= fd_pedido.fd_mesa.numr_mesa rescue nil %></label>
                   <%else%>
                    <b>Mesa</b> <label><%= fd_pedido.fd_mesa.numr_mesa rescue nil %></label>
                 <%end%>
+                <%else%>
+                  <%if fd_pedido.tipo_atendimento == "viagem" %>
+                  <b>Viagem</b>
+                  <%end%>
+                  <%if fd_pedido.tipo_atendimento == "entrega" %>
+                  <b>Entrega</b>
+                  <%end%>          
               <%end%>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <b>Valor R$</b> <label id="valor<%=fd_pedido.id%>"></label>
