@@ -454,7 +454,7 @@ function PrintElem() {
         }
 
 
-        var horario = '<p class="serif">' + data.getDate() + '/' +  data.getMonth() + '/' + data.getFullYear() + ' ' + data.getHours() + ':' + minutes + '</p>';
+        var horario = '<p class="serif">' + data.getDate() + '/' +  (data.getMonth() + 1) + '/' + data.getFullYear() + ' ' + data.getHours() + ':' + minutes + '</p>';
 
         var cliente = '' +
         '<p class="serif">' + 'Cliente: ' + $("#txtNomeCliente").val() + '</p>' +
