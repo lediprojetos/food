@@ -446,6 +446,15 @@ function PrintElem() {
         '}' +
         '</style>';
 
+        var data = new Date();
+        var minutes = data.getMinutes();
+
+        if (minutes < 10){
+          minutes = '0' + minutes;
+        }
+
+
+        var horario = '<p class="serif">' + data.getDate() + '/' +  data.getMonth() + '/' + data.getFullYear() + ' ' + data.getHours() + ':' + minutes + '</p>';
 
         var cliente = '' +
         '<p class="serif">' + 'Cliente: ' + $("#txtNomeCliente").val() + '</p>' +
@@ -457,6 +466,9 @@ function PrintElem() {
         if ($("#txtNomeCliente").val() != ""){
           htmlToPrint += cliente;
         }
+
+
+        htmlToPrint += horario;
 
         
     htmlToPrint +=  divToPrint.outerHTML;
