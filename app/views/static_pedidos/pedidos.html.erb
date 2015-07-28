@@ -448,7 +448,7 @@ function PrintElem() {
 
         var data = new Date();
         var minutes = data.getMinutes();
-
+        var pedido = <%=@numr_contador%>;
         if (minutes < 10){
           minutes = '0' + minutes;
         }
@@ -467,8 +467,8 @@ function PrintElem() {
           htmlToPrint += cliente;
         }
 
-
-        htmlToPrint += horario;
+        horario += "<p class='serif'><b>Pedido N° " + pedido +"</b></p>";
+        htmlToPrint +=  horario;
 
         
     htmlToPrint +=  divToPrint.outerHTML;
