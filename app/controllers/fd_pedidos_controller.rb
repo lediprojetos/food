@@ -3,20 +3,6 @@ class FdPedidosController < ApplicationController
   before_action :set_fd_pedido, only: [:show, :edit, :update, :destroy]
 
 
-      if params[:fd_mesa_id] != '0'
-      #@fd_pedidos = FdPedido.where(:fd_mesa_id => params[:fd_mesa_id]).order(:created_at => :desc).limit(10)
-      @fd_pedidos = FdPedido.joins(:fd_caixa).where(:fd_mesa_id => params[:fd_mesa_id], fd_caixas: { data_fechamento: nil}) rescue nil 
-    
-      @fd_mesa_id = params[:fd_mesa_id]
-    else
-      #@fd_pedidos = FdPedido.where(:tipo_atendimento => params[:tipo_atendimento]).order(:created_at => :desc).limit(10)
-      @fd_pedidos = FdPedido.joins(:fd_caixa).where(:tipo_atendimento => params[:tipo_atendimento], :fd_empresa_id => user.fd_empresa_id, fd_caixas: { data_fechamento: nil}) rescue nil 
-      @fd_mesa_id = 0
-    end
-
-    @tipo_atendimento = params[:tipo_atendimento]
-
-
   def efetua_pagamento
 
     params[:valr_pedido] = params[:valr_pedido].gsub('R$', '')
