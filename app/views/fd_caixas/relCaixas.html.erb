@@ -1,0 +1,43 @@
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+<div class="panel-heading"><h3 class="panel-title">Listar de Caixas</h3></div>
+
+ <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Data abertura</th>
+      <th>Data fechamento</th>
+      <th>Valor fechamento</th>
+      <th>Situação</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fd_caixas.each do |fd_caixa| %>
+      <tr>
+        <td><%= fd_caixa.data_abertura %></td>
+        <td><%= fd_caixa.data_fechamento %></td>
+        <td><%= fd_caixa.valor_fechamento %></td>
+        
+        <% if fd_caixa.data_fechamento%>
+           <td style="color:Red" > Fechado</td>
+        <%else%>
+            <td style="color:Green">Aberto</td>
+        <%end%>
+        
+        
+        <td align='right'>
+            <div class="btn-group">         
+              <%= link_to relPedidosListagem_path(fd_caixa), :class => "btn btn-default btn-sm" do %>
+                <span class="glyphicon glyphicon-list-alt"></span> Detalhar 
+              <% end %>             
+             </div>
+          </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</div>

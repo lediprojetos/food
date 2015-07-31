@@ -2,7 +2,7 @@ Food::Application.routes.draw do
 
   resources :fd_caixas do
     member do
-      get :troca_caixa     
+      get :troca_caixa
     end
   end
 
@@ -130,6 +130,8 @@ Food::Application.routes.draw do
   match '/fechar_caixa', to: 'fd_caixas#fechar_caixa', via: 'get'
   match '/trocarempresa', to: 'fd_usuarios#troca_empresa', via: 'get'
   
+  match '/relCaixas', to: 'fd_caixas#relCaixas', via: 'get'
 
+  get '/relPedidosListagem/:fd_caixa_id/', to: 'static_pedidos#relPedidosListagem', as: 'relPedidosListagem'
 
 end

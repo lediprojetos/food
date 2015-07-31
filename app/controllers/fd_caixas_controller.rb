@@ -3,6 +3,15 @@ class FdCaixasController < ApplicationController
 
 include ActionView::Helpers::NumberHelper
 
+
+def detalha_caixa
+
+end
+
+
+def relCaixas
+    @fd_caixas = FdCaixa.where(fd_empresa_id: user.fd_empresa_id).order('id DESC').all
+end    
  
  def busca_caixa_aberto
    

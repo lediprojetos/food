@@ -1,6 +1,13 @@
 #encoding: utf-8
 class StaticPedidosController < ApplicationController
 
+	def relPedidosListagem
+
+			@fd_pedidos = FdPedido.joins(:fd_caixa).where(:fd_caixa_id => params[:fd_caixa_id], :fd_empresa_id => user.fd_empresa_id) rescue nil 
+	
+	end 
+
+
 	def lista_pedidos
 
 		if params[:fd_mesa_id] != '0'
