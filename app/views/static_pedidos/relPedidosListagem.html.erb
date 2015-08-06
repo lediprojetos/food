@@ -1,20 +1,192 @@
 
-<br/>
-<br/>
 
 <div class="panel panel-default">
-  <div class="list-group">
-    <a href="#" class="list-group-item disabled">
-      Pedidos
-    </a>
-    <% @fd_pedidos.each do |fd_pedido| %>
-     <a href="<%=pedidos_path(0,fd_pedido.id,'mesa')%>" class="list-group-item list-group-item-<%= fd_pedido.fd_situacao_id == 1 ? 'danger' : 'success' %>">
-      <span class="glyphicon glyphicon-folder-<%= fd_pedido.fd_situacao_id == 1 ? 'open' : 'close' %>" aria-hidden="true"></span>
-      <b>&nbsp;Pedido Nº</b> <%= fd_pedido.numr_contador %>
-     </a>
-    <% end %>
-    <a href="#" class="list-group-item disabled">
-      ...
-    </a>    
+  <!-- Default panel contents -->
+<div class="panel-heading"><h3 class="panel-title">Pedidos do caixa <b>N°<%= params[:fd_caixa_id]%></b></h3></div>
+
+ <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Número</th>
+      <th>Valor Pago</th>
+      <th>Pago</th>
+      <th>Tipo</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+  <% @fd_pedidos.each do |fd_pedido| %>
+      <tr>
+
+        <% if fd_pedido.numr_contador < 10%>
+           <td> 0<%= fd_pedido.numr_contador %></td>
+          <%else%>
+           <td>Nº 0<%= fd_pedido.numr_contador %></td>
+        <%end%>
+
+        <td><%= number_to_currency(fd_pedido.valr_pedido, unit: "R$", separator: ",", delimiter: "") %></td>  
+
+        <%if fd_pedido.flag_pago %>
+            <td><span style="color:green;" class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+        <%else%>
+            <td></td>
+        <%end%>
+
+         <%if fd_pedido.fd_mesa %>
+           <% if fd_pedido.fd_mesa.numr_mesa < 10%>
+             <td>Mesa 0<%= fd_pedido.fd_mesa.numr_mesa rescue nil %></td>
+            <%else%>
+             <td>Mesa <%= fd_pedido.fd_mesa.numr_mesa rescue nil %></td>
+          <%end%>
+          <%else%>
+            <%if fd_pedido.tipo_atendimento == "viagem" %>
+            <td>Viagem</td>
+            <%end%>
+            <%if fd_pedido.tipo_atendimento == "entrega" %>
+            <td>Entrega</td>
+            <%end%>          
+        <%end%>
+
+        <td align='right'>
+            <div class="btn-group">       
+              <button type="button" class="btn btn-default" aria-label="Left Align" onclick="montaComanda(<%=fd_pedido.id%>);">
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Expandir
+              </button>          
+             </div>
+          </td>        
+      </tr>
+  <% end %>
+
+  </tbody>
+</table>
+
+</div>    
+
+
+<div class="modal fade bs-example-modal-sm" id="mdFechaCaixa">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 id="h4Ingredientes" class="modal-title">Comanda</h4>
+      </div>
+      <div class="modal-body">
+       
+        <div id="myDivToPrint" name="myDivToPrint">
+
+          <table width="100%" name="tlbItensComanda" id="tlbItensComanda">
+            <tbody id="bodyTlbComanda">
+              <tr class="dotted">
+              </tr>
+            </tbody>                                      
+          </table>
+        </div>       
+
+      <div class="modal-footer">
+        <button type="button"  class="btn btn-danger" data-dismiss="modal">Sair</button>
+      </div>
+    </div><!-- /.modal-content -->
   </div>
-</div>
+
+<script type="text/javascript">
+
+function montaComanda2(fd_pedido_id){
+
+
+$.ajax({
+    url: '<%= busca_itemcomanda_adicionais_path %>',
+    data : 
+    {
+        fd_pedido_id : fd_pedido_id
+    },
+    success: function(data){
+
+      for (var i in data) {
+        var item = data[i];
+        
+          $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.numr_quantidade+'X '+item.desc_produto+'</td><td align="right">'+item.valr_item+'</td></tr>');
+
+
+      };
+
+
+    },
+    async:   false
+  })  
+
+}
+  
+function montaComanda(fd_pedido_id){
+
+
+$('#mdFechaCaixa').modal('show')
+
+$.ajax({
+    url: '<%= busca_itemcomanda_path %>',
+    data : 
+    {
+        fd_pedido_id : fd_pedido_id
+    },
+    success: function(data){
+
+      var total_geral = 0
+      var valr_item_total = 0
+      var valr_entrega = 'R$ 0,00'
+
+      $("#bodyTlbComanda").empty();
+      $("#total").val('');
+
+      for (var i in data) {
+        var item = data[i];
+        var tipo_atendimento = ""; 
+        valr_entrega = item.valr_entrega;
+
+          total_geral = item.valr_item_total_geral;
+          valr_item_total = item.valr_item_total
+
+          if (item.valr_pedido == " 0,00") {
+
+            $("#total").val(total_geral);
+            
+          } else {
+
+            $("#total").val(item.valr_pedido);
+
+          }
+
+
+          if (item.flag_pedidomisto == true){
+
+            var nomeMisto = buscaDetalhesPedidosMistos(item.id); 
+
+            $('#tlbItensComanda').append('<tr class="dotted"><td>'+nomeMisto+' '+item.desc_variacaoMisto+'</td><td align="right">'+item.valr_item+'</td></tr>');
+
+          } else {
+
+            $('#tlbItensComanda').append('<tr class="dotted"><td>'+item.desc_produto+' '+item.desc_variacao+'</td><td align="right">'+item.valr_item+'</td></tr>');
+
+          }
+
+      };
+
+      montaComanda2(fd_pedido_id);
+
+      if(valr_entrega != 'R$ 0,00'){
+
+        $('#tlbItensComanda').append('<tr class="dotted"><td>Entrega</td><td align="right">'+valr_entrega+'</td></tr>');
+        $("#valr_entrega").val(valr_entrega);
+      }      
+
+      $('#tlbItensComanda').append('<tr style="height:20px;"><td></td><td align="right"></td></tr>');
+      $('#tlbItensComanda').append('<tr class="dotted"><td>Total</td><td align="right">'+valr_item_total+'</td></tr>');
+      $('#tlbItensComanda').append('<tr class="dotted"><td>Total + taxas %</td><td align="right">'+total_geral+'</td></tr>');
+
+    }
+  })  
+
+}
+
+</script>
+
