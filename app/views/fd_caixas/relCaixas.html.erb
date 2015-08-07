@@ -16,8 +16,8 @@
   <tbody>
     <% @fd_caixas.each do |fd_caixa| %>
       <tr>
-        <td><%= fd_caixa.data_abertura %></td>
-        <td><%= fd_caixa.data_fechamento %></td>
+        <td><%= fd_caixa.data_abertura.blank? ? '' : fd_caixa.data_abertura.strftime("%d/%m/%Y - %H:%M")%></td>
+        <td><%= fd_caixa.data_fechamento.blank? ? '' : fd_caixa.data_fechamento.strftime("%d/%m/%Y - %H:%M")%></td>
         <td><%= number_to_currency(fd_caixa.valor_fechamento, unit: "R$", separator: ",", delimiter: "") %></td>
         
         <% if fd_caixa.data_fechamento%>

@@ -4,6 +4,8 @@ class StaticPedidosController < ApplicationController
 	def relPedidosListagem
 
 			@fd_pedidos = FdPedido.joins(:fd_caixa).where(:fd_caixa_id => params[:fd_caixa_id], :fd_empresa_id => user.fd_empresa_id) rescue nil 
+
+			@fd_caixa = FdCaixa.find_by_id(params[:fd_caixa_id])
 	
 	end 
 

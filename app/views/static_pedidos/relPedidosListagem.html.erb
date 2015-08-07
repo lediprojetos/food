@@ -1,4 +1,16 @@
+  <div class="input-group input-group-lg">
+    <span class="input-group-addon" id="sizing-addon1">Total Geral</span>
+    <input type="text" class="form-control" value="<%=number_to_currency(@fd_pedidos.sum(:valr_pedido), unit: "R$", separator: ",", delimiter: "")%>" disabled="disabled" aria-describedby="sizing-addon1">
+  </div>
 
+  <br/>
+
+  <div class="input-group input-group-lg">
+    <span class="input-group-addon" id="sizing-addon1">Total Fechado</span>
+    <input type="text" class="form-control" value="<%=number_to_currency(@fd_caixa.valor_fechamento, unit: "R$", separator: ",", delimiter: "")%>" disabled="disabled" aria-describedby="sizing-addon1">
+  </div>  
+
+  <br/>
 
 <div class="panel panel-default">
   <!-- Default panel contents -->
@@ -89,6 +101,8 @@
       </div>
     </div><!-- /.modal-content -->
   </div>
+
+
 
 <script type="text/javascript">
 
