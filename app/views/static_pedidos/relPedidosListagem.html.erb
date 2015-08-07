@@ -188,5 +188,35 @@ $.ajax({
 
 }
 
+
+function buscaDetalhesPedidosMistos(fd_itempedidos_id){
+
+  $('#fd_itempedido_id').val(fd_itempedido_id);
+
+  var nomeMisto = "";
+
+  $.ajax({
+    url: '<%= busca_DetalhesMistos_path %>',
+    data : 
+    {
+        fd_itempedidos_id : fd_itempedidos_id
+    },
+    success: function(data){
+
+
+        for (var i in data) {
+          var item = data[i];
+
+          nomeMisto = nomeMisto + " ½ " + item.nome_produto;
+
+        };
+
+    },
+    async:   false
+  })  
+
+        return nomeMisto;
+}
+
 </script>
 
